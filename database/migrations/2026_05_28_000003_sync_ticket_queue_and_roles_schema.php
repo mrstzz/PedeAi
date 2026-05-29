@@ -91,10 +91,18 @@ return new class extends Migration
             }
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'role_id')) {
-                $table->dropConstrainedForeignId('role_id');
+        if (Schema::hasColumn('users', 'role_id')) {
+            try {
+                Schema::table('users', function (Blueprint $table) {
+                    $table->dropForeign(['role_id']);
+                });
+            } catch (\Throwable) {
+                //
             }
-        });
+
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('role_id');
+            });
+        }
     }
 };
