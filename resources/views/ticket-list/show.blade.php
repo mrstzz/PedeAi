@@ -1,0 +1,119 @@
+@php
+    $money = fn ($value) => 'R$ '.number_format((float) $value, 2, ',', '.');
+    $itemLabels = [
+        'pendente' => 'Pendente',
+        'em_preparo' => 'Em preparo',
+        'entregue' => 'Entregue',
+    ];
+    $itemBadges = [
+        'pendente' => 'badge-warning',
+        'em_preparo' => 'badge-info',
+        'entregue' => 'badge-success',
+    ];
+@endphp
+
+<x-layouts::app :title="__('Detalhes da comanda')">
+    <div class="min-h-full bg-base-200 text-base-content">
+        <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
+            <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                    <div class="badge {{ $ticket->priority === 'alta' ? 'badge-error' : 'badge-primary' }} badge-outline mb-3">
+                        Prioridade {{ $ticket->priority === 'alta' ? 'alta' : 'normal' }}
+                    </div>
+                    <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Comanda #{{ $ticket->id }}</h1>
+                    <p class="mt-2 text-sm text-base-content/70">
+                        {{ $ticket->display_name }}{{ $ticket->table_number ? ' - Mesa '.$ticket->table_number : '' }}
+                    </p>
+                </div>
+
+                <x-link-button href="{{ route('ticket-list.index') }}" class="min-h-11">Voltar</x-link-button>
+            </section>
+
+            @if ($errors->any())
+                <div class="alert alert-error">
+                    <div>
+                        <h2 class="font-semibold">Revise os dados informados</h2>
+                        <p class="text-sm">{{ $errors->first() }}</p>
+                    </div>
+                </div>
+            @endif
+
+            <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
+                <x-card title="Itens da comanda" bodyClass="p-0">
+                    <div class="overflow-x-auto">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Qtd.</th>
+                                    <th>Status</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($ticket->items as $item)
+                                    <tr>
+                                        <td>
+                                            <div class="font-semibold text-neutral">{{ $item->product_name }}</div>
+                                            @if ($item->notes)
+                                                <div class="text-xs text-base-content/60">{{ $item->notes }}</div>
+                                            @endif
+                                        </td>
+                                        <td>{{ $item->quantity }}</td>
+                                        <td>
+                                            <span class="badge {{ $itemBadges[$item->status] ?? 'badge-neutral' }}">
+                                                {{ $itemLabels[$item->status] ?? $item->status }}
+                                            </span>
+                                        </td>
+                                        <td>{{ $money($item->subtotal) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="border-t border-base-300 p-4 text-right text-lg font-bold">
+                        Total: {{ $money($ticket->total_amount) }}
+                    </div>
+                </x-card>
+
+                <x-card title="Adicionar itens">
+                    @if (in_array($ticket->status, ['fechada', 'paga', 'cancelada'], true))
+                        <div class="alert alert-warning">Esta comanda ja foi encerrada.</div>
+                    @else
+                        <x-form :action="route('ticket-list.items.store', $ticket)" post>
+                            @for ($index = 0; $index < 4; $index++)
+                                <div class="rounded-lg border border-base-300 bg-base-200 p-4">
+                                    <div class="grid gap-3">
+                                        <label class="form-control">
+                                            <x-input-label value="Item" />
+                                            <select name="items[{{ $index }}][menu_item_id]" class="select select-bordered w-full bg-base-100" @disabled($menuItems->isEmpty())>
+                                                <option value="">Selecione</option>
+                                                @foreach ($menuItems as $menuItem)
+                                                    <option value="{{ $menuItem->id }}" @selected((string) old("items.$index.menu_item_id") === (string) $menuItem->id)>
+                                                        {{ $menuItem->name }} - {{ $money($menuItem->price) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </label>
+
+                                        <label class="form-control">
+                                            <x-input-label value="Quantidade" />
+                                            <x-text-input name="items[{{ $index }}][quantity]" type="number" inputmode="numeric" min="1" step="1" value="{{ old("items.$index.quantity") }}" placeholder="1" />
+                                        </label>
+
+                                        <label class="form-control">
+                                            <x-input-label value="Observacoes" />
+                                            <x-text-input name="items[{{ $index }}][notes]" value="{{ old("items.$index.notes") }}" />
+                                        </label>
+                                    </div>
+                                </div>
+                            @endfor
+
+                            <x-primary-button type="submit" :disabled="$menuItems->isEmpty()">Adicionar</x-primary-button>
+                        </x-form>
+                    @endif
+                </x-card>
+            </section>
+        </div>
+    </div>
+</x-layouts::app>
