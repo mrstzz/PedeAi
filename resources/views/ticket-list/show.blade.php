@@ -10,6 +10,20 @@
         'em_preparo' => 'badge-info',
         'entregue' => 'badge-success',
     ];
+    $statusLabels = [
+        'aberta' => 'Aberta',
+        'em_andamento' => 'Em andamento',
+        'fechada' => 'Fechada',
+        'paga' => 'Paga',
+        'cancelada' => 'Cancelada',
+    ];
+    $statusBadges = [
+        'aberta' => 'badge-primary',
+        'em_andamento' => 'badge-info',
+        'fechada' => 'badge-warning',
+        'paga' => 'badge-success',
+        'cancelada' => 'badge-error',
+    ];
 @endphp
 
 <x-layouts::app :title="__('Detalhes da comanda')">
@@ -24,6 +38,9 @@
                     <p class="mt-2 text-sm text-base-content/70">
                         {{ $ticket->display_name }}{{ $ticket->table_number ? ' - Mesa '.$ticket->table_number : '' }}
                     </p>
+                    <div class="mt-3 badge {{ $statusBadges[$ticket->status] ?? 'badge-neutral' }}">
+                        {{ $statusLabels[$ticket->status] ?? $ticket->status }}
+                    </div>
                 </div>
 
                 <x-link-button href="{{ route('ticket-list.index') }}" class="min-h-11">Voltar</x-link-button>
@@ -76,10 +93,30 @@
                     </div>
                 </x-card>
 
-                <x-card title="Adicionar itens">
-                    @if (in_array($ticket->status, ['fechada', 'paga', 'cancelada'], true))
-                        <div class="alert alert-warning">Esta comanda ja foi encerrada.</div>
-                    @else
+                <div class="flex flex-col gap-6">
+                    <x-card title="Status da comanda">
+                        <x-form :action="route('ticket-list.status.update', $ticket)" post>
+                            @method('PATCH')
+
+                            <label class="form-control">
+                                <x-input-label value="Status atual" />
+                                <select name="status" class="select select-bordered w-full bg-base-100">
+                                    @foreach ($statusLabels as $status => $label)
+                                        <option value="{{ $status }}" @selected(old('status', $ticket->status) === $status)>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </label>
+
+                            <x-primary-button type="submit">Atualizar status</x-primary-button>
+                        </x-form>
+                    </x-card>
+
+                    <x-card title="Adicionar itens">
+                        @if (in_array($ticket->status, ['fechada', 'paga', 'cancelada'], true))
+                            <div class="alert alert-warning">Esta comanda ja foi encerrada.</div>
+                        @else
                         <x-form :action="route('ticket-list.items.store', $ticket)" post>
                             @for ($index = 0; $index < 4; $index++)
                                 <div class="rounded-lg border border-base-300 bg-base-200 p-4">
@@ -111,8 +148,9 @@
 
                             <x-primary-button type="submit" :disabled="$menuItems->isEmpty()">Adicionar</x-primary-button>
                         </x-form>
-                    @endif
-                </x-card>
+                        @endif
+                    </x-card>
+                </div>
             </section>
         </div>
     </div>

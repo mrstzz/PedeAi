@@ -8,15 +8,8 @@
 
         <div class="flex min-h-[calc(100svh-2rem)] flex-col items-center justify-center bg-base-100 px-6 py-10">
             <div class="flex w-full max-w-md flex-col gap-8">
-                <a href="{{ route('home') }}" class="flex flex-col items-center gap-3 font-medium" wire:navigate>
-                    <span class="flex size-36 items-center justify-center">
-                        <x-app-logo-icon class="size-32" />
-                    </span>
-
-                    <span class="text-center text-5xl font-bold leading-none">
-                        <span class="text-primary">Pede</span><span class="text-secondary">Ai</span>
-                    </span>
-                    <span class="text-center text-sm font-semibold uppercase text-base-content/55">Gestao digital de pedidos</span>
+                <a href="{{ route('home') }}" class="flex flex-col items-center font-medium" wire:navigate>
+                    <x-app-logo-icon class="h-auto w-64 max-w-full" />
                 </a>
 
                 <div class="flex flex-col gap-6">

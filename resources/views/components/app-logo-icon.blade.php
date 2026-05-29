@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" {{ $attributes }}>
-    <path fill="#2f91c8" d="M9 12.5A8.5 8.5 0 0 1 17.5 4h13A8.5 8.5 0 0 1 39 12.5v23A8.5 8.5 0 0 1 30.5 44h-13A8.5 8.5 0 0 1 9 35.5v-23Z" />
-    <path fill="#ffffff" d="M16 17.5A7.5 7.5 0 0 1 23.5 10h1A7.5 7.5 0 0 1 32 17.5v.5H16v-.5Z" />
-    <path fill="#ff6b0b" d="M14 24.5c0-1.38 1.12-2.5 2.5-2.5h15a2.5 2.5 0 0 1 0 5h-15a2.5 2.5 0 0 1-2.5-2.5Z" />
-    <path fill="#f5a832" d="M19 30h10a5 5 0 0 1-10 0Z" />
-    <path fill="#ffffff" d="M25 12.25a1 1 0 0 1 1-1h5.25a1 1 0 1 1 0 2H26a1 1 0 0 1-1-1ZM16.75 32.5a1.25 1.25 0 1 1 0-2.5h14.5a1.25 1.25 0 1 1 0 2.5h-14.5Z" opacity=".82" />
-</svg>
+<img
+    src="{{ asset('Logo-pede-ai.png') }}"
+    alt="PedeAi"
+    {{ $attributes->class(['object-contain']) }}
+>

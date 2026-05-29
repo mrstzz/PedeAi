@@ -15,6 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('ticket-list/create', [TicketListController::class, 'create'])->name('ticket-list.create');
     Route::post('ticket-list/store', [TicketListController::class, 'store'])->name('ticket-list.store');
     Route::get('ticket-list/{ticketList}', [TicketListController::class, 'show'])->name('ticket-list.show');
+    Route::patch('ticket-list/{ticketList}/status', [TicketListController::class, 'updateStatus'])->name('ticket-list.status.update');
     Route::post('ticket-list/{ticketList}/items', [TicketListController::class, 'storeItems'])->name('ticket-list.items.store');
     Route::post('ticket-list/{ticketList}/start-preparation', [TicketListController::class, 'startPreparation'])->name('ticket-list.start-preparation');
     Route::post('ticket-items/{ticketItem}/deliver', [TicketListController::class, 'deliverItem'])->name('ticket-items.deliver');

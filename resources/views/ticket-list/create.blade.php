@@ -77,52 +77,79 @@
                     </section>
 
                     <label class="form-control">
-                        <x-input-label value="Observacoes da comanda: "/>
-                        <x-text-input
+                        <x-input-label value="Observacoes da comanda" />
+                         <x-text-input
                             id="notes"
-                            class="textarea textarea-bordered min-h-24 bg-base-100"
                             type="text"
+                            class="textarea textarea-bordered min-h-24 bg-base-100"
                             name="notes"
                             placeholder="Ex: sem cebola, aniversariante, pedido prioritario..."
-                            :value="old('file')"/>
+                            :value="old('notes')"/>
                     </label>
 
+                    @php
+                        $itemRows = old('items', [
+                            ['menu_item_id' => null, 'quantity' => 1, 'notes' => null],
+                        ]);
+                    @endphp
+
                     <section class="space-y-4">
-                        <div>
-                            <h2 class="text-lg font-semibold text-neutral">Itens da comanda</h2>
-                            <p class="text-sm text-base-content/65">Preencha ao menos uma linha. O total sera calculado automaticamente ao salvar.</p>
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                            <div>
+                                <h2 class="text-lg font-semibold text-neutral">Itens da comanda</h2>
+                                <p class="text-sm text-base-content/65">Adicione os itens consumidos. O total sera calculado automaticamente ao salvar.</p>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-soft"
+                                data-add-ticket-item
+                                @disabled($menuItems->isEmpty())
+                            >
+                                Adicionar item
+                            </button>
                         </div>
 
-                        <div class="grid gap-4">
-                            @for ($index = 0; $index < 8; $index++)
-                                <div class="rounded-lg border border-base-300 bg-base-200 p-4">
+                        <div class="grid gap-4" data-ticket-items>
+                            @foreach ($itemRows as $index => $itemRow)
+                                <div class="rounded-lg border border-base-300 bg-base-200 p-4" data-ticket-item-row>
                                     <div class="mb-3 flex items-center justify-between">
-                                        <span class="badge badge-primary badge-outline">Item {{ $index + 1 }}</span>
+                                        <span class="badge badge-primary badge-outline" data-ticket-item-label>Item {{ $index + 1 }}</span>
+
+                                        <button
+                                            type="button"
+                                            class="btn btn-ghost btn-xs text-error"
+                                            data-remove-ticket-item
+                                            @if ($loop->first && count($itemRows) === 1) hidden @endif
+                                        >
+                                            Remover
+                                        </button>
                                     </div>
 
-                                    <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_8rem]">
-                                        <label class="form-control">
+                                    <div class="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_9rem]">
+                                        <label class="form-control min-w-0">
                                             <x-input-label value="Item do cardapio" />
                                             <select name="items[{{ $index }}][menu_item_id]" class="select select-bordered w-full bg-base-100" @disabled($menuItems->isEmpty())>
                                                 <option value="">Selecione um item</option>
                                                 @foreach ($menuItems as $menuItem)
-                                                    <option value="{{ $menuItem->id }}" @selected((string) old("items.$index.menu_item_id") === (string) $menuItem->id)>
+                                                    <option value="{{ $menuItem->id }}" @selected((string) old('items.' . $index . '.menu_item_id', $itemRow['menu_item_id'] ?? '') === (string) $menuItem->id)>
                                                         {{ $menuItem->name }} - R$ {{ number_format((float) $menuItem->price, 2, ',', '.') }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </label>
 
-                                        <label class="form-control">
+                                        <label class="form-control w-full min-w-28">
                                             <x-input-label value="Qtd." />
-                                            <x-text-input
+                                            <input
                                                 name="items[{{ $index }}][quantity]"
                                                 type="number"
                                                 inputmode="numeric"
                                                 min="1"
                                                 step="1"
-                                                value="{{ old("items.$index.quantity", $index === 0 ? 1 : null) }}"
+                                                value="{{ old('items.' . $index . '.quantity', $itemRow['quantity'] ?? 1) }}"
                                                 placeholder="1"
+                                                class="input input-bordered w-full bg-base-100"
                                             />
                                         </label>
                                     </div>
@@ -131,12 +158,12 @@
                                         <x-input-label value="Observacoes do item" />
                                         <x-text-input
                                             name="items[{{ $index }}][notes]"
-                                            value="{{ old("items.$index.notes") }}"
+                                            value="{{ old('items.' . $index . '.notes', $itemRow['notes'] ?? '') }}"
                                             placeholder="Ponto da carne, adicionais, retirada..."
                                         />
                                     </label>
                                 </div>
-                            @endfor
+                            @endforeach
                         </div>
                     </section>
 
@@ -148,4 +175,101 @@
             </x-card>
         </div>
     </div>
+
+    <template id="ticket-item-template">
+        <div class="rounded-lg border border-base-300 bg-base-200 p-4" data-ticket-item-row>
+            <div class="mb-3 flex items-center justify-between">
+                <span class="badge badge-primary badge-outline" data-ticket-item-label>Item __NUMBER__</span>
+
+                <button type="button" class="btn btn-ghost btn-xs text-error" data-remove-ticket-item>
+                    Remover
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_9rem]">
+                <label class="form-control min-w-0">
+                    <x-input-label value="Item do cardapio" />
+                    <select name="items[__INDEX__][menu_item_id]" class="select select-bordered w-full bg-base-100" @disabled($menuItems->isEmpty())>
+                        <option value="">Selecione um item</option>
+                        @foreach ($menuItems as $menuItem)
+                            <option value="{{ $menuItem->id }}">
+                                {{ $menuItem->name }} - R$ {{ number_format((float) $menuItem->price, 2, ',', '.') }}
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
+
+                <label class="form-control w-full min-w-28">
+                    <x-input-label value="Qtd." />
+                    <input
+                        name="items[__INDEX__][quantity]"
+                        type="number"
+                        inputmode="numeric"
+                        min="1"
+                        step="1"
+                        value="1"
+                        placeholder="1"
+                        class="input input-bordered w-full bg-base-100"
+                    />
+                </label>
+            </div>
+
+            <label class="form-control mt-4">
+                <x-input-label value="Observacoes do item" />
+                <x-text-input
+                    name="items[__INDEX__][notes]"
+                    placeholder="Ponto da carne, adicionais, retirada..."
+                />
+            </label>
+        </div>
+    </template>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const list = document.querySelector('[data-ticket-items]');
+            const addButton = document.querySelector('[data-add-ticket-item]');
+            const template = document.querySelector('#ticket-item-template');
+
+            if (!list || !addButton || !template) {
+                return;
+            }
+
+            const refreshRows = () => {
+                const rows = [...list.querySelectorAll('[data-ticket-item-row]')];
+
+                rows.forEach((row, index) => {
+                    row.querySelector('[data-ticket-item-label]').textContent = `Item ${index + 1}`;
+                    row.querySelectorAll('[name]').forEach((field) => {
+                        field.name = field.name.replace(/items\[\d+]/, `items[${index}]`);
+                    });
+
+                    const removeButton = row.querySelector('[data-remove-ticket-item]');
+                    removeButton.hidden = rows.length === 1;
+                });
+            };
+
+            addButton.addEventListener('click', () => {
+                const index = list.querySelectorAll('[data-ticket-item-row]').length;
+                const html = template.innerHTML
+                    .replaceAll('__INDEX__', index)
+                    .replaceAll('__NUMBER__', index + 1);
+
+                list.insertAdjacentHTML('beforeend', html);
+                refreshRows();
+            });
+
+            list.addEventListener('click', (event) => {
+                const removeButton = event.target.closest('[data-remove-ticket-item]');
+
+                if (!removeButton) {
+                    return;
+                }
+
+                removeButton.closest('[data-ticket-item-row]').remove();
+                refreshRows();
+            });
+
+            refreshRows();
+        });
+    </script>
 </x-layouts::app>

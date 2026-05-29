@@ -8,8 +8,8 @@
             <div class="relative hidden h-full flex-col bg-primary p-10 text-primary-content lg:flex dark:bg-neutral dark:text-neutral-content">
                 <div class="absolute inset-0 bg-primary dark:bg-neutral"></div>
                 <a href="{{ route('home') }}" class="relative z-20 flex items-center text-lg font-medium" wire:navigate>
-                    <span class="flex h-10 w-10 items-center justify-center rounded-md">
-                            <x-app-logo-icon class="me-2 h-7" />
+                    <span class="me-3 flex size-12 items-center justify-center rounded-lg bg-white p-1">
+                        <x-app-logo-icon class="size-full" />
                     </span>
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -28,8 +28,8 @@
             <div class="w-full lg:p-8">
                 <div class="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
                     <a href="{{ route('home') }}" class="z-20 flex flex-col items-center gap-2 font-medium lg:hidden" wire:navigate>
-                        <span class="flex h-9 w-9 items-center justify-center rounded-md">
-                            <x-app-logo-icon class="size-9" />
+                        <span class="flex size-20 items-center justify-center rounded-lg bg-base-100 p-1">
+                            <x-app-logo-icon class="size-full" />
                         </span>
 
                         <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>

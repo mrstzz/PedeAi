@@ -42,17 +42,11 @@ class TicketListController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'customer_name' => ['nullable', 'string', 'max:255'],
-            'table_number' => ['nullable', 'string', 'max:255'],
-            'status' => ['required', Rule::in(['aberta', 'em_andamento', 'fechada', 'paga', 'cancelada'])],
-            'priority' => ['required', Rule::in(['normal', 'alta'])],
-            'notes' => ['nullable', 'string'],
-            'items' => ['required', 'array', 'min:1'],
-            'items.*.menu_item_id' => ['nullable', 'integer', Rule::exists('menu_items', 'id')->where('active', true)],
-            'items.*.quantity' => ['required_with:items.*.menu_item_id', 'nullable', 'integer', 'min:1'],
-            'items.*.notes' => ['nullable', 'string'],
-        ]);
+        $data = $request->validate(
+            $this->ticketRules(),
+            $this->ticketMessages(),
+            $this->ticketAttributes(),
+        );
 
         $items = $this->buildItems($data['items']);
 
@@ -128,7 +122,7 @@ class TicketListController extends Controller
             'items.*.menu_item_id' => ['nullable', 'integer', Rule::exists('menu_items', 'id')->where('active', true)],
             'items.*.quantity' => ['required_with:items.*.menu_item_id', 'nullable', 'integer', 'min:1'],
             'items.*.notes' => ['nullable', 'string'],
-        ]);
+        ], $this->ticketMessages(), $this->ticketAttributes());
 
         $items = $this->buildItems($data['items']);
 
@@ -146,6 +140,25 @@ class TicketListController extends Controller
         return redirect()
             ->route('ticket-list.show', $ticketList)
             ->with('status', 'Itens adicionados com sucesso.');
+    }
+
+    public function updateStatus(Request $request, TicketList $ticketList)
+    {
+        $data = $request->validate([
+            'status' => ['required', Rule::in(['aberta', 'em_andamento', 'fechada', 'paga', 'cancelada'])],
+        ], [
+            'status.required' => 'Selecione um status para a comanda.',
+            'status.in' => 'Selecione um status valido para a comanda.',
+        ]);
+
+        $isClosedStatus = in_array($data['status'], ['fechada', 'paga', 'cancelada'], true);
+
+        $ticketList->forceFill([
+            'status' => $data['status'],
+            'closed_at' => $isClosedStatus ? ($ticketList->closed_at ?? now()) : null,
+        ])->save();
+
+        return back()->with('status', 'Status da comanda atualizado com sucesso.');
     }
 
     public function startPreparation(TicketList $ticketList)
@@ -199,5 +212,43 @@ class TicketListController extends Controller
                 ];
             })
             ->values();
+    }
+
+    private function ticketRules(): array
+    {
+        return [
+            'customer_name' => ['nullable', 'string', 'max:255'],
+            'table_number' => ['nullable', 'string', 'max:255'],
+            'status' => ['required', Rule::in(['aberta', 'em_andamento', 'fechada', 'paga', 'cancelada'])],
+            'priority' => ['required', Rule::in(['normal', 'alta'])],
+            'notes' => ['nullable', 'string'],
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.menu_item_id' => ['nullable', 'integer', Rule::exists('menu_items', 'id')->where('active', true)],
+            'items.*.quantity' => ['required_with:items.*.menu_item_id', 'nullable', 'integer', 'min:1'],
+            'items.*.notes' => ['nullable', 'string'],
+        ];
+    }
+
+    private function ticketMessages(): array
+    {
+        return [
+            'items.required' => 'Informe ao menos um item para a comanda.',
+            'items.min' => 'Informe ao menos um item para a comanda.',
+            'items.*.menu_item_id.exists' => 'Selecione um item ativo do cardapio.',
+            'items.*.quantity.required_with' => 'Informe a quantidade do item selecionado.',
+            'items.*.quantity.integer' => 'A quantidade precisa ser um numero inteiro.',
+            'items.*.quantity.min' => 'A quantidade precisa ser pelo menos 1.',
+        ];
+    }
+
+    private function ticketAttributes(): array
+    {
+        return [
+            'customer_name' => 'cliente',
+            'table_number' => 'mesa ou balcao',
+            'items.*.menu_item_id' => 'item do cardapio',
+            'items.*.quantity' => 'quantidade',
+            'items.*.notes' => 'observacoes do item',
+        ];
     }
 }

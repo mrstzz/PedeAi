@@ -101,8 +101,8 @@
                         <div class="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
                             @foreach ($tickets as $ticket)
                                 <x-card class="border-primary/15">
-                                    <div class="flex items-start justify-between gap-3">
-                                        <div>
+                                    <div class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+                                        <div class="min-w-0">
                                             <h3 class="card-title text-base text-neutral">Comanda #{{ $ticket->id }}</h3>
                                             <p class="text-sm text-base-content/60">
                                                 {{ $ticket->display_name }}
@@ -112,7 +112,7 @@
                                             </p>
                                         </div>
 
-                                        <div class="badge {{ $statusBadges[$ticket->status] ?? 'badge-neutral' }}">
+                                        <div class="badge whitespace-nowrap px-3 {{ $statusBadges[$ticket->status] ?? 'badge-neutral' }}">
                                             {{ $statusLabels[$ticket->status] ?? $ticket->status }}
                                         </div>
                                     </div>
@@ -168,7 +168,7 @@
                                         <div class="timeline-middle h-3 w-3 rounded-full bg-primary"></div>
                                         <div class="timeline-end {{ $loop->last ? '' : 'mb-4' }}">
                                             <p class="text-sm font-semibold">
-                                                Comanda #{{ $ticket->id }} {{ $statusLabels[$ticket->status] ?? $ticket->status }}
+                                                Comanda #{{ $ticket->id }} - {{ $statusLabels[$ticket->status] ?? $ticket->status }}
                                             </p>
                                             <p class="text-xs text-base-content/55">
                                                 Atualizada em {{ optional($ticket->updated_at)->format('d/m/Y H:i') ?? '-' }}
