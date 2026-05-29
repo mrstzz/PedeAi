@@ -1,22 +1,33 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white antialiased dark:bg-linear-to-b dark:from-neutral-950 dark:to-neutral-900">
-        <div class="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-            <div class="flex w-full max-w-sm flex-col gap-2">
-                <a href="{{ route('home') }}" class="flex flex-col items-center gap-2 font-medium" wire:navigate>
-                    <span class="flex h-9 w-9 mb-1 items-center justify-center rounded-md">
-                        <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
+    <body data-theme="pedeai" class="min-h-screen bg-base-100 text-base-content antialiased">
+        <div class="h-2 w-full bg-primary"></div>
+
+        <div class="flex min-h-[calc(100svh-2rem)] flex-col items-center justify-center bg-base-100 px-6 py-10">
+            <div class="flex w-full max-w-md flex-col gap-8">
+                <a href="{{ route('home') }}" class="flex flex-col items-center gap-3 font-medium" wire:navigate>
+                    <span class="flex size-36 items-center justify-center">
+                        <x-app-logo-icon class="size-32" />
                     </span>
-                    <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>
+
+                    <span class="text-center text-5xl font-bold leading-none">
+                        <span class="text-primary">Pede</span><span class="text-secondary">Ai</span>
+                    </span>
+                    <span class="text-center text-sm font-semibold uppercase text-base-content/55">Gestao digital de pedidos</span>
                 </a>
+
                 <div class="flex flex-col gap-6">
                     {{ $slot }}
                 </div>
             </div>
         </div>
+
+        <footer class="fixed inset-x-0 bottom-0 bg-neutral/70 px-4 py-1 text-center text-sm text-neutral-content">
+            Gestao Facil LTDA - 2026 © Todos os direitos reservados.
+        </footer>
 
         @persist('toast')
             <flux:toast.group>

@@ -6,6 +6,46 @@
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+    name: "pedeai";
+    default: true;
+    prefersdark: false;
+    color-scheme: light;
+
+    --color-base-100: #ffffff;
+    --color-base-200: #f5f9fb;
+    --color-base-300: #dfeaf0;
+    --color-base-content: #20323d;
+    --color-primary: #2f91c8;
+    --color-primary-content: #ffffff;
+    --color-secondary: #ff6b0b;
+    --color-secondary-content: #ffffff;
+    --color-accent: #f5a832;
+    --color-accent-content: #20323d;
+    --color-neutral: #243948;
+    --color-neutral-content: #ffffff;
+    --color-info: #39a7d6;
+    --color-info-content: #ffffff;
+    --color-success: #1fa971;
+    --color-success-content: #ffffff;
+    --color-warning: #f5a832;
+    --color-warning-content: #20323d;
+    --color-error: #e5484d;
+    --color-error-content: #ffffff;
+
+    --radius-selector: 0.5rem;
+    --radius-field: 0.5rem;
+    --radius-box: 0.5rem;
+    --size-selector: 0.25rem;
+    --size-field: 0.25rem;
+    --border: 1px;
+    --depth: 1;
+    --noise: 0;
+}
+
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
@@ -23,17 +63,44 @@
     --color-zinc-900: #171717;
     --color-zinc-950: #0a0a0a;
 
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
+    --color-accent: #ff6b0b;
+    --color-accent-content: #ff6b0b;
     --color-accent-foreground: var(--color-white);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: #ff8a3d;
+        --color-accent-content: #ff8a3d;
+        --color-accent-foreground: #1f0d02;
     }
+
+}
+
+:root.dark [data-theme="pedeai"],
+[data-theme="pedeai"].dark,
+.dark [data-theme="pedeai"] {
+    color-scheme: dark;
+    --color-base-100: #172630;
+    --color-base-200: #10202a;
+    --color-base-300: #263b48;
+    --color-base-content: #e7f2f7;
+    --color-primary: #55afd9;
+    --color-primary-content: #071923;
+    --color-secondary: #ff8a3d;
+    --color-secondary-content: #1f0d02;
+    --color-accent: #f7bc4b;
+    --color-accent-content: #1f1603;
+    --color-neutral: #0b1820;
+    --color-neutral-content: #e7f2f7;
+    --color-info: #67c3e4;
+    --color-info-content: #071923;
+    --color-success: #43c993;
+    --color-success-content: #062116;
+    --color-warning: #f7bc4b;
+    --color-warning-content: #1f1603;
+    --color-error: #ff6b70;
+    --color-error-content: #270708;
 }
 
 @layer base {

@@ -1,9 +1,9 @@
 @props([
     'optionsRoute' => 'passkey.login-options',
     'submitRoute' => 'passkey.login',
-    'label' => __('Sign in with a passkey'),
-    'loadingLabel' => __('Authenticating...'),
-    'separator' => __('Or continue with email'),
+    'label' => __('Entrar com chave de acesso'),
+    'loadingLabel' => __('Autenticando...'),
+    'separator' => __('Ou continue com email'),
 ])
 
 @assets
@@ -63,10 +63,10 @@
 
             <div class="relative my-6">
                 <div class="absolute inset-0 flex items-center">
-                    <div class="w-full border-t border-zinc-200 dark:border-zinc-700"></div>
+                    <div class="w-full border-t border-base-300"></div>
                 </div>
                 <div class="relative flex justify-center text-xs uppercase">
-                    <span class="px-2 text-zinc-500 dark:text-zinc-400 bg-white dark:bg-zinc-900">
+                    <span class="bg-base-100 px-2 text-base-content/60">
                         {{ $separator }}
                     </span>
                 </div>
