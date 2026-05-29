@@ -1,32 +1,57 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
-            <flux:sidebar.header>
+    <body data-theme="pedeai" class="min-h-screen bg-base-200 text-base-content">
+        <flux:sidebar sticky collapsible="mobile" class="border-e border-base-300 bg-neutral text-neutral-content">
+            <flux:sidebar.header class="border-b border-neutral-content/10 pb-4">
                 <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
-            <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
+            <div class="px-3 py-3">
+                <div class="rounded-lg border border-neutral-content/10 bg-neutral-content/10 p-3">
+                    <p class="text-xs font-medium uppercase text-neutral-content/60">Operacao</p>
+                    <p class="mt-1 text-sm font-semibold text-neutral-content">Comandas e tickets</p>
+                </div>
+            </div>
+
+            <flux:sidebar.nav class="px-2">
+                <flux:sidebar.group :heading="__('Atendimento')" class="grid text-neutral-content/70">
+                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                        {{ __('Resumo') }}
                     </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="folder-git-2" :href="route('ticket-list.index')" :current="request()->routeIs('ticket-list.index')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                        {{ __('Comandas') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="layout-grid" :href="route('ticket-list.create')" :current="request()->routeIs('ticket-list.create')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                        {{ __('Nova comanda') }}
+                    </flux:sidebar.item>
+
+                    @if (auth()->user()?->canAccessKitchenQueue())
+                        <flux:sidebar.item icon="book-open-text" :href="route('kitchen-queue.index')" :current="request()->routeIs('kitchen-queue.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                            {{ __('Fila de atendimento') }}
+                        </flux:sidebar.item>
+                    @endif
                 </flux:sidebar.group>
+
+                @if (auth()->user()?->isAdmin())
+                    <flux:sidebar.group :heading="__('Administracao')" class="mt-6 grid text-neutral-content/70">
+                        <flux:sidebar.item icon="book-open-text" :href="route('menu-items.index')" :current="request()->routeIs('menu-items.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                            {{ __('Itens da comanda') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @endif
             </flux:sidebar.nav>
 
             <flux:spacer />
 
-            <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
+            <flux:sidebar.nav class="px-2">
+                <flux:sidebar.item icon="book-open-text" :href="route('profile.edit')" :current="request()->routeIs('profile.*')" class="text-neutral-content/80 hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                    {{ __('Configuracoes') }}
                 </flux:sidebar.item>
             </flux:sidebar.nav>
 
@@ -66,7 +91,7 @@
 
                     <flux:menu.radio.group>
                         <flux:menu.item :href="route('profile.edit')" icon="cog" wire:navigate>
-                            {{ __('Settings') }}
+                            {{ __('Configuracoes') }}
                         </flux:menu.item>
                     </flux:menu.radio.group>
 
@@ -81,7 +106,7 @@
                             class="w-full cursor-pointer"
                             data-test="logout-button"
                         >
-                            {{ __('Log out') }}
+                            {{ __('Sair') }}
                         </flux:menu.item>
                     </form>
                 </flux:menu>
