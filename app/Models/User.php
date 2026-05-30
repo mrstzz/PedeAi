@@ -42,7 +42,7 @@ class User extends Authenticatable implements PasskeyUser
 
     public function isAdmin(): bool
     {
-        return $this->hasRole('administrador', 'admin');
+        return (int) $this->role_id === 1 || $this->hasRole('administrador', 'admin');
     }
 
     public function canAccessKitchenQueue(): bool

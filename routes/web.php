@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KitchenQueueController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\TicketListController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
@@ -25,6 +26,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('menu-items', [MenuItemController::class, 'index'])->name('menu-items.index');
     Route::get('menu-items/create', [MenuItemController::class, 'create'])->name('menu-items.create');
     Route::post('menu-items/store', [MenuItemController::class, 'store'])->name('menu-items.store');
+
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::patch('users/{user}/role', [UserController::class, 'updateRole'])->name('users.role.update');
 });
 
 require __DIR__.'/settings.php';

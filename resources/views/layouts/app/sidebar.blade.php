@@ -31,17 +31,26 @@
                         {{ __('Nova comanda') }}
                     </flux:sidebar.item>
 
-                    @if (auth()->user()?->canAccessKitchenQueue())
+                    
+                </flux:sidebar.group>
+
+                @if (auth()->user()?->canAccessKitchenQueue())
+                    <flux:sidebar.group :heading="__('Cozinha')" class="mt-6 grid text-neutral-content/70">
                         <flux:sidebar.item icon="book-open-text" :href="route('kitchen-queue.index')" :current="request()->routeIs('kitchen-queue.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
                             {{ __('Fila de atendimento') }}
                         </flux:sidebar.item>
-                    @endif
-                </flux:sidebar.group>
+                    </flux:sidebar.group>
+            
+                @endif
 
                 @if (auth()->user()?->isAdmin())
                     <flux:sidebar.group :heading="__('Administracao')" class="mt-6 grid text-neutral-content/70">
                         <flux:sidebar.item icon="book-open-text" :href="route('menu-items.index')" :current="request()->routeIs('menu-items.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
                             {{ __('Itens da comanda') }}
+                        </flux:sidebar.item>
+
+                        <flux:sidebar.item icon="book-open-text" :href="route('users.index')" :current="request()->routeIs('users.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                            {{ __('Usuarios') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>
                 @endif
@@ -54,6 +63,13 @@
                     {{ __('Configuracoes') }}
                 </flux:sidebar.item>
             </flux:sidebar.nav>
+
+            <div class="px-3 pb-2">
+                <div class="rounded-lg border border-neutral-content/10 bg-neutral-content/10 px-3 py-2">
+                    <p class="text-xs font-medium uppercase text-neutral-content/55">Permissão: </p>
+                    <p class="mt-1 text-sm font-semibold text-neutral-content">{{ auth()->user()->role?->name ?? 'Sem permissão' }}</p>
+                </div>
+            </div>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
@@ -82,6 +98,7 @@
                                 <div class="grid flex-1 text-start text-sm leading-tight">
                                     <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
                                     <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
+                                    <flux:text class="truncate">Role: {{ auth()->user()->role?->name ?? 'Sem role' }}</flux:text>
                                 </div>
                             </div>
                         </div>

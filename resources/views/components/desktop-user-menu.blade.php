@@ -15,6 +15,7 @@
             <div class="grid flex-1 text-start text-sm leading-tight">
                 <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
                 <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
+                <flux:text class="truncate">Role: {{ auth()->user()->role?->name ?? 'Sem role' }}</flux:text>
             </div>
         </div>
         <flux:menu.separator />
