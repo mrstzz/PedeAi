@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\TicketList;
 use App\Models\MenuItem;
 use App\Models\TicketItem;
+use App\Models\RestaurantTable;
+use App\Services\TicketOpeningService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class TicketListController extends Controller
 {
+    private const BRASILIA_TIMEZONE = 'America/Sao_Paulo';
+
     /**
      * Display a listing of the resource.
      */
@@ -27,20 +31,42 @@ class TicketListController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(TicketOpeningService $ticketOpeningService)
     {
         return view('ticket-list.create', [
             'menuItems' => MenuItem::query()
                 ->where('active', true)
                 ->orderBy('name')
                 ->get(),
+            'availableTables' => $ticketOpeningService->availableTables(),
+            'activeReservations' => $ticketOpeningService->reservationsAvailableForOpening(),
+        ]);
+    }
+
+    public function availableTables(Request $request, TicketOpeningService $ticketOpeningService)
+    {
+        $data = $request->validate([
+            'at' => ['nullable', 'date'],
+        ]);
+
+        $at = filled($data['at'] ?? null)
+            ? \Illuminate\Support\Carbon::parse($data['at'], self::BRASILIA_TIMEZONE)
+            : now(self::BRASILIA_TIMEZONE);
+
+        return response()->json([
+            'data' => $ticketOpeningService->availableTables($at)->map(fn ($table): array => [
+                'id' => $table->id,
+                'identifier' => $table->identifier,
+                'capacity' => $table->capacity,
+                'status' => $table->status,
+            ])->values(),
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, TicketOpeningService $ticketOpeningService)
     {
         $data = $request->validate(
             $this->ticketRules(),
@@ -56,19 +82,7 @@ class TicketListController extends Controller
                 ->withInput();
         }
 
-        DB::transaction(function () use ($data, $items): void {
-            $ticket = TicketList::query()->create([
-                'customer_name' => $data['customer_name'] ?? null,
-                'table_number' => $data['table_number'] ?? null,
-                'status' => $data['status'],
-                'priority' => $data['priority'],
-                'total_amount' => $items->sum('subtotal'),
-                'notes' => $data['notes'] ?? null,
-                'closed_at' => in_array($data['status'], ['fechada', 'paga', 'cancelada'], true) ? now() : null,
-            ]);
-
-            $ticket->items()->createMany($items->all());
-        });
+        $ticketOpeningService->openTicket($data, $items);
 
         return redirect()
             ->route('ticket-list.index')
@@ -81,7 +95,7 @@ class TicketListController extends Controller
     public function show(TicketList $ticketList)
     {
         return view('ticket-list.show', [
-            'ticket' => $ticketList->load('items'),
+            'ticket' => $ticketList->load(['items', 'restaurantTable', 'reservation']),
             'menuItems' => MenuItem::query()
                 ->where('active', true)
                 ->orderBy('name')
@@ -152,11 +166,34 @@ class TicketListController extends Controller
         ]);
 
         $isClosedStatus = in_array($data['status'], ['fechada', 'paga', 'cancelada'], true);
+        $releasesTable = in_array($data['status'], ['paga', 'cancelada'], true);
 
-        $ticketList->forceFill([
-            'status' => $data['status'],
-            'closed_at' => $isClosedStatus ? ($ticketList->closed_at ?? now()) : null,
-        ])->save();
+        DB::transaction(function () use ($ticketList, $data, $isClosedStatus, $releasesTable): void {
+            $ticketList->forceFill([
+                'status' => $data['status'],
+                'closed_at' => $isClosedStatus ? ($ticketList->closed_at ?? now()) : null,
+            ])->save();
+
+            if ($ticketList->restaurant_table_id) {
+                $table = $ticketList->restaurantTable()
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($table) {
+                    $hasOtherOpenTicket = $table->tickets()
+                        ->whereKeyNot($ticketList->id)
+                        ->whereIn('status', ['aberta', 'em_andamento', 'fechada'])
+                        ->exists();
+
+                    $table->forceFill([
+                        'status' => ($releasesTable && ! $hasOtherOpenTicket)
+                            ? RestaurantTable::STATUS_AVAILABLE
+                            : RestaurantTable::STATUS_OCCUPIED,
+                    ])
+                        ->save();
+                }
+            }
+        });
 
         return back()->with('status', 'Status da comanda atualizado com sucesso.');
     }
@@ -218,8 +255,9 @@ class TicketListController extends Controller
     {
         return [
             'customer_name' => ['nullable', 'string', 'max:255'],
-            'table_number' => ['nullable', 'string', 'max:255'],
-            'status' => ['required', Rule::in(['aberta', 'em_andamento', 'fechada', 'paga', 'cancelada'])],
+            'restaurant_table_id' => ['nullable', 'required_without:reservation_id', 'integer', Rule::exists('restaurant_tables', 'id')],
+            'reservation_id' => ['nullable', 'integer', Rule::exists('reservations', 'id')],
+            'status' => ['nullable', Rule::in(['aberta', 'em_andamento', 'fechada', 'paga', 'cancelada'])],
             'priority' => ['required', Rule::in(['normal', 'alta'])],
             'notes' => ['nullable', 'string'],
             'items' => ['required', 'array', 'min:1'],
@@ -238,6 +276,9 @@ class TicketListController extends Controller
             'items.*.quantity.required_with' => 'Informe a quantidade do item selecionado.',
             'items.*.quantity.integer' => 'A quantidade precisa ser um numero inteiro.',
             'items.*.quantity.min' => 'A quantidade precisa ser pelo menos 1.',
+            'restaurant_table_id.required_without' => 'Selecione uma mesa livre ou uma reserva confirmada.',
+            'restaurant_table_id.exists' => 'Selecione uma mesa cadastrada.',
+            'reservation_id.exists' => 'Selecione uma reserva cadastrada.',
         ];
     }
 
@@ -245,7 +286,8 @@ class TicketListController extends Controller
     {
         return [
             'customer_name' => 'cliente',
-            'table_number' => 'mesa ou balcao',
+            'restaurant_table_id' => 'mesa',
+            'reservation_id' => 'reserva',
             'items.*.menu_item_id' => 'item do cardapio',
             'items.*.quantity' => 'quantidade',
             'items.*.notes' => 'observacoes do item',

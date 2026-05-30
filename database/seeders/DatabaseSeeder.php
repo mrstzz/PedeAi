@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\MenuItem;
 use App\Models\Role;
+use App\Models\RestaurantTable;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -51,6 +52,16 @@ class DatabaseSeeder extends Seeder
             MenuItem::query()->updateOrCreate(
                 ['name' => $item['name']],
                 $item + ['active' => true],
+            );
+        }
+
+        foreach (range(1, 8) as $number) {
+            RestaurantTable::query()->updateOrCreate(
+                ['identifier' => (string) $number],
+                [
+                    'capacity' => $number <= 4 ? 4 : 6,
+                    'status' => 'disponivel',
+                ],
             );
         }
     }

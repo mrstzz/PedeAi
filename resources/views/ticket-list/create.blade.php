@@ -35,6 +35,17 @@
                 </div>
             @endif
 
+            @if ($availableTables->isEmpty() && $activeReservations->isEmpty())
+                <div class="alert alert-warning">
+                    <div>
+                        <h2 class="font-semibold">Nenhuma mesa livre no momento</h2>
+                        <p class="text-sm">
+                            Libere uma mesa, conclua uma comanda aberta ou selecione uma reserva confirmada dentro do horario.
+                        </p>
+                    </div>
+                </div>
+            @endif
+
             <x-card>
                 <x-form :action="route('ticket-list.store')" post>
                     <section class="grid gap-4 lg:grid-cols-4">
@@ -48,22 +59,26 @@
                         </label>
 
                         <label class="form-control">
-                            <x-input-label value="Mesa / Balcao" />
-                            <x-text-input
-                                name="table_number"
-                                value="{{ old('table_number') }}"
-                                placeholder="Ex: 12, balcao ou delivery"
-                            />
+                            <x-input-label value="Reserva confirmada" />
+                            <select name="reservation_id" class="select select-bordered w-full bg-base-100" data-reservation-select>
+                                <option value="">Sem reserva</option>
+                                @foreach ($activeReservations as $reservation)
+                                    <option value="{{ $reservation->id }}" @selected((string) old('reservation_id') === (string) $reservation->id)>
+                                        {{ $reservation->customer_name }} - Mesa {{ $reservation->restaurantTable?->identifier }} - {{ $reservation->reserved_at->timezone('America/Sao_Paulo')->format('H:i') }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </label>
 
                         <label class="form-control">
-                            <x-input-label value="Status" />
-                            <select name="status" class="select select-bordered w-full bg-base-100">
-                                <option value="aberta" @selected(old('status', 'aberta') === 'aberta')>Aberta</option>
-                                <option value="em_andamento" @selected(old('status') === 'em_andamento')>Em andamento</option>
-                                <option value="fechada" @selected(old('status') === 'fechada')>Fechada</option>
-                                <option value="paga" @selected(old('status') === 'paga')>Paga</option>
-                                <option value="cancelada" @selected(old('status') === 'cancelada')>Cancelada</option>
+                            <x-input-label value="Mesa livre" />
+                            <select name="restaurant_table_id" class="select select-bordered w-full bg-base-100" data-table-select @disabled($availableTables->isEmpty())>
+                                <option value="">Selecione uma mesa</option>
+                                @foreach ($availableTables as $table)
+                                    <option value="{{ $table->id }}" @selected((string) old('restaurant_table_id') === (string) $table->id)>
+                                        Mesa {{ $table->identifier }} - {{ $table->capacity }} lugares
+                                    </option>
+                                @endforeach
                             </select>
                         </label>
 
@@ -169,7 +184,7 @@
 
                     <div class="flex flex-col-reverse gap-3 border-t border-base-300 pt-4 sm:flex-row sm:justify-end">
                         <x-secondary-button type="reset">Limpar</x-secondary-button>
-                        <x-primary-button type="submit" :disabled="$menuItems->isEmpty()">Salvar comanda</x-primary-button>
+                        <x-primary-button type="submit" :disabled="$menuItems->isEmpty() || ($availableTables->isEmpty() && $activeReservations->isEmpty())">Salvar comanda</x-primary-button>
                     </div>
                 </x-form>
             </x-card>
@@ -225,51 +240,92 @@
     </template>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const list = document.querySelector('[data-ticket-items]');
-            const addButton = document.querySelector('[data-add-ticket-item]');
-            const template = document.querySelector('#ticket-item-template');
+        (() => {
+            const initTicketCreate = () => {
+                const list = document.querySelector('[data-ticket-items]');
+                const addButton = document.querySelector('[data-add-ticket-item]');
+                const template = document.querySelector('#ticket-item-template');
+                const reservationSelect = document.querySelector('[data-reservation-select]');
+                const tableSelect = document.querySelector('[data-table-select]');
 
-            if (!list || !addButton || !template) {
-                return;
-            }
-
-            const refreshRows = () => {
-                const rows = [...list.querySelectorAll('[data-ticket-item-row]')];
-
-                rows.forEach((row, index) => {
-                    row.querySelector('[data-ticket-item-label]').textContent = `Item ${index + 1}`;
-                    row.querySelectorAll('[name]').forEach((field) => {
-                        field.name = field.name.replace(/items\[\d+]/, `items[${index}]`);
-                    });
-
-                    const removeButton = row.querySelector('[data-remove-ticket-item]');
-                    removeButton.hidden = rows.length === 1;
-                });
-            };
-
-            addButton.addEventListener('click', () => {
-                const index = list.querySelectorAll('[data-ticket-item-row]').length;
-                const html = template.innerHTML
-                    .replaceAll('__INDEX__', index)
-                    .replaceAll('__NUMBER__', index + 1);
-
-                list.insertAdjacentHTML('beforeend', html);
-                refreshRows();
-            });
-
-            list.addEventListener('click', (event) => {
-                const removeButton = event.target.closest('[data-remove-ticket-item]');
-
-                if (!removeButton) {
+                if (!list || !addButton || !template) {
                     return;
                 }
 
-                removeButton.closest('[data-ticket-item-row]').remove();
-                refreshRows();
-            });
+                const refreshRows = () => {
+                    const rows = [...list.querySelectorAll('[data-ticket-item-row]')];
 
-            refreshRows();
-        });
+                    rows.forEach((row, index) => {
+                        row.querySelector('[data-ticket-item-label]').textContent = `Item ${index + 1}`;
+                        row.querySelectorAll('[name]').forEach((field) => {
+                            field.name = field.name.replace(/items\[\d+]/, `items[${index}]`);
+                        });
+
+                        const removeButton = row.querySelector('[data-remove-ticket-item]');
+                        removeButton.hidden = rows.length === 1;
+                    });
+                };
+
+                const syncReservationAndTable = () => {
+                    if (!reservationSelect || !tableSelect) {
+                        return;
+                    }
+
+                    const hasReservation = reservationSelect.value !== '';
+
+                    if (hasReservation) {
+                        tableSelect.value = '';
+                    }
+
+                    tableSelect.disabled = hasReservation || tableSelect.dataset.empty === 'true';
+                    tableSelect.classList.toggle('opacity-60', hasReservation);
+                };
+
+                if (!list.dataset.ticketItemsReady) {
+                    addButton.addEventListener('click', () => {
+                        const index = list.querySelectorAll('[data-ticket-item-row]').length;
+                        const html = template.innerHTML
+                            .replaceAll('__INDEX__', index)
+                            .replaceAll('__NUMBER__', index + 1);
+
+                        list.insertAdjacentHTML('beforeend', html);
+                        refreshRows();
+                    });
+
+                    list.addEventListener('click', (event) => {
+                        const removeButton = event.target.closest('[data-remove-ticket-item]');
+
+                        if (!removeButton) {
+                            return;
+                        }
+
+                        removeButton.closest('[data-ticket-item-row]').remove();
+                        refreshRows();
+                    });
+
+                    list.dataset.ticketItemsReady = 'true';
+                }
+
+                if (reservationSelect && !reservationSelect.dataset.reservationReady) {
+                    reservationSelect.addEventListener('change', syncReservationAndTable);
+                    reservationSelect.dataset.reservationReady = 'true';
+                }
+
+                if (tableSelect && !tableSelect.dataset.empty) {
+                    tableSelect.dataset.empty = tableSelect.disabled ? 'true' : 'false';
+                }
+
+                refreshRows();
+                syncReservationAndTable();
+            };
+
+            initTicketCreate();
+
+            if (!window.__pedeaiTicketCreateBound) {
+                document.addEventListener('DOMContentLoaded', initTicketCreate);
+                document.addEventListener('livewire:navigated', initTicketCreate);
+                window.__pedeaiTicketCreateBound = true;
+            }
+        })();
     </script>
 </x-layouts::app>

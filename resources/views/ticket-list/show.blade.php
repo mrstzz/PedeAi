@@ -36,8 +36,13 @@
                     </div>
                     <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Comanda #{{ $ticket->id }}</h1>
                     <p class="mt-2 text-sm text-base-content/70">
-                        {{ $ticket->display_name }}{{ $ticket->table_number ? ' - Mesa '.$ticket->table_number : '' }}
+                        {{ $ticket->display_name }}{{ $ticket->restaurantTable ? ' - Mesa '.$ticket->restaurantTable->identifier : ($ticket->table_number ? ' - Mesa '.$ticket->table_number : '') }}
                     </p>
+                    @if ($ticket->reservation)
+                        <p class="mt-1 text-sm text-base-content/60">
+                            Reserva #{{ $ticket->reservation->id }} - {{ $ticket->reservation->reserved_at->timezone('America/Sao_Paulo')->format('d/m/Y H:i') }}
+                        </p>
+                    @endif
                     <div class="mt-3 badge {{ $statusBadges[$ticket->status] ?? 'badge-neutral' }}">
                         {{ $statusLabels[$ticket->status] ?? $ticket->status }}
                     </div>

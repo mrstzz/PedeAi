@@ -31,6 +31,10 @@
                         {{ __('Nova comanda') }}
                     </flux:sidebar.item>
 
+                    <flux:sidebar.item icon="book-open-text" :href="route('reservations.index')" :current="request()->routeIs('reservations.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                        {{ __('Reservas') }}
+                    </flux:sidebar.item>
+
                     
                 </flux:sidebar.group>
 
@@ -45,6 +49,10 @@
 
                 @if (auth()->user()?->isAdmin())
                     <flux:sidebar.group :heading="__('Administracao')" class="mt-6 grid text-neutral-content/70">
+                        <flux:sidebar.item icon="layout-grid" :href="route('restaurant-tables.index')" :current="request()->routeIs('restaurant-tables.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
+                            {{ __('Mesas') }}
+                        </flux:sidebar.item>
+
                         <flux:sidebar.item icon="book-open-text" :href="route('menu-items.index')" :current="request()->routeIs('menu-items.*')" class="text-neutral-content hover:bg-neutral-content/10 data-current:bg-primary data-current:text-content" wire:navigate>
                             {{ __('Itens da comanda') }}
                         </flux:sidebar.item>
