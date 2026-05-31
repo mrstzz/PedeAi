@@ -47,4 +47,36 @@ class MenuItemController extends Controller
             ->route('menu-items.index')
             ->with('status', 'Item cadastrado com sucesso.');
     }
+
+    public function edit(MenuItem $menuItem)
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        return view('menu-items.edit', [
+            'item' => $menuItem,
+        ]);
+    }
+
+    public function update(Request $request, MenuItem $menuItem)
+    {
+        abort_unless(auth()->user()?->isAdmin(), 403);
+
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'description' => ['nullable', 'string'],
+            'active' => ['nullable', 'boolean'],
+        ]);
+
+        $menuItem->update([
+            'name' => $data['name'],
+            'price' => $data['price'],
+            'description' => $data['description'] ?? null,
+            'active' => (bool) ($data['active'] ?? false),
+        ]);
+
+        return redirect()
+            ->route('menu-items.index')
+            ->with('status', 'Item atualizado com sucesso.');
+    }
 }

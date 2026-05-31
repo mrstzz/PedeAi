@@ -8,12 +8,15 @@ use App\Models\TicketList;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class TicketOpeningService
 {
     private const OPEN_TICKET_STATUSES = ['aberta', 'em_andamento'];
     private const BRASILIA_TIMEZONE = 'America/Sao_Paulo';
+
+    public function __construct(private readonly OperationalAudit $audit) {}
 
     public function availableTables(?CarbonInterface $at = null): Collection
     {
@@ -82,6 +85,11 @@ class TicketOpeningService
             $reservation?->forceFill([
                 'status' => Reservation::STATUS_COMPLETED,
             ])->save();
+
+            $this->audit->record('ticket.opened', $ticket, [
+                'restaurant_table_id' => $table->id,
+                'reservation_id' => $reservation?->id,
+            ]);
 
             return $ticket->load(['restaurantTable', 'reservation', 'items']);
         });
@@ -162,7 +170,14 @@ class TicketOpeningService
         return fn ($query) => $query
             ->where('status', Reservation::STATUS_CONFIRMED)
             ->where('reserved_at', '<=', $at)
-            ->whereRaw('DATE_ADD(reserved_at, INTERVAL duration_minutes MINUTE) > ?', [$at]);
+            ->whereRaw($this->reservationEndsAfterSql(), [$at]);
+    }
+
+    private function reservationEndsAfterSql(): string
+    {
+        return DB::connection()->getDriverName() === 'sqlite'
+            ? "datetime(reserved_at, '+' || duration_minutes || ' minutes') > ?"
+            : 'DATE_ADD(reserved_at, INTERVAL duration_minutes MINUTE) > ?';
     }
 
     private function brasilia(?CarbonInterface $at = null): CarbonInterface

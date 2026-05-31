@@ -24,8 +24,10 @@ Sistema de gestao digital de pedidos para restaurante/bar, com dashboard operaci
 - Abertura de comandas respeitando disponibilidade de mesas e reservas.
 - Adicao de itens em comandas abertas.
 - Alteracao de status da comanda.
+- Pagamento de comanda com desconto, acrescimo/servico e forma de pagamento.
 - Fila de atendimento/cozinha.
 - Controle de usuarios e roles.
+- Auditoria operacional de abertura, pagamento, alteracao de status e reservas.
 - Tema claro/escuro/sistema via configuracoes de aparencia.
 
 ## Regras de negocio importantes
@@ -60,6 +62,8 @@ Para abrir comanda de uma mesa reservada, o atendente deve selecionar a reserva 
 
 Ao cancelar uma reserva sem comanda aberta, a mesa volta para `disponivel`.
 
+Reservas podem ser editadas enquanto ainda nao possuem comanda vinculada. A remarcacao valida conflitos de horario e troca o status das mesas envolvidas dentro de transacao.
+
 ### Comandas
 
 As comandas usam a tabela `tickets`.
@@ -90,6 +94,7 @@ Roles principais:
 - `Administrador`
 - `Cozinha`
 - `Atendente`
+- `Garcom`
 
 Regras:
 
@@ -97,6 +102,7 @@ Regras:
 - Admin consegue alterar roles de usuarios, mas nao consegue atribuir admin para outro usuario pela tela.
 - Admin nao consegue alterar a propria role pela tela, evitando auto-bloqueio.
 - Cozinha e Admin acessam a fila de atendimento.
+- Garcom usa layout simplificado e mobile para criar reservas e abrir comandas.
 
 ## Instalacao
 
@@ -211,6 +217,7 @@ Tambem cria roles, itens iniciais de cardapio e mesas iniciais.
 | POST | `/ticket-list/store` | `ticket-list.store` | Criar comanda |
 | GET | `/ticket-list/{ticketList}` | `ticket-list.show` | Detalhes da comanda |
 | PATCH | `/ticket-list/{ticketList}/status` | `ticket-list.status.update` | Alterar status da comanda |
+| POST | `/ticket-list/{ticketList}/pay` | `ticket-list.pay` | Pagar comanda |
 | POST | `/ticket-list/{ticketList}/items` | `ticket-list.items.store` | Adicionar itens na comanda |
 | POST | `/ticket-list/{ticketList}/start-preparation` | `ticket-list.start-preparation` | Enviar para preparo |
 | POST | `/ticket-items/{ticketItem}/deliver` | `ticket-items.deliver` | Marcar item como entregue |
@@ -222,6 +229,8 @@ Tambem cria roles, itens iniciais de cardapio e mesas iniciais.
 | GET | `/reservations` | `reservations.index` | Listagem de reservas |
 | GET | `/reservations/create` | `reservations.create` | Nova reserva |
 | POST | `/reservations/store` | `reservations.store` | Criar reserva |
+| GET | `/reservations/{reservation}/edit` | `reservations.edit` | Editar reserva |
+| PATCH | `/reservations/{reservation}` | `reservations.update` | Atualizar reserva |
 | PATCH | `/reservations/{reservation}/cancel` | `reservations.cancel` | Cancelar reserva |
 
 ### Mesas
@@ -231,6 +240,8 @@ Tambem cria roles, itens iniciais de cardapio e mesas iniciais.
 | GET | `/restaurant-tables` | `restaurant-tables.index` | Listagem de mesas |
 | GET | `/restaurant-tables/create` | `restaurant-tables.create` | Nova mesa |
 | POST | `/restaurant-tables/store` | `restaurant-tables.store` | Criar mesa |
+| GET | `/restaurant-tables/{restaurantTable}/edit` | `restaurant-tables.edit` | Editar mesa |
+| PATCH | `/restaurant-tables/{restaurantTable}` | `restaurant-tables.update` | Atualizar mesa |
 
 ### Itens da comanda
 
@@ -239,6 +250,8 @@ Tambem cria roles, itens iniciais de cardapio e mesas iniciais.
 | GET | `/menu-items` | `menu-items.index` | Listagem de itens |
 | GET | `/menu-items/create` | `menu-items.create` | Novo item |
 | POST | `/menu-items/store` | `menu-items.store` | Criar item |
+| GET | `/menu-items/{menuItem}/edit` | `menu-items.edit` | Editar item |
+| PATCH | `/menu-items/{menuItem}` | `menu-items.update` | Atualizar item |
 
 ### Cozinha
 
@@ -275,9 +288,12 @@ app/
     MenuItem.php
     Role.php
     User.php
+    OperationalEvent.php
   Services/
     TicketOpeningService.php
     ReservationService.php
+    TicketPaymentService.php
+    OperationalAudit.php
 
 resources/views/
   dashboard.blade.php
@@ -311,8 +327,22 @@ Centraliza a regra de reserva:
 - Lista mesas aptas para reserva.
 - Cria reserva em transacao.
 - Valida conflito de reserva por horario.
+- Remarca reservas sem comanda vinculada.
 - Marca mesa como `reservada`.
 - Cancela reserva e libera mesa quando permitido.
+
+### `TicketPaymentService`
+
+Centraliza o pagamento da comanda:
+
+- Calcula valor pago com desconto e acrescimo/servico.
+- Marca a comanda como `paga`.
+- Registra forma de pagamento e horario de pagamento.
+- Libera a mesa quando nao houver outra comanda bloqueante.
+
+### `OperationalAudit`
+
+Registra eventos operacionais em `operational_events`, incluindo usuario, entidade afetada, evento e propriedades adicionais.
 
 ## Observacoes de ambiente
 
@@ -328,9 +358,18 @@ Alguns comandos Artisan tambem precisam de `mbstring`:
 extension=mbstring
 ```
 
+Os testes usam SQLite em memoria. Para roda-los localmente, habilite tambem:
+
+```ini
+extension=pdo_sqlite
+extension=sqlite3
+```
+
 Se aparecer `could not find driver`, o problema esta no PHP local sem `pdo_mysql`.
 
 Se aparecer erro com `mb_strimwidth`, habilite `mbstring`.
+
+Se os testes falharem com `Connection: sqlite` e `could not find driver`, habilite `pdo_sqlite`.
 
 ## Comandos uteis
 

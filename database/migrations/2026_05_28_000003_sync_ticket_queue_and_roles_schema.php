@@ -25,6 +25,8 @@ return new class extends Migration
             'cozinha' => ['name' => 'Cozinha', 'slug' => 'cozinha'],
             'attendant' => ['name' => 'Atendente', 'slug' => 'atendente'],
             'atendente' => ['name' => 'Atendente', 'slug' => 'atendente'],
+            'waiter' => ['name' => 'Garcom', 'slug' => 'garcom'],
+            'garcom' => ['name' => 'Garcom', 'slug' => 'garcom'],
         ]);
 
         foreach ($roles->unique('slug') as $role) {

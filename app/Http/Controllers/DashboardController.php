@@ -3,12 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\TicketList;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function __invoke(Request $request)
     {
+        if ($request->user()?->isWaiter()) {
+            return view('waiter.dashboard', [
+                'openTicketsCount' => TicketList::query()
+                    ->whereIn('status', ['aberta', 'em_andamento', 'fechada'])
+                    ->count(),
+                'reservationsCount' => Reservation::query()
+                    ->whereIn('status', ['pendente', 'confirmada'])
+                    ->count(),
+                'recentTickets' => TicketList::query()
+                    ->latest('opened_at')
+                    ->take(4)
+                    ->get(),
+            ]);
+        }
+
         $search = trim((string) $request->query('search'));
         $status = $request->query('status', 'todos');
         $statuses = ['aberta', 'em_andamento', 'fechada', 'paga', 'cancelada'];

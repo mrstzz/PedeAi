@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\RestaurantTable;
 use App\Services\ReservationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -61,6 +62,41 @@ class ReservationController extends Controller
         return redirect()
             ->route('reservations.index')
             ->with('status', 'Reserva cadastrada com sucesso.');
+    }
+
+    public function edit(Reservation $reservation)
+    {
+        return view('reservations.edit', [
+            'reservation' => $reservation->load('restaurantTable'),
+            'tables' => RestaurantTable::query()
+                ->where(function ($query) use ($reservation) {
+                    $query->where('status', RestaurantTable::STATUS_AVAILABLE)
+                        ->orWhereKey($reservation->restaurant_table_id);
+                })
+                ->orderBy('identifier')
+                ->get(),
+        ]);
+    }
+
+    public function update(Request $request, Reservation $reservation, ReservationService $reservationService)
+    {
+        $data = $request->validate([
+            'restaurant_table_id' => ['required', 'integer', Rule::exists('restaurant_tables', 'id')],
+            'customer_name' => ['required', 'string', 'max:255'],
+            'customer_phone' => ['nullable', 'string', 'max:30'],
+            'reserved_at' => ['required', 'date'],
+            'duration_minutes' => ['required', 'integer', 'min:30', 'max:480'],
+            'party_size' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'notes' => ['nullable', 'string'],
+        ]);
+
+        $data['reserved_at'] = Carbon::parse($data['reserved_at'], self::BRASILIA_TIMEZONE);
+
+        $reservationService->update($reservation, $data);
+
+        return redirect()
+            ->route('reservations.index')
+            ->with('status', 'Reserva atualizada com sucesso.');
     }
 
     public function cancel(Reservation $reservation, ReservationService $reservationService)

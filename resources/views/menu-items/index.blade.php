@@ -44,6 +44,7 @@
                                     <th>Descricao</th>
                                     <th>Valor</th>
                                     <th>Status</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,6 +57,9 @@
                                             <span class="badge {{ $item->active ? 'badge-success' : 'badge-ghost' }}">
                                                 {{ $item->active ? 'Ativo' : 'Inativo' }}
                                             </span>
+                                        </td>
+                                        <td class="text-right">
+                                            <a href="{{ route('menu-items.edit', $item) }}" class="btn btn-ghost btn-sm" wire:navigate>Editar</a>
                                         </td>
                                     </tr>
                                 @endforeach

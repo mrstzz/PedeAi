@@ -7,6 +7,8 @@ use App\Models\MenuItem;
 use App\Models\TicketItem;
 use App\Models\RestaurantTable;
 use App\Services\TicketOpeningService;
+use App\Services\TicketPaymentService;
+use App\Services\OperationalAudit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -95,7 +97,7 @@ class TicketListController extends Controller
     public function show(TicketList $ticketList)
     {
         return view('ticket-list.show', [
-            'ticket' => $ticketList->load(['items', 'restaurantTable', 'reservation']),
+            'ticket' => $ticketList->load(['items', 'restaurantTable', 'reservation', 'events.user']),
             'menuItems' => MenuItem::query()
                 ->where('active', true)
                 ->orderBy('name')
@@ -156,7 +158,7 @@ class TicketListController extends Controller
             ->with('status', 'Itens adicionados com sucesso.');
     }
 
-    public function updateStatus(Request $request, TicketList $ticketList)
+    public function updateStatus(Request $request, TicketList $ticketList, OperationalAudit $audit, TicketPaymentService $paymentService)
     {
         $data = $request->validate([
             'status' => ['required', Rule::in(['aberta', 'em_andamento', 'fechada', 'paga', 'cancelada'])],
@@ -168,31 +170,30 @@ class TicketListController extends Controller
         $isClosedStatus = in_array($data['status'], ['fechada', 'paga', 'cancelada'], true);
         $releasesTable = in_array($data['status'], ['paga', 'cancelada'], true);
 
-        DB::transaction(function () use ($ticketList, $data, $isClosedStatus, $releasesTable): void {
+        DB::transaction(function () use ($ticketList, $data, $isClosedStatus, $releasesTable, $audit, $paymentService): void {
+            $previousStatus = $ticketList->status;
+
             $ticketList->forceFill([
                 'status' => $data['status'],
                 'closed_at' => $isClosedStatus ? ($ticketList->closed_at ?? now()) : null,
             ])->save();
 
-            if ($ticketList->restaurant_table_id) {
-                $table = $ticketList->restaurantTable()
-                    ->lockForUpdate()
-                    ->first();
+            if ($releasesTable) {
+                $paymentService->releaseTable($ticketList);
+            } elseif ($ticketList->restaurant_table_id) {
+                $table = $ticketList->restaurantTable()->lockForUpdate()->first();
 
                 if ($table) {
-                    $hasOtherOpenTicket = $table->tickets()
-                        ->whereKeyNot($ticketList->id)
-                        ->whereIn('status', ['aberta', 'em_andamento', 'fechada'])
-                        ->exists();
-
                     $table->forceFill([
-                        'status' => ($releasesTable && ! $hasOtherOpenTicket)
-                            ? RestaurantTable::STATUS_AVAILABLE
-                            : RestaurantTable::STATUS_OCCUPIED,
-                    ])
-                        ->save();
+                        'status' => RestaurantTable::STATUS_OCCUPIED,
+                    ])->save();
                 }
             }
+
+            $audit->record('ticket.status_changed', $ticketList, [
+                'from' => $previousStatus,
+                'to' => $data['status'],
+            ]);
         });
 
         return back()->with('status', 'Status da comanda atualizado com sucesso.');
@@ -249,6 +250,22 @@ class TicketListController extends Controller
                 ];
             })
             ->values();
+    }
+
+    public function pay(Request $request, TicketList $ticketList, TicketPaymentService $paymentService)
+    {
+        $data = $request->validate([
+            'payment_method' => ['required', Rule::in(['dinheiro', 'pix', 'debito', 'credito', 'outro'])],
+            'discount_amount' => ['nullable', 'numeric', 'min:0'],
+            'service_amount' => ['nullable', 'numeric', 'min:0'],
+        ], [
+            'payment_method.required' => 'Selecione a forma de pagamento.',
+            'payment_method.in' => 'Selecione uma forma de pagamento valida.',
+        ]);
+
+        $paymentService->pay($ticketList, $data);
+
+        return back()->with('status', 'Comanda paga com sucesso.');
     }
 
     private function ticketRules(): array

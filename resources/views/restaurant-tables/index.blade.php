@@ -57,6 +57,7 @@
                                     <th>Status</th>
                                     <th>Comandas abertas</th>
                                     <th>Reservas confirmadas</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,6 +72,9 @@
                                         </td>
                                         <td>{{ $table->open_tickets_count }}</td>
                                         <td>{{ $table->active_reservations_count }}</td>
+                                        <td class="text-right">
+                                            <a href="{{ route('restaurant-tables.edit', $table) }}" class="btn btn-ghost btn-sm" wire:navigate>Editar</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

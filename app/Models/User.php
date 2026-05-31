@@ -50,6 +50,11 @@ class User extends Authenticatable implements PasskeyUser
         return $this->hasRole('administrador', 'admin', 'cozinha');
     }
 
+    public function isWaiter(): bool
+    {
+        return $this->hasRole('garcom');
+    }
+
     public function hasRole(string ...$roles): bool
     {
         $slug = $this->role?->slug;

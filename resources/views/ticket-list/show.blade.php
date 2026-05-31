@@ -62,7 +62,27 @@
 
             <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_24rem]">
                 <x-card title="Itens da comanda" bodyClass="p-0">
-                    <div class="overflow-x-auto">
+                    <div class="grid gap-3 p-4 md:hidden">
+                        @foreach ($ticket->items as $item)
+                            <div class="rounded-lg border border-base-300 bg-base-100 p-3">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="min-w-0">
+                                        <p class="font-semibold text-neutral">{{ $item->product_name }}</p>
+                                        <p class="text-sm text-base-content/60">Qtd. {{ $item->quantity }}</p>
+                                    </div>
+                                    <span class="badge shrink-0 {{ $itemBadges[$item->status] ?? 'badge-neutral' }}">
+                                        {{ $itemLabels[$item->status] ?? $item->status }}
+                                    </span>
+                                </div>
+                                @if ($item->notes)
+                                    <p class="mt-2 text-xs text-base-content/60">{{ $item->notes }}</p>
+                                @endif
+                                <p class="mt-2 text-right font-semibold">{{ $money($item->subtotal) }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="hidden overflow-x-auto md:block">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -99,6 +119,47 @@
                 </x-card>
 
                 <div class="flex flex-col gap-6">
+                    <x-card title="Pagamento">
+                        @if ($ticket->status === 'paga')
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between"><span>Forma</span><strong>{{ ucfirst($ticket->payment_method ?? '-') }}</strong></div>
+                                <div class="flex justify-between"><span>Desconto</span><strong>{{ $money($ticket->discount_amount) }}</strong></div>
+                                <div class="flex justify-between"><span>Servico</span><strong>{{ $money($ticket->service_amount) }}</strong></div>
+                                <div class="flex justify-between text-base"><span>Total pago</span><strong>{{ $money($ticket->paid_amount) }}</strong></div>
+                            </div>
+                        @elseif ($ticket->status === 'cancelada')
+                            <div class="alert alert-warning">Comanda cancelada.</div>
+                        @else
+                            <x-form :action="route('ticket-list.pay', $ticket)" post>
+                                <label class="form-control">
+                                    <x-input-label value="Forma de pagamento" />
+                                    <select name="payment_method" class="select select-bordered w-full bg-base-100">
+                                        <option value="">Selecione</option>
+                                        <option value="dinheiro">Dinheiro</option>
+                                        <option value="pix">Pix</option>
+                                        <option value="debito">Debito</option>
+                                        <option value="credito">Credito</option>
+                                        <option value="outro">Outro</option>
+                                    </select>
+                                </label>
+
+                                <div class="grid gap-3 sm:grid-cols-2">
+                                    <label class="form-control">
+                                        <x-input-label value="Desconto" />
+                                        <x-text-input name="discount_amount" type="number" min="0" step="0.01" value="0" />
+                                    </label>
+
+                                    <label class="form-control">
+                                        <x-input-label value="Servico/acrescimo" />
+                                        <x-text-input name="service_amount" type="number" min="0" step="0.01" value="0" />
+                                    </label>
+                                </div>
+
+                                <x-primary-button type="submit">Marcar como paga</x-primary-button>
+                            </x-form>
+                        @endif
+                    </x-card>
+
                     <x-card title="Status da comanda">
                         <x-form :action="route('ticket-list.status.update', $ticket)" post>
                             @method('PATCH')
@@ -153,6 +214,24 @@
 
                             <x-primary-button type="submit" :disabled="$menuItems->isEmpty()">Adicionar</x-primary-button>
                         </x-form>
+                        @endif
+                    </x-card>
+
+                    <x-card title="Historico">
+                        @if ($ticket->events->isEmpty())
+                            <p class="text-sm text-base-content/60">Nenhum evento registrado.</p>
+                        @else
+                            <div class="space-y-3">
+                                @foreach ($ticket->events as $event)
+                                    <div class="rounded-lg border border-base-300 bg-base-100 p-3 text-sm">
+                                        <div class="flex justify-between gap-3">
+                                            <strong>{{ $event->event }}</strong>
+                                            <span class="text-xs text-base-content/55">{{ $event->created_at->format('d/m H:i') }}</span>
+                                        </div>
+                                        <p class="mt-1 text-xs text-base-content/60">{{ $event->user?->name ?? 'Sistema' }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
                         @endif
                     </x-card>
                 </div>

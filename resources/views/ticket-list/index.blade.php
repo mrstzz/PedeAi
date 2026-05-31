@@ -43,7 +43,27 @@
                         <x-link-button href="{{ route('ticket-list.create') }}">Cadastrar comanda</x-link-button>
                     </div>
                 @else
-                    <div class="overflow-x-auto">
+                    <div class="grid gap-3 p-4 md:hidden">
+                        @foreach ($tickets as $ticket)
+                            <a href="{{ route('ticket-list.show', $ticket) }}" class="rounded-lg border border-base-300 bg-base-100 p-4 shadow-sm" wire:navigate>
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="min-w-0">
+                                        <p class="font-semibold text-neutral">Comanda #{{ $ticket->id }}</p>
+                                        <p class="truncate text-sm text-base-content/60">{{ $ticket->display_name }}{{ $ticket->table_number ? ' - Mesa '.$ticket->table_number : '' }}</p>
+                                    </div>
+                                    <span class="badge shrink-0 {{ $statusBadges[$ticket->status] ?? 'badge-neutral' }}">
+                                        {{ $statusLabels[$ticket->status] ?? $ticket->status }}
+                                    </span>
+                                </div>
+                                <div class="mt-3 grid grid-cols-2 gap-2 text-sm">
+                                    <div><span class="text-base-content/55">Itens</span><br><strong>{{ $ticket->items_count }}</strong></div>
+                                    <div class="text-right"><span class="text-base-content/55">Total</span><br><strong>{{ $money($ticket->total_amount) }}</strong></div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+
+                    <div class="hidden overflow-x-auto md:block">
                         <table class="table">
                             <thead>
                                 <tr>

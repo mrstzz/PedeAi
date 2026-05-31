@@ -54,7 +54,34 @@
                         <x-link-button href="{{ route('reservations.create') }}">Cadastrar reserva</x-link-button>
                     </div>
                 @else
-                    <div class="overflow-x-auto">
+                    <div class="grid gap-3 p-4 md:hidden">
+                        @foreach ($reservations as $reservation)
+                            <div class="rounded-lg border border-base-300 bg-base-100 p-4 shadow-sm">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="min-w-0">
+                                        <p class="font-semibold text-neutral">{{ $reservation->customer_name }}</p>
+                                        <p class="text-sm text-base-content/60">Mesa {{ $reservation->restaurantTable?->identifier ?? '-' }}</p>
+                                    </div>
+                                    <span class="badge shrink-0 {{ $statusBadges[$reservation->status] ?? 'badge-neutral' }}">
+                                        {{ $statusLabels[$reservation->status] ?? $reservation->status }}
+                                    </span>
+                                </div>
+                                <p class="mt-3 text-sm">{{ $reservation->reserved_at->timezone('America/Sao_Paulo')->format('d/m/Y H:i') }} - {{ $reservation->duration_minutes }} min</p>
+                                @if (in_array($reservation->status, ['pendente', 'confirmada'], true))
+                                    <div class="mt-4 grid grid-cols-2 gap-2">
+                                        <a href="{{ route('reservations.edit', $reservation) }}" class="btn btn-ghost btn-sm" wire:navigate>Editar</a>
+                                        <form method="POST" action="{{ route('reservations.cancel', $reservation) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="btn btn-error btn-soft btn-sm w-full">Cancelar</button>
+                                        </form>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="hidden overflow-x-auto md:block">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -94,13 +121,16 @@
                                         </td>
                                         <td class="text-right">
                                             @if (in_array($reservation->status, ['pendente', 'confirmada'], true))
-                                                <form method="POST" action="{{ route('reservations.cancel', $reservation) }}">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit" class="btn btn-error btn-soft btn-sm">
-                                                        Cancelar
-                                                    </button>
-                                                </form>
+                                                <div class="flex justify-end gap-2">
+                                                    <a href="{{ route('reservations.edit', $reservation) }}" class="btn btn-ghost btn-sm" wire:navigate>Editar</a>
+                                                    <form method="POST" action="{{ route('reservations.cancel', $reservation) }}">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <button type="submit" class="btn btn-error btn-soft btn-sm">
+                                                            Cancelar
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             @endif
                                         </td>
                                     </tr>

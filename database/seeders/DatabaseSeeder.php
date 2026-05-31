@@ -18,12 +18,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory(10)->create();
 
         $roles = collect([
             ['name' => 'Administrador', 'slug' => 'administrador'],
             ['name' => 'Cozinha', 'slug' => 'cozinha'],
             ['name' => 'Atendente', 'slug' => 'atendente'],
+            ['name' => 'Garcom', 'slug' => 'garcom'],
         ])->mapWithKeys(fn (array $role) => [
             $role['slug'] => Role::query()->updateOrCreate(
                 ['slug' => $role['slug']],

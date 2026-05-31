@@ -58,6 +58,33 @@ class RestaurantTableController extends Controller
             ->with('status', 'Mesa cadastrada com sucesso.');
     }
 
+    public function edit(RestaurantTable $restaurantTable)
+    {
+        $this->authorizeAdmin();
+
+        return view('restaurant-tables.edit', [
+            'table' => $restaurantTable,
+            'statuses' => $this->statuses(),
+        ]);
+    }
+
+    public function update(Request $request, RestaurantTable $restaurantTable)
+    {
+        $this->authorizeAdmin();
+
+        $data = $request->validate([
+            'identifier' => ['required', 'string', 'max:50', Rule::unique('restaurant_tables', 'identifier')->ignore($restaurantTable)],
+            'capacity' => ['required', 'integer', 'min:1', 'max:100'],
+            'status' => ['required', Rule::in(array_keys($this->statuses()))],
+        ]);
+
+        $restaurantTable->update($data);
+
+        return redirect()
+            ->route('restaurant-tables.index')
+            ->with('status', 'Mesa atualizada com sucesso.');
+    }
+
     private function authorizeAdmin(): void
     {
         abort_unless(auth()->user()?->isAdmin(), 403);
