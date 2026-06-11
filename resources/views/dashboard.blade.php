@@ -30,7 +30,7 @@
             <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <div class="badge badge-secondary badge-outline mb-3">Central de comandas</div>
-                    <h1 class="text-2xl font-bold tracking-normal text-base-content/70 sm:text-3xl">Dashboard de Comandasgit</h1>
+                    <h1 class="text-2xl font-bold tracking-normal text-base-content/70 sm:text-3xl">Dashboard de Comandas</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
                         Acompanhe comandas abertas, pagamentos e movimentacoes cadastradas no sistema.
                     </p>
