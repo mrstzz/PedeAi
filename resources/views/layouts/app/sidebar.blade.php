@@ -3,7 +3,7 @@
     <head>
         @include('partials.head')
     </head>
-    <body data-theme="pedeai" class="min-h-screen bg-base-200 text-base-content">
+    <body data-theme="pedeai" class="app-texture-bg min-h-screen text-base-content">
         <flux:sidebar sticky collapsible="mobile" class="border-e border-base-300 bg-neutral text-neutral-content">
             <flux:sidebar.header class="border-b border-neutral-content/10 pb-4">
                 <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />

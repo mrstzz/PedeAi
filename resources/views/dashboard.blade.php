@@ -25,12 +25,12 @@
 @endphp
 
 <x-layouts::app :title="__('Dashboard')">
-    <div class="min-h-full bg-base-200 text-base-content">
+    <div class="min-h-full text-base-content">
         <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
             <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
                     <div class="badge badge-secondary badge-outline mb-3">Central de comandas</div>
-                    <h1 class="text-2xl font-bold tracking-normal text-base-content/70 sm:text-3xl">Dashboard de tickets</h1>
+                    <h1 class="text-2xl font-bold tracking-normal text-base-content/70 sm:text-3xl">Dashboard de Comandasgit</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
                         Acompanhe comandas abertas, pagamentos e movimentacoes cadastradas no sistema.
                     </p>

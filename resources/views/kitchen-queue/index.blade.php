@@ -12,7 +12,7 @@
 @endphp
 
 <x-layouts::app :title="__('Fila de atendimento')">
-    <div class="min-h-full bg-base-200 text-base-content">
+    <div class="min-h-full text-base-content">
         <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
             <section>
                 <div class="badge badge-secondary badge-outline mb-3">Cozinha</div>

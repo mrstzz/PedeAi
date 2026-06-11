@@ -3,7 +3,7 @@
     <head>
         @include('partials.head')
     </head>
-    <body data-theme="pedeai" class="min-h-screen bg-base-200 text-base-content">
+    <body data-theme="pedeai" class="app-texture-bg min-h-screen text-base-content">
         <flux:header container class="border-b border-base-300 bg-base-100">
             <flux:sidebar.toggle class="lg:hidden mr-2" icon="bars-2" inset="left" />
 

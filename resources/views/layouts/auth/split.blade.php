@@ -3,7 +3,7 @@
     <head>
         @include('partials.head')
     </head>
-    <body data-theme="pedeai" class="min-h-screen bg-base-200 text-base-content antialiased">
+    <body data-theme="pedeai" class="app-texture-bg min-h-screen text-base-content antialiased">
         <div class="relative grid h-dvh flex-col items-center justify-center px-8 sm:px-0 lg:max-w-none lg:grid-cols-2 lg:px-0">
             <div class="relative hidden h-full flex-col bg-primary p-10 text-primary-content lg:flex dark:bg-neutral dark:text-neutral-content">
                 <div class="absolute inset-0 bg-primary dark:bg-neutral"></div>
