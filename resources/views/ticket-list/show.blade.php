@@ -280,9 +280,9 @@
                         @else
                             <x-form :action="route('ticket-list.items.store', $ticket)" post>
                                 @for ($index = 0; $index < 4; $index++)
-                                    <div class="rounded-lg border border-base-300/80 bg-base-200/70 p-4">
+                                    <div class="rounded-lg border border-base-300/80 bg-base-200/70 p-3 sm:p-4">
                                         <div class="grid gap-3">
-                                            <label class="form-control">
+                                            <label class="grid gap-2">
                                                 <x-input-label value="Item" />
                                                 <select name="items[{{ $index }}][menu_item_id]" class="select select-bordered min-h-11 w-full bg-base-100" @disabled($menuItems->isEmpty())>
                                                     <option value="">Selecione</option>
@@ -294,14 +294,28 @@
                                                 </select>
                                             </label>
 
-                                            <label class="form-control">
+                                            <label class="grid gap-2">
                                                 <x-input-label value="Quantidade" />
-                                                <x-text-input name="items[{{ $index }}][quantity]" type="number" inputmode="numeric" min="1" step="1" value="{{ old("items.$index.quantity") }}" placeholder="1" class="min-h-11" />
+                                                <input
+                                                    name="items[{{ $index }}][quantity]"
+                                                    type="number"
+                                                    inputmode="numeric"
+                                                    min="1"
+                                                    step="1"
+                                                    value="{{ old("items.$index.quantity", 1) }}"
+                                                    placeholder="1"
+                                                    class="block min-h-11 w-full rounded-lg border border-base-300 bg-base-100 px-3 py-2 text-base text-base-content shadow-sm"
+                                                >
                                             </label>
 
-                                            <label class="form-control">
+                                            <label class="grid gap-2">
                                                 <x-input-label value="Observações" />
-                                                <x-text-input name="items[{{ $index }}][notes]" value="{{ old("items.$index.notes") }}" class="min-h-11" />
+                                                <input
+                                                    name="items[{{ $index }}][notes]"
+                                                    value="{{ old("items.$index.notes") }}"
+                                                    placeholder="Ponto, adicionais, retirada..."
+                                                    class="block min-h-11 w-full rounded-lg border border-base-300 bg-base-100 px-3 py-2 text-base text-base-content shadow-sm"
+                                                >
                                             </label>
                                         </div>
                                     </div>

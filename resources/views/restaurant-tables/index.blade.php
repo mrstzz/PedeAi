@@ -32,7 +32,7 @@
     $tableItems = collect($tables->items());
     $tableMetrics = [
         [
-            'label' => 'Mesas nesta pagina',
+            'label' => 'Mesas nesta página',
             'value' => $tableItems->count(),
             'description' => 'Cadastro operacional',
             'icon' => 'table-cells',
@@ -113,7 +113,7 @@
                 <div class="flex flex-col gap-3 border-b border-base-300/80 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                     <div>
                         <h2 class="text-lg font-semibold text-neutral">Mapa de mesas</h2>
-                        <p class="text-sm text-base-content/55">Status, capacidade e vinculos ativos por mesa.</p>
+                        <p class="text-sm text-base-content/55">Status, capacidade e vínculos ativos por mesa.</p>
                     </div>
 
                     <div class="inline-flex items-center gap-2 rounded-md border border-base-300 bg-base-200/70 px-3 py-2 text-sm text-base-content/65">
@@ -176,7 +176,7 @@
                                     <th class="px-5 py-4">Status</th>
                                     <th class="px-5 py-4">Comandas abertas</th>
                                     <th class="px-5 py-4">Reservas confirmadas</th>
-                                    <th class="px-5 py-4 text-right">Acoes</th>
+                                    <th class="px-5 py-4 text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-base-300/70">

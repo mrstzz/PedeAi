@@ -136,7 +136,7 @@
                         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                             <div>
                                 <h2 class="text-lg font-semibold text-neutral">Fila de comandas</h2>
-                                <p class="text-sm text-base-content/55">Tickets cadastrados, filtrados por status e busca.</p>
+                                <p class="text-sm text-base-content/55">Comandas cadastradas, filtradas por status e busca.</p>
                             </div>
 
                             <div class="inline-flex items-center gap-2 rounded-md border border-base-300 bg-base-200/70 px-3 py-2 text-sm text-base-content/65">

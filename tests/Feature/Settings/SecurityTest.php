@@ -28,7 +28,7 @@ test('security settings page can be rendered', function () {
 
     $response->assertSee('Chaves de acesso');
     $response->assertSee('Nenhuma chave cadastrada');
-    $response->assertSee('Autenticacao em dois fatores');
+    $response->assertSee('Autenticação em dois fatores');
     $response->assertSee('Ativar 2FA');
 });
 
@@ -53,7 +53,7 @@ test('security settings page renders without two factor when feature is disabled
         ->assertSee('Atualizar senha')
         ->assertDontSee('Gerencie suas chaves de acesso para entrar sem senha')
         ->assertDontSee('Adicione uma chave de acesso para entrar sem senha')
-        ->assertDontSee('Autenticacao em dois fatores');
+        ->assertDontSee('Autenticação em dois fatores');
 });
 
 test('two factor authentication disabled when confirmation abandoned between requests', function () {

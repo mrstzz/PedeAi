@@ -13,7 +13,7 @@
             <div class="px-3 py-3">
                 <div class="rounded-lg border border-neutral-content/10 bg-neutral-content/10 p-3 shadow-inner">
                     <p class="text-xs font-semibold uppercase text-neutral-content/60">Operação</p>
-                    <p class="mt-1 text-sm font-semibold text-neutral-content">Comandas e tickets</p>
+                    <p class="mt-1 text-sm font-semibold text-neutral-content">Comandas e atendimento</p>
                     <div class="mt-3 h-1.5 overflow-hidden rounded-full bg-neutral-content/10">
                         <div class="h-full w-2/3 rounded-full bg-secondary"></div>
                     </div>

@@ -30,8 +30,8 @@
 
 <x-layouts::app :title="__('Nova comanda')">
     <div class="min-h-full text-base-content">
-        <div class="mx-auto flex w-full max-w-[100rem] flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 2xl:px-10">
-            <section class="rounded-lg border border-base-300/80 bg-base-100/90 p-5 shadow-sm backdrop-blur sm:p-6">
+        <div class="mx-auto flex w-full max-w-[100rem] flex-col gap-4 px-0 py-0 sm:gap-6 sm:px-6 sm:py-6 lg:px-8 2xl:px-10">
+            <section class="hidden rounded-lg border border-base-300/80 bg-base-100/90 p-5 shadow-sm backdrop-blur sm:block sm:p-6">
                 <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                     <div class="min-w-0">
                         <div class="mb-3 inline-flex items-center gap-2 rounded-md border border-secondary/25 bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-secondary">
@@ -51,7 +51,7 @@
                 </div>
             </section>
 
-            <section class="grid gap-4 md:grid-cols-3">
+            <section class="hidden gap-4 md:grid md:grid-cols-3">
                 @foreach ($setupMetrics as $metric)
                     <article class="rounded-lg border border-base-300/80 bg-base-100 p-5 shadow-sm">
                         <div class="flex items-start justify-between gap-4">
@@ -102,10 +102,10 @@
                 </div>
             @endif
 
-            <x-form :action="route('ticket-list.store')" post class="gap-6">
+            <x-form :action="route('ticket-list.store')" post class="gap-4 sm:gap-6">
                 <section class="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
                     <div class="flex flex-col gap-6">
-                        <x-card>
+                        <x-card class="rounded-none border-x-0 border-t-0 shadow-none sm:rounded-lg sm:border-x sm:border-t sm:shadow-sm" bodyClass="p-4 sm:p-6">
                             <div class="flex items-center justify-between gap-3">
                                 <div>
                                     <h2 class="text-lg font-semibold text-neutral">Dados do atendimento</h2>
@@ -170,7 +170,7 @@
                             </label>
                         </x-card>
 
-                        <x-card>
+                        <x-card class="rounded-none border-x-0 shadow-none sm:rounded-lg sm:border-x sm:shadow-sm" bodyClass="p-4 sm:p-6">
                             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                 <div>
                                     <h2 class="text-lg font-semibold text-neutral">Itens da comanda</h2>
@@ -190,7 +190,7 @@
 
                             <div class="grid gap-4" data-ticket-items>
                                 @foreach ($itemRows as $index => $itemRow)
-                                    <div class="rounded-lg border border-base-300/80 bg-base-200/70 p-4 shadow-sm" data-ticket-item-row>
+                                    <div class="rounded-lg border border-base-300/80 bg-base-200/70 p-3 shadow-sm sm:p-4" data-ticket-item-row>
                                         <div class="mb-4 flex items-center justify-between gap-3">
                                             <span class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20" data-ticket-item-label>
                                                 Item {{ $index + 1 }}
@@ -206,7 +206,7 @@
                                             </button>
                                         </div>
 
-                                        <div class="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_9rem]">
+                                        <div class="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_9rem]">
                                             <label class="form-control min-w-0">
                                                 <x-input-label value="Item do cardápio" />
                                                 <select name="items[{{ $index }}][menu_item_id]" class="select select-bordered min-h-11 w-full bg-base-100" @disabled($menuItems->isEmpty())>
@@ -219,7 +219,7 @@
                                                 </select>
                                             </label>
 
-                                            <label class="form-control w-full min-w-28">
+                                            <label class="form-control w-full min-w-0">
                                                 <x-input-label value="Qtd." />
                                                 <input
                                                     name="items[{{ $index }}][quantity]"
@@ -234,13 +234,13 @@
                                             </label>
                                         </div>
 
-                                        <label class="form-control mt-4">
+                                        <label class="form-control mt-3 min-w-0">
                                             <x-input-label value="Observações do item" />
-                                            <x-text-input
+                                            <input
                                                 name="items[{{ $index }}][notes]"
                                                 value="{{ old('items.' . $index . '.notes', $itemRow['notes'] ?? '') }}"
                                                 placeholder="Ponto da carne, adicionais, retirada..."
-                                                class="min-h-11"
+                                                class="input input-bordered min-h-11 w-full bg-base-100"
                                             />
                                         </label>
                                     </div>
@@ -249,7 +249,7 @@
                         </x-card>
                     </div>
 
-                    <aside class="flex flex-col gap-4">
+                    <aside class="hidden flex-col gap-4 xl:flex">
                         <x-card>
                             <div class="flex items-center justify-between gap-3">
                                 <div>
@@ -287,7 +287,7 @@
                     </aside>
                 </section>
 
-                <div class="flex flex-col-reverse gap-3 rounded-lg border border-base-300/80 bg-base-100 p-4 shadow-sm sm:flex-row sm:justify-end">
+                <div class="flex flex-col-reverse gap-3 border border-x-0 border-base-300/80 bg-base-100 p-4 shadow-sm sm:flex-row sm:justify-end sm:rounded-lg sm:border-x">
                     <x-secondary-button type="reset" class="min-h-11 gap-2">
                         <flux:icon.arrow-path class="size-4" />
                         Limpar
@@ -302,7 +302,7 @@
     </div>
 
     <template id="ticket-item-template">
-        <div class="rounded-lg border border-base-300/80 bg-base-200/70 p-4 shadow-sm" data-ticket-item-row>
+        <div class="rounded-lg border border-base-300/80 bg-base-200/70 p-3 shadow-sm sm:p-4" data-ticket-item-row>
             <div class="mb-4 flex items-center justify-between gap-3">
                 <span class="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20" data-ticket-item-label>Item __NUMBER__</span>
 
@@ -311,7 +311,7 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_9rem]">
+            <div class="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_9rem]">
                 <label class="form-control min-w-0">
                     <x-input-label value="Item do cardápio" />
                     <select name="items[__INDEX__][menu_item_id]" class="select select-bordered min-h-11 w-full bg-base-100" @disabled($menuItems->isEmpty())>
@@ -324,7 +324,7 @@
                     </select>
                 </label>
 
-                <label class="form-control w-full min-w-28">
+                <label class="form-control w-full min-w-0">
                     <x-input-label value="Qtd." />
                     <input
                         name="items[__INDEX__][quantity]"
@@ -339,12 +339,12 @@
                 </label>
             </div>
 
-            <label class="form-control mt-4">
+            <label class="form-control mt-3 min-w-0">
                 <x-input-label value="Observações do item" />
-                <x-text-input
+                <input
                     name="items[__INDEX__][notes]"
                     placeholder="Ponto da carne, adicionais, retirada..."
-                    class="min-h-11"
+                    class="input input-bordered min-h-11 w-full bg-base-100"
                 />
             </label>
         </div>

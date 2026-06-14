@@ -33,7 +33,7 @@
     $activeReservations = $reservationItems->whereIn('status', ['pendente', 'confirmada'])->count();
     $reservationMetrics = [
         [
-            'label' => 'Reservas nesta pagina',
+            'label' => 'Reservas nesta página',
             'value' => $reservationItems->count(),
             'description' => 'Registros recentes',
             'icon' => 'calendar-days',
@@ -56,7 +56,7 @@
         [
             'label' => 'Com comanda',
             'value' => $reservationItems->filter(fn ($reservation) => filled($reservation->ticket))->count(),
-            'description' => 'Vinculadas a tickets',
+            'description' => 'Vinculadas a comandas',
             'icon' => 'ticket',
             'accent' => 'text-secondary bg-secondary/10 ring-secondary/15',
         ],
@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
                                     <div class="rounded-md bg-base-200/70 p-3">
-                                        <span class="text-xs text-base-content/50">Horario</span>
+                                        <span class="text-xs text-base-content/50">Horário</span>
                                         <strong class="mt-1 block text-neutral">{{ $reservation->reserved_at->timezone('America/Sao_Paulo')->format('d/m H:i') }}</strong>
                                     </div>
                                     <div class="rounded-md bg-base-200/70 p-3">
@@ -198,7 +198,7 @@
                                     <th class="px-5 py-4">Data e hora</th>
                                     <th class="px-5 py-4">Status</th>
                                     <th class="px-5 py-4">Comanda</th>
-                                    <th class="px-5 py-4 text-right">Acoes</th>
+                                    <th class="px-5 py-4 text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-base-300/70">

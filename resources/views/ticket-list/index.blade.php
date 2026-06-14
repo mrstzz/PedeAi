@@ -43,7 +43,7 @@
     $activeCount = $ticketItems->whereIn('status', ['aberta', 'em_andamento', 'fechada'])->count();
     $ticketMetrics = [
         [
-            'label' => 'Comandas nesta pagina',
+            'label' => 'Comandas nesta página',
             'value' => $ticketItems->count(),
             'description' => 'Registros recentes',
             'icon' => 'ticket',
@@ -66,7 +66,7 @@
         [
             'label' => 'Total listado',
             'value' => $money($ticketItems->sum('total_amount')),
-            'description' => 'Soma das comandas visiveis',
+            'description' => 'Soma das comandas visíveis',
             'icon' => 'banknotes',
             'accent' => 'text-secondary bg-secondary/10 ring-secondary/15',
         ],
@@ -75,13 +75,13 @@
 
 <x-layouts::app :title="__('Comandas')">
     <div class="min-h-full text-base-content">
-        <div class="mx-auto flex w-full max-w-[100rem] flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 2xl:px-10">
-            <section class="rounded-lg border border-base-300/80 bg-base-100/90 p-5 shadow-sm backdrop-blur sm:p-6">
+        <div class="mx-auto flex w-full max-w-[100rem] flex-col gap-4 px-0 py-0 sm:gap-6 sm:px-6 sm:py-6 lg:px-8 2xl:px-10">
+            <section class="hidden rounded-lg border border-base-300/80 bg-base-100/90 p-5 shadow-sm backdrop-blur sm:block sm:p-6">
                 <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                     <div class="min-w-0">
                         <div class="mb-3 inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-primary">
                             <span class="size-1.5 rounded-full bg-primary"></span>
-                            Tickets
+                            Comandas
                         </div>
                         <h1 class="text-3xl font-bold tracking-normal text-neutral sm:text-4xl">Comandas</h1>
                         <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/65">
@@ -96,7 +96,7 @@
                 </div>
             </section>
 
-            <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <section class="hidden gap-4 sm:grid sm:grid-cols-2 xl:grid-cols-4">
                 @foreach ($ticketMetrics as $metric)
                     <article class="rounded-lg border border-base-300/80 bg-base-100 p-5 shadow-sm">
                         <div class="flex items-start justify-between gap-4">
@@ -113,14 +113,14 @@
                 @endforeach
             </section>
 
-            <x-card bodyClass="p-0">
-                <div class="flex flex-col gap-3 border-b border-base-300/80 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <x-card class="rounded-none border-x-0 border-t-0 shadow-none sm:rounded-lg sm:border-x sm:border-t sm:shadow-sm" bodyClass="p-0">
+                <div class="flex flex-row items-center justify-between gap-3 border-b border-base-300/80 px-4 py-3 sm:p-6">
                     <div>
-                        <h2 class="text-lg font-semibold text-neutral">Lista de comandas</h2>
-                        <p class="text-sm text-base-content/55">Comandas mais recentes, prioridades e valores.</p>
+                        <h1 class="text-xl font-bold text-neutral sm:text-lg sm:font-semibold">Comandas</h1>
+                        <p class="text-xs text-base-content/60 sm:text-sm">Prioridades e valores.</p>
                     </div>
 
-                    <div class="inline-flex items-center gap-2 rounded-md border border-base-300 bg-base-200/70 px-3 py-2 text-sm text-base-content/65">
+                    <div class="inline-flex shrink-0 items-center gap-2 rounded-md border border-base-300 bg-base-200/70 px-3 py-2 text-sm text-base-content/65">
                         <flux:icon.ticket class="size-4 text-primary" />
                         {{ $ticketItems->count() }} registro{{ $ticketItems->count() === 1 ? '' : 's' }}
                     </div>
@@ -141,9 +141,9 @@
                         </x-link-button>
                     </div>
                 @else
-                    <div class="grid gap-3 p-4 md:hidden">
+                    <div class="grid gap-3 px-3 py-4 sm:grid-cols-2 sm:p-4 xl:hidden">
                         @foreach ($tickets as $ticket)
-                            <a href="{{ route('ticket-list.show', $ticket) }}" class="rounded-lg border border-base-300/80 bg-base-100 p-4 shadow-sm" wire:navigate>
+                            <a href="{{ route('ticket-list.show', $ticket) }}" class="rounded-lg border border-base-300/80 bg-base-100 p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-md focus-visible:outline-secondary sm:p-4" wire:navigate>
                                 <div class="flex items-start justify-between gap-3">
                                     <div class="min-w-0">
                                         <p class="text-xs font-semibold uppercase tracking-normal text-base-content/45">Comanda</p>
@@ -157,6 +157,15 @@
                                         {{ $statusLabels[$ticket->status] ?? $ticket->status }}
                                     </span>
                                 </div>
+                                <div class="mt-3 flex flex-wrap gap-2">
+                                    <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 {{ $priorityMeta[$ticket->priority] ?? $priorityMeta['normal'] }}">
+                                        <span class="size-1.5 rounded-full {{ $ticket->priority === 'alta' ? 'bg-error' : 'bg-base-content/35' }}"></span>
+                                        {{ $ticket->priority === 'alta' ? 'Alta' : 'Normal' }}
+                                    </span>
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-base-200 px-3 py-1 text-xs font-semibold text-base-content/70 ring-1 ring-base-300">
+                                        {{ optional($ticket->opened_at)->format('d/m H:i') ?? 'Sem abertura' }}
+                                    </span>
+                                </div>
                                 <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
                                     <div class="rounded-md bg-base-200/70 p-3">
                                         <span class="text-xs text-base-content/50">Itens</span>
@@ -167,11 +176,15 @@
                                         <strong class="mt-1 block text-base text-neutral">{{ $money($ticket->total_amount) }}</strong>
                                     </div>
                                 </div>
+                                <div class="mt-4 flex items-center justify-between border-t border-base-300/70 pt-3 text-sm font-semibold text-primary">
+                                    <span>Ver detalhes</span>
+                                    <flux:icon.chevron-right class="size-4" />
+                                </div>
                             </a>
                         @endforeach
                     </div>
 
-                    <div class="hidden overflow-x-auto md:block">
+                    <div class="hidden overflow-x-auto xl:block">
                         <table class="min-w-full text-sm">
                             <thead class="bg-base-200/70 text-left text-xs font-semibold uppercase tracking-normal text-base-content/55">
                                 <tr>
@@ -183,7 +196,7 @@
                                     <th class="px-5 py-4">Itens</th>
                                     <th class="px-5 py-4">Total</th>
                                     <th class="px-5 py-4">Abertura</th>
-                                    <th class="px-5 py-4 text-right">Acoes</th>
+                                    <th class="px-5 py-4 text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-base-300/70">

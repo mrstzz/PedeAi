@@ -1,4 +1,4 @@
-<x-layouts::auth :title="__('Autenticacao em dois fatores')">
+<x-layouts::auth :title="__('Autenticação em dois fatores')">
     <div class="flex flex-col gap-6">
         <div
             class="relative w-full h-auto"

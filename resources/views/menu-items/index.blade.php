@@ -3,7 +3,7 @@
     $items = collect($menuItems->items());
     $menuMetrics = [
         [
-            'label' => 'Itens nesta pagina',
+            'label' => 'Itens nesta página',
             'value' => $items->count(),
             'description' => 'Produtos cadastrados',
             'icon' => 'book-open',
@@ -26,7 +26,7 @@
         [
             'label' => 'Valor médio',
             'value' => $items->count() ? $money($items->avg('price')) : $money(0),
-            'description' => 'Media da pagina atual',
+            'description' => 'Média da página atual',
             'icon' => 'banknotes',
             'accent' => 'text-secondary bg-secondary/10 ring-secondary/15',
         ],
@@ -137,7 +137,7 @@
                                     <th class="px-5 py-4">Descrição</th>
                                     <th class="px-5 py-4">Valor</th>
                                     <th class="px-5 py-4">Status</th>
-                                    <th class="px-5 py-4 text-right">Acoes</th>
+                                    <th class="px-5 py-4 text-right">Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-base-300/70">
