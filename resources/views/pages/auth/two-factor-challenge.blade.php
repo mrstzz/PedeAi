@@ -39,7 +39,7 @@
             <div x-show="showRecoveryInput">
                 <x-auth-header
                     :title="__('Codigo de recuperacao')"
-                    :description="__('Confirme o acesso usando um dos seus codigos de recuperacao.')"
+                    :description="__('Confirme o acesso usando um dos seus códigos de recuperação.')"
                 />
             </div>
 

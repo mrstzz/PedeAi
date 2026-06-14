@@ -9,7 +9,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('Configuracoes de perfil')] class extends Component {
+new #[Title('Configurações de perfil')] class extends Component {
     use ProfileValidationRules;
 
     public string $name = '';
@@ -79,7 +79,7 @@ new #[Title('Configuracoes de perfil')] class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <flux:heading class="sr-only">{{ __('Configuracoes de perfil') }}</flux:heading>
+    <flux:heading class="sr-only">{{ __('Configurações de perfil') }}</flux:heading>
 
     <x-pages::settings.layout :heading="__('Perfil')" :subheading="__('Atualize seu nome e endereco de email')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
@@ -91,7 +91,7 @@ new #[Title('Configuracoes de perfil')] class extends Component {
                 @if ($this->hasUnverifiedEmail)
                     <div>
                         <flux:text class="mt-4">
-                            {{ __('Seu endereco de email ainda nao foi verificado.') }}
+                            {{ __('Seu endereço de email ainda não foi verificado.') }}
 
                             <flux:link class="text-sm cursor-pointer" wire:click.prevent="resendVerificationNotification">
                                 {{ __('Clique aqui para reenviar o email de verificacao.') }}

@@ -45,7 +45,7 @@
                         </div>
                         <h1 class="text-3xl font-bold tracking-normal text-neutral sm:text-4xl">Itens da comanda</h1>
                         <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/65">
-                            Cadastre os produtos que o atendente podera selecionar ao criar uma comanda.
+                            Cadastre os produtos que o atendente poderá selecionar ao criar uma comanda.
                         </p>
                     </div>
 
@@ -85,8 +85,8 @@
             <x-card bodyClass="p-0">
                 <div class="flex flex-col gap-3 border-b border-base-300/80 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                     <div>
-                        <h2 class="text-lg font-semibold text-neutral">Catalogo do atendimento</h2>
-                        <p class="text-sm text-base-content/55">Produtos, descricoes, precos e disponibilidade.</p>
+                        <h2 class="text-lg font-semibold text-neutral">Catálogo do atendimento</h2>
+                        <p class="text-sm text-base-content/55">Produtos, descrições, preços e disponibilidade.</p>
                     </div>
 
                     <div class="inline-flex items-center gap-2 rounded-md border border-base-300 bg-base-200/70 px-3 py-2 text-sm text-base-content/65">
@@ -103,7 +103,7 @@
                         <div>
                             <h2 class="text-lg font-semibold text-neutral">Nenhum item cadastrado</h2>
                             <p class="mt-1 max-w-md text-sm text-base-content/65">
-                                Crie os itens do cardapio para facilitar o atendimento.
+                                Crie os itens do cardápio para facilitar o atendimento.
                             </p>
                         </div>
                         <x-link-button href="{{ route('menu-items.create') }}" class="gap-2">
@@ -118,7 +118,7 @@
                                 <div class="flex items-start justify-between gap-3">
                                     <div class="min-w-0">
                                         <p class="font-semibold text-neutral">{{ $item->name }}</p>
-                                        <p class="truncate text-sm text-base-content/60">{{ $item->description ?: 'Sem descricao' }}</p>
+                                        <p class="truncate text-sm text-base-content/60">{{ $item->description ?: 'Sem descrição' }}</p>
                                     </div>
                                     <span class="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ring-1 {{ $item->active ? 'bg-success/10 text-success ring-success/20' : 'bg-base-200 text-base-content/70 ring-base-300' }}">
                                         <span class="size-1.5 rounded-full {{ $item->active ? 'bg-success' : 'bg-base-content/35' }}"></span>
@@ -138,7 +138,7 @@
                             <thead class="bg-base-200/70 text-left text-xs font-semibold uppercase tracking-normal text-base-content/55">
                                 <tr>
                                     <th class="px-5 py-4">Item</th>
-                                    <th class="px-5 py-4">Descricao</th>
+                                    <th class="px-5 py-4">Descrição</th>
                                     <th class="px-5 py-4">Valor</th>
                                     <th class="px-5 py-4">Status</th>
                                     <th class="px-5 py-4 text-right">Acoes</th>
@@ -154,7 +154,7 @@
                                                 </div>
                                                 <div>
                                                     <p class="font-semibold text-neutral">{{ $item->name }}</p>
-                                                    <p class="text-xs text-base-content/50">Item do cardapio</p>
+                                                    <p class="text-xs text-base-content/50">Item do cardápio</p>
                                                 </div>
                                             </div>
                                         </td>

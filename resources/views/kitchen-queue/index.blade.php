@@ -38,7 +38,7 @@
         [
             'label' => 'Itens pendentes',
             'value' => $queueItems->where('status', 'pendente')->count(),
-            'description' => 'Ainda nao iniciados',
+            'description' => 'Ainda não iniciados',
             'icon' => 'clock',
             'accent' => 'text-warning bg-warning/10 ring-warning/20',
         ],

@@ -93,10 +93,10 @@ class RestaurantTableController extends Controller
     private function statuses(): array
     {
         return [
-            RestaurantTable::STATUS_AVAILABLE => 'Disponivel',
+            RestaurantTable::STATUS_AVAILABLE => 'Disponível',
             RestaurantTable::STATUS_OCCUPIED => 'Ocupada',
             RestaurantTable::STATUS_RESERVED => 'Reservada',
-            RestaurantTable::STATUS_MAINTENANCE => 'Manutencao',
+            RestaurantTable::STATUS_MAINTENANCE => 'Manutenção',
         ];
     }
 }

@@ -68,7 +68,7 @@
                         <div class="flex items-center justify-between border-b border-base-300 pb-4">
                             <div>
                                 <p class="text-xs font-semibold uppercase text-base-content/50">Agora</p>
-                                <h2 class="text-lg font-bold text-neutral">Operacao do salao</h2>
+                                <h2 class="text-lg font-bold text-neutral">Operação do salão</h2>
                             </div>
                             <span class="badge badge-success">Online</span>
                         </div>

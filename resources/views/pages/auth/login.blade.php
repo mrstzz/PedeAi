@@ -51,7 +51,7 @@
         </form>
 
         <div class="space-x-1 text-center text-sm text-base-content/65 rtl:space-x-reverse">
-            <span>{{ __('Ainda nao tem uma conta?') }}</span>
+            <span>{{ __('Ainda não tem uma conta?') }}</span>
             <flux:link :href="route('register')" wire:navigate>{{ __('Criar conta') }}</flux:link>
         </div>
     </div>

@@ -37,8 +37,6 @@
                     <flux:sidebar.item icon="calendar-days" :href="route('reservations.index')" :current="request()->routeIs('reservations.*')" class="rounded-md text-neutral-content/75 hover:bg-neutral-content/10 hover:text-neutral-content data-current:bg-primary data-current:text-primary-content data-current:shadow-sm" wire:navigate>
                         {{ __('Reservas') }}
                     </flux:sidebar.item>
-
-                    
                 </flux:sidebar.group>
 
                 @if (auth()->user()?->canAccessKitchenQueue())
@@ -47,7 +45,6 @@
                             {{ __('Fila de atendimento') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>
-            
                 @endif
 
                 @if (auth()->user()?->isAdmin())
@@ -85,7 +82,6 @@
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
 
-        <!-- Mobile User Menu -->
         <flux:header class="lg:hidden">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
@@ -109,7 +105,7 @@
                                 <div class="grid flex-1 text-start text-sm leading-tight">
                                     <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
                                     <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
-                                    <flux:text class="truncate">Role: {{ auth()->user()->role?->name ?? 'Sem role' }}</flux:text>
+                                    <flux:text class="truncate">Permissão: {{ auth()->user()->role?->name ?? 'Sem permissão' }}</flux:text>
                                 </div>
                             </div>
                         </div>

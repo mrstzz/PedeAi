@@ -39,12 +39,12 @@
                         />
                     </flux:tooltip>
                 @endif
-                <flux:tooltip :content="__('Configuracoes')" position="bottom">
+                <flux:tooltip :content="__('Configurações')" position="bottom">
                     <flux:navbar.item
                         class="h-10 max-lg:hidden [&>div>svg]:size-5"
                         icon="book-open-text"
                         :href="route('profile.edit')"
-                        :label="__('Configuracoes')"
+                        :label="__('Configurações')"
                     />
                 </flux:tooltip>
             </flux:navbar>
@@ -79,7 +79,7 @@
                     </flux:sidebar.item>
                 @endif
                 <flux:sidebar.item icon="book-open-text" :href="route('profile.edit')" wire:navigate>
-                    {{ __('Configuracoes') }}
+                    {{ __('Configurações') }}
                 </flux:sidebar.item>
             </flux:sidebar.nav>
         </flux:sidebar>

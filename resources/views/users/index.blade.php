@@ -2,7 +2,7 @@
     $userItems = collect($users->items());
     $userMetrics = [
         [
-            'label' => 'Usuarios nesta pagina',
+            'label' => 'Usuários nesta página',
             'value' => $userItems->count(),
             'description' => 'Contas cadastradas',
             'icon' => 'users',
@@ -18,7 +18,7 @@
         [
             'label' => 'Alteraveis',
             'value' => $userItems->reject(fn ($user) => $user->is(auth()->user()) || $user->isAdmin())->count(),
-            'description' => 'Permissao editavel aqui',
+            'description' => 'Permissão editável aqui',
             'icon' => 'pencil-square',
             'accent' => 'text-success bg-success/10 ring-success/15',
         ],
@@ -32,7 +32,7 @@
     ];
 @endphp
 
-<x-layouts::app :title="__('Usuarios')">
+<x-layouts::app :title="__('Usuários')">
     <div class="min-h-full text-base-content">
         <div class="mx-auto flex w-full max-w-[100rem] flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 2xl:px-10">
             <section class="rounded-lg border border-base-300/80 bg-base-100/90 p-5 shadow-sm backdrop-blur sm:p-6">
@@ -40,11 +40,11 @@
                     <div class="min-w-0">
                         <div class="mb-3 inline-flex items-center gap-2 rounded-md border border-secondary/25 bg-secondary/10 px-3 py-1 text-xs font-semibold uppercase tracking-normal text-secondary">
                             <span class="size-1.5 rounded-full bg-secondary"></span>
-                            Administracao
+                            Administração
                         </div>
-                        <h1 class="text-3xl font-bold tracking-normal text-neutral sm:text-4xl">Usuarios</h1>
+                        <h1 class="text-3xl font-bold tracking-normal text-neutral sm:text-4xl">Usuários</h1>
                         <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/65">
-                            Gerencie as permissoes dos usuarios. A permissao de administrador nao pode ser atribuida por esta tela.
+                            Gerencie as permissões dos usuários. A permissão de administrador não pode ser atribuída por esta tela.
                         </p>
                     </div>
 
@@ -94,7 +94,7 @@
             <x-card bodyClass="p-0">
                 <div class="flex flex-col gap-3 border-b border-base-300/80 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                     <div>
-                        <h2 class="text-lg font-semibold text-neutral">Permissoes de usuario</h2>
+                        <h2 class="text-lg font-semibold text-neutral">Permissões de usuário</h2>
                         <p class="text-sm text-base-content/55">Altere roles operacionais sem conceder administrador.</p>
                     </div>
 
@@ -110,9 +110,9 @@
                             <flux:icon.users class="size-6" />
                         </div>
                         <div>
-                            <h2 class="text-lg font-semibold text-neutral">Nenhum usuario encontrado</h2>
+                            <h2 class="text-lg font-semibold text-neutral">Nenhum usuário encontrado</h2>
                             <p class="mt-1 max-w-md text-sm text-base-content/65">
-                                Quando usuarios forem cadastrados, eles aparecem aqui para controle de permissao.
+                                Quando usuários forem cadastrados, eles aparecem aqui para controle de permissão.
                             </p>
                         </div>
                     </div>
@@ -125,12 +125,12 @@
                                         <p class="font-semibold text-neutral">{{ $user->name }}</p>
                                         <p class="truncate text-sm text-base-content/60">{{ $user->email }}</p>
                                         @if ($user->is(auth()->user()))
-                                            <p class="mt-1 text-xs font-semibold text-primary">Seu usuario</p>
+                                            <p class="mt-1 text-xs font-semibold text-primary">Seu usuário</p>
                                         @endif
                                     </div>
                                     <span class="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ring-1 {{ $user->isAdmin() ? 'bg-secondary/10 text-secondary ring-secondary/20' : 'bg-base-200 text-base-content/70 ring-base-300' }}">
                                         <span class="size-1.5 rounded-full {{ $user->isAdmin() ? 'bg-secondary' : 'bg-base-content/35' }}"></span>
-                                        {{ $user->role?->name ?? 'Sem permissao' }}
+                                        {{ $user->role?->name ?? 'Sem permissão' }}
                                     </span>
                                 </div>
 
@@ -167,10 +167,10 @@
                         <table class="min-w-full text-sm">
                             <thead class="bg-base-200/70 text-left text-xs font-semibold uppercase tracking-normal text-base-content/55">
                                 <tr>
-                                    <th class="px-5 py-4">Usuario</th>
+                                    <th class="px-5 py-4">Usuário</th>
                                     <th class="px-5 py-4">Email</th>
-                                    <th class="px-5 py-4">Permissao atual</th>
-                                    <th class="px-5 py-4">Alterar permissao</th>
+                                    <th class="px-5 py-4">Permissão atual</th>
+                                    <th class="px-5 py-4">Alterar permissão</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-base-300/70">
@@ -184,7 +184,7 @@
                                                 <div>
                                                     <div class="font-semibold text-neutral">{{ $user->name }}</div>
                                                     @if ($user->is(auth()->user()))
-                                                        <div class="text-xs font-semibold text-primary">Seu usuario</div>
+                                                        <div class="text-xs font-semibold text-primary">Seu usuário</div>
                                                     @endif
                                                 </div>
                                             </div>
@@ -193,7 +193,7 @@
                                         <td class="px-5 py-4">
                                             <span class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ring-1 {{ $user->isAdmin() ? 'bg-secondary/10 text-secondary ring-secondary/20' : 'bg-base-200 text-base-content/70 ring-base-300' }}">
                                                 <span class="size-1.5 rounded-full {{ $user->isAdmin() ? 'bg-secondary' : 'bg-base-content/35' }}"></span>
-                                                {{ $user->role?->name ?? 'Sem permissao' }}
+                                                {{ $user->role?->name ?? 'Sem permissão' }}
                                             </span>
                                         </td>
                                         <td class="px-5 py-4">

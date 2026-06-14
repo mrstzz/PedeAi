@@ -1,9 +1,9 @@
 @php
     $statusLabels = [
-        'disponivel' => 'Disponivel',
+        'disponivel' => 'Disponível',
         'ocupada' => 'Ocupada',
         'reservada' => 'Reservada',
-        'manutencao' => 'Manutencao',
+        'manutencao' => 'Manutenção',
     ];
 
     $statusMeta = [
@@ -74,7 +74,7 @@
                         </div>
                         <h1 class="text-3xl font-bold tracking-normal text-neutral sm:text-4xl">Mesas</h1>
                         <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/65">
-                            Cadastre as mesas que poderao ser selecionadas ao abrir comandas.
+                            Cadastre as mesas que poderão ser selecionadas ao abrir comandas.
                         </p>
                     </div>
 

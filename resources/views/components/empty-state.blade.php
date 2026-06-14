@@ -1,0 +1,20 @@
+@props([
+    'title',
+    'description' => null,
+    'icon' => 'inbox',
+])
+
+<div {{ $attributes->class(['flex flex-col items-center gap-4 p-10 text-center']) }}>
+    <div class="grid size-12 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
+        <flux:icon :name="$icon" class="size-6" />
+    </div>
+    <div>
+        <h2 class="text-lg font-semibold text-neutral">{{ $title }}</h2>
+        @if ($description)
+            <p class="mt-1 max-w-md text-sm text-base-content/65">{{ $description }}</p>
+        @endif
+    </div>
+    @if ($slot->isNotEmpty())
+        {{ $slot }}
+    @endif
+</div>

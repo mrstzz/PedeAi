@@ -3,7 +3,7 @@
         'pendente' => 'Pendente',
         'confirmada' => 'Confirmada',
         'cancelada' => 'Cancelada',
-        'concluida' => 'Concluida',
+        'concluida' => 'Concluída',
     ];
 
     $statusMeta = [
@@ -47,7 +47,7 @@
             'accent' => 'text-info bg-info/10 ring-info/15',
         ],
         [
-            'label' => 'Concluidas',
+            'label' => 'Concluídas',
             'value' => $reservationItems->where('status', 'concluida')->count(),
             'description' => 'Atendimento finalizado',
             'icon' => 'check-circle',
@@ -123,7 +123,7 @@
                 <div class="flex flex-col gap-3 border-b border-base-300/80 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
                     <div>
                         <h2 class="text-lg font-semibold text-neutral">Agenda de reservas</h2>
-                        <p class="text-sm text-base-content/55">Clientes, mesas, horarios e comandas vinculadas.</p>
+                        <p class="text-sm text-base-content/55">Clientes, mesas, horários e comandas vinculadas.</p>
                     </div>
 
                     <div class="inline-flex items-center gap-2 rounded-md border border-base-300 bg-base-200/70 px-3 py-2 text-sm text-base-content/65">
@@ -169,7 +169,7 @@
                                         <strong class="mt-1 block text-neutral">{{ $reservation->reserved_at->timezone('America/Sao_Paulo')->format('d/m H:i') }}</strong>
                                     </div>
                                     <div class="rounded-md bg-base-200/70 p-3">
-                                        <span class="text-xs text-base-content/50">Duracao</span>
+                                        <span class="text-xs text-base-content/50">Duração</span>
                                         <strong class="mt-1 block text-neutral">{{ $reservation->duration_minutes }} min</strong>
                                     </div>
                                 </div>
