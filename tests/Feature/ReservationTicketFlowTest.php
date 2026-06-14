@@ -16,10 +16,10 @@ uses(RefreshDatabase::class);
 
 function createRole(string $name, string $slug): Role
 {
-    return Role::query()->create([
-        'name' => $name,
-        'slug' => $slug,
-    ]);
+    return Role::query()->firstOrCreate(
+        ['slug' => $slug],
+        ['name' => $name],
+    );
 }
 
 function createUserWithRole(string $slug): User

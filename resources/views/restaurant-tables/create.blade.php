@@ -27,9 +27,7 @@
                             <p class="text-sm text-base-content/55">Identificação operacional e disponibilidade inicial.</p>
                         </div>
 
-                        <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                            <flux:icon.table-cells class="size-5" />
-                        </div>
+                        <flux:icon.table-cells class="size-6 text-primary" />
                     </div>
 
                     <x-form :action="route('restaurant-tables.store')" post>
@@ -99,9 +97,7 @@
                     />
                     <x-card>
                         <div class="flex items-start gap-3">
-                            <div class="grid size-10 shrink-0 place-items-center rounded-lg bg-secondary/10 text-secondary ring-1 ring-secondary/15">
-                                <flux:icon.light-bulb class="size-5" />
-                            </div>
+                            <flux:icon.light-bulb class="size-6 shrink-0 text-secondary" />
                             <p class="text-sm leading-6 text-base-content/65">
                                 Use identificações curtas para facilitar a leitura no salão, como 1, 2, Varanda 1 ou Balcão.
                             </p>

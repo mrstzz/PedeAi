@@ -27,9 +27,7 @@
                 {{ $slot }}
             </div>
         @elseif ($icon)
-            <div class="hidden size-12 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15 lg:grid">
-                <flux:icon :name="$icon" class="size-6" />
-            </div>
+            <x-icon-mark :icon="$icon" accent="text-primary" class="hidden size-7 lg:block" />
         @endif
     </div>
 </section>

@@ -60,9 +60,7 @@
                                 <p class="mt-2 text-4xl font-bold tracking-normal text-neutral">{{ $metric['value'] }}</p>
                             </div>
 
-                            <div class="grid size-11 place-items-center rounded-lg ring-1 {{ $metric['accent'] }}">
-                                <flux:icon :name="$metric['icon']" class="size-5" />
-                            </div>
+                            <x-icon-mark :icon="$metric['icon']" :accent="$metric['accent']" class="size-7" />
                         </div>
 
                         <p class="mt-4 border-t border-base-300/70 pt-3 text-sm text-base-content/60">{{ $metric['description'] }}</p>
@@ -114,9 +112,7 @@
                                     <p class="text-sm text-base-content/55">Cliente, mesa, reserva e prioridade da comanda.</p>
                                 </div>
 
-                                <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                    <flux:icon.clipboard-document-list class="size-5" />
-                                </div>
+                                <flux:icon.clipboard-document-list class="size-6 text-primary" />
                             </div>
 
                             <section class="grid gap-4 lg:grid-cols-2 2xl:grid-cols-4">
@@ -261,9 +257,7 @@
                                     <p class="text-sm text-base-content/55">Confira antes de salvar.</p>
                                 </div>
 
-                                <div class="grid size-10 place-items-center rounded-lg bg-secondary/10 text-secondary ring-1 ring-secondary/15">
-                                    <flux:icon.information-circle class="size-5" />
-                                </div>
+                                <flux:icon.information-circle class="size-6 text-secondary" />
                             </div>
 
                             <div class="space-y-3 text-sm">
@@ -284,9 +278,7 @@
 
                         <x-card>
                             <div class="flex items-start gap-3">
-                                <div class="grid size-10 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                    <flux:icon.light-bulb class="size-5" />
-                                </div>
+                                <flux:icon.light-bulb class="size-6 shrink-0 text-primary" />
                                 <p class="text-sm leading-6 text-base-content/65">
                                     Se uma reserva for selecionada, a mesa livre fica desabilitada para evitar vinculo duplicado.
                                 </p>

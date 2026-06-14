@@ -157,9 +157,7 @@
                                 <h2 class="text-base font-semibold text-neutral">Ações rápidas</h2>
                                 <p class="text-sm text-base-content/55">Atalhos principais desta comanda.</p>
                             </div>
-                            <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                <flux:icon.bars-arrow-down class="size-5" />
-                            </div>
+                            <flux:icon.bars-arrow-down class="size-6 text-primary" />
                         </div>
 
                         <div class="grid gap-2">
@@ -192,9 +190,7 @@
                                 <h2 class="text-base font-semibold text-neutral">Pagamento</h2>
                                 <p class="text-sm text-base-content/55">Fechamento financeiro.</p>
                             </div>
-                            <div class="grid size-10 place-items-center rounded-lg bg-secondary/10 text-secondary ring-1 ring-secondary/15">
-                                <flux:icon.banknotes class="size-5" />
-                            </div>
+                            <flux:icon.banknotes class="size-6 text-secondary" />
                         </div>
 
                         @if ($ticket->status === 'paga')
@@ -276,9 +272,7 @@
                                 <h2 class="text-base font-semibold text-neutral">Adicionar itens</h2>
                                 <p class="text-sm text-base-content/55">Inclua novos produtos na comanda.</p>
                             </div>
-                            <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                <flux:icon.plus class="size-5" />
-                            </div>
+                            <flux:icon.plus class="size-6 text-primary" />
                         </div>
 
                         @if (in_array($ticket->status, ['fechada', 'paga', 'cancelada'], true))
@@ -327,9 +321,7 @@
                                 <h2 class="text-base font-semibold text-neutral">Histórico</h2>
                                 <p class="text-sm text-base-content/55">Eventos operacionais registrados.</p>
                             </div>
-                            <div class="grid size-10 place-items-center rounded-lg bg-info/10 text-info ring-1 ring-info/15">
-                                <flux:icon.clock class="size-5" />
-                            </div>
+                            <flux:icon.clock class="size-6 text-info" />
                         </div>
 
                         @if ($ticket->events->isEmpty())

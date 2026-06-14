@@ -5,9 +5,7 @@
 ])
 
 <div {{ $attributes->class(['flex flex-col items-center gap-4 p-10 text-center']) }}>
-    <div class="grid size-12 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-        <flux:icon :name="$icon" class="size-6" />
-    </div>
+    <x-icon-mark :icon="$icon" accent="text-primary" class="size-8" />
     <div>
         <h2 class="text-lg font-semibold text-neutral">{{ $title }}</h2>
         @if ($description)

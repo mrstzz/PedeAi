@@ -84,9 +84,7 @@
                                 <p class="mt-2 text-4xl font-bold tracking-normal text-neutral">{{ $metric['value'] }}</p>
                             </div>
 
-                            <div class="grid size-11 place-items-center rounded-lg ring-1 {{ $metric['accent'] }}">
-                                <flux:icon :name="$metric['icon']" class="size-5" />
-                            </div>
+                            <x-icon-mark :icon="$metric['icon']" :accent="$metric['accent']" class="size-7" />
                         </div>
 
                         <p class="mt-4 border-t border-base-300/70 pt-3 text-sm text-base-content/60">{{ $metric['description'] }}</p>
@@ -96,9 +94,7 @@
 
             @if ($tickets->isEmpty())
                 <x-card bodyClass="items-center p-10 text-center">
-                    <div class="grid size-12 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                        <flux:icon.check-circle class="size-6" />
-                    </div>
+                    <flux:icon.check-circle class="size-8 text-primary" />
                     <h2 class="text-lg font-semibold text-neutral">Nenhuma comanda aguardando preparo</h2>
                     <p class="max-w-md text-sm text-base-content/65">
                         Quando uma comanda for aberta ou enviada para preparo, ela aparece aqui para a cozinha.

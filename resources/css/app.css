@@ -18,21 +18,21 @@
     --color-base-200: #f5f9fb;
     --color-base-300: #dfeaf0;
     --color-base-content: #20323d;
-    --color-primary: #2f91c8;
+    --color-primary: #217fac;
     --color-primary-content: #ffffff;
-    --color-secondary: #ff6b0b;
+    --color-secondary: #c94f00;
     --color-secondary-content: #ffffff;
     --color-accent: #f5a832;
     --color-accent-content: #20323d;
     --color-neutral: #243948;
     --color-neutral-content: #ffffff;
-    --color-info: #39a7d6;
+    --color-info: #1f85ad;
     --color-info-content: #ffffff;
-    --color-success: #1fa971;
+    --color-success: #167a53;
     --color-success-content: #ffffff;
     --color-warning: #f5a832;
     --color-warning-content: #20323d;
-    --color-error: #e5484d;
+    --color-error: #c7373c;
     --color-error-content: #ffffff;
 
     --radius-selector: 0.5rem;
@@ -112,6 +112,22 @@
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
     }
+
+    :focus-visible {
+        outline: 2px solid var(--color-secondary);
+        outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            scroll-behavior: auto !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
 }
 
 @layer utilities {
@@ -138,6 +154,82 @@
 }
 
 @layer components {
+    .btn,
+    .input,
+    .select,
+    .textarea,
+    .card,
+    table tbody tr,
+    [data-flux-sidebar-item] {
+        transition-duration: 160ms;
+        transition-property: background-color, border-color, box-shadow, color, opacity, transform;
+        transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    .btn {
+        outline-offset: 3px;
+    }
+
+    .btn:focus-visible,
+    a:focus-visible,
+    button:focus-visible,
+    [role='button']:focus-visible,
+    [data-flux-sidebar-item]:focus-visible {
+        outline: 2px solid var(--color-secondary);
+        outline-offset: 3px;
+    }
+
+    .btn:not(:disabled):not(.btn-disabled):hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px color-mix(in srgb, var(--color-neutral) 12%, transparent);
+    }
+
+    .btn:not(:disabled):not(.btn-disabled):active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px color-mix(in srgb, var(--color-neutral) 10%, transparent);
+    }
+
+    .btn-soft.btn-primary {
+        background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+        color: var(--color-primary);
+    }
+
+    .btn-soft.btn-primary:hover {
+        background-color: color-mix(in srgb, var(--color-primary) 18%, transparent);
+        color: color-mix(in srgb, var(--color-primary) 82%, var(--color-neutral));
+    }
+
+    .btn-soft.btn-error {
+        background-color: color-mix(in srgb, var(--color-error) 10%, transparent);
+        color: var(--color-error);
+    }
+
+    .btn-soft.btn-error:hover {
+        background-color: color-mix(in srgb, var(--color-error) 16%, transparent);
+    }
+
+    .card:focus-within {
+        border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-base-300));
+        box-shadow:
+            0 1px 2px color-mix(in srgb, var(--color-neutral) 12%, transparent),
+            0 0 0 3px color-mix(in srgb, var(--color-primary) 14%, transparent);
+    }
+
+    table tbody tr:hover {
+        background-color: color-mix(in srgb, var(--color-primary) 7%, var(--color-base-100));
+    }
+
+    a:not(.btn):not([data-flux-sidebar-item]) {
+        text-underline-offset: 0.18em;
+        transition-duration: 160ms;
+        transition-property: color, opacity, text-decoration-color, transform;
+        transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    a:not(.btn):not([data-flux-sidebar-item]):hover {
+        text-decoration-color: currentColor;
+    }
+
     [data-flux-sidebar-item][data-current] {
         background-color: var(--color-primary) !important;
         border-color: color-mix(in srgb, var(--color-primary) 35%, transparent) !important;
@@ -163,7 +255,7 @@
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+    @apply outline-hidden ring-2 ring-secondary ring-offset-2 ring-offset-base-100;
 }
 
 /* \[:where(&)\]:size-4 {

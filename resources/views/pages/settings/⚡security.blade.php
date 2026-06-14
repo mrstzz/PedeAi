@@ -262,9 +262,7 @@ new #[Title('Configurações de segurança')] class extends Component {
                         @forelse ($passkeys as $passkey)
                             <div class="flex items-center justify-between p-4 {{ ! $loop->last ? 'border-b border-base-300' : '' }}">
                                 <div class="flex items-center gap-4">
-                                    <div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-base-200">
-                                        <flux:icon.key class="size-5 text-base-content/60" />
-                                    </div>
+                                    <flux:icon.key class="size-6 shrink-0 text-base-content/60" />
                                     <div class="space-y-1">
                                         <div class="flex items-center gap-2.5">
                                             <p class="font-medium tracking-tight">{{ $passkey['name'] }}</p>
@@ -293,9 +291,7 @@ new #[Title('Configurações de segurança')] class extends Component {
                             </div>
                         @empty
                             <div class="p-8 text-center">
-                                <div class="mx-auto mb-4 flex size-14 items-center justify-center rounded-lg bg-base-200">
-                                    <flux:icon.key class="size-7 text-base-content/50" />
-                                </div>
+                                <flux:icon.key class="mx-auto mb-4 size-8 text-base-content/50" />
                                 <p class="font-medium">{{ __('Nenhuma chave cadastrada') }}</p>
                                 <flux:text class="mt-1">{{ __('Adicione uma chave de acesso para entrar sem senha') }}</flux:text>
                             </div>

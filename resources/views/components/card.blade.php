@@ -14,7 +14,7 @@
                 @endif
 
                 @if ($description)
-                    <p class="text-sm text-base-content/55">{{ $description }}</p>
+                    <p class="text-sm text-base-content/65">{{ $description }}</p>
                 @endif
             </header>
         @endif

@@ -72,9 +72,7 @@
                                 <p class="mt-2 truncate text-3xl font-bold tracking-normal text-neutral sm:text-4xl">{{ $metric['value'] }}</p>
                             </div>
 
-                            <div class="grid size-11 shrink-0 place-items-center rounded-lg ring-1 {{ $metric['accent'] }}">
-                                <flux:icon :name="$metric['icon']" class="size-5" />
-                            </div>
+                            <x-icon-mark :icon="$metric['icon']" :accent="$metric['accent']" class="size-7" />
                         </div>
 
                         <p class="mt-4 border-t border-base-300/70 pt-3 text-sm text-base-content/60">{{ $metric['description'] }}</p>
@@ -97,9 +95,7 @@
 
                 @if ($menuItems->isEmpty())
                     <div class="flex flex-col items-center gap-4 p-10 text-center">
-                        <div class="grid size-12 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                            <flux:icon.book-open class="size-6" />
-                        </div>
+                        <flux:icon.book-open class="size-8 text-primary" />
                         <div>
                             <h2 class="text-lg font-semibold text-neutral">Nenhum item cadastrado</h2>
                             <p class="mt-1 max-w-md text-sm text-base-content/65">
@@ -149,9 +145,7 @@
                                     <tr class="transition hover:bg-primary/5">
                                         <td class="px-5 py-4">
                                             <div class="flex items-center gap-3">
-                                                <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                                    <flux:icon.book-open class="size-5" />
-                                                </div>
+                                                <flux:icon.book-open class="size-6 text-primary" />
                                                 <div>
                                                     <p class="font-semibold text-neutral">{{ $item->name }}</p>
                                                     <p class="text-xs text-base-content/50">Item do cardápio</p>

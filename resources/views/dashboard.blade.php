@@ -122,9 +122,7 @@
                                 <p class="mt-2 text-4xl font-bold tracking-normal text-neutral">{{ $card['value'] }}</p>
                             </div>
 
-                            <div class="grid size-11 place-items-center rounded-lg ring-1 {{ $card['accent'] }}">
-                                <flux:icon :name="$card['icon']" class="size-5" />
-                            </div>
+                            <x-icon-mark :icon="$card['icon']" :accent="$card['accent']" class="size-7" />
                         </div>
 
                         <p class="mt-4 border-t border-base-300/70 pt-3 text-sm text-base-content/60">{{ $card['description'] }}</p>
@@ -162,9 +160,7 @@
 
                     @if ($tickets->isEmpty())
                         <x-card class="border-dashed" bodyClass="items-center p-8 text-center">
-                            <div class="grid size-12 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                <flux:icon.clipboard-document-list class="size-6" />
-                            </div>
+                            <flux:icon.clipboard-document-list class="size-8 text-primary" />
                             <h2 class="text-lg font-semibold text-neutral">Nenhum ticket encontrado</h2>
                             <p class="max-w-md text-sm text-base-content/65">
                                 Quando as comandas forem cadastradas, elas aparecem aqui com status, valores e quantidade de itens.
@@ -232,9 +228,7 @@
                                 <p class="text-sm text-base-content/55">{{ (int) $statusCounts->sum() }} comandas no total</p>
                             </div>
 
-                            <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                <flux:icon.clipboard class="size-5" />
-                            </div>
+                            <flux:icon.clipboard class="size-6 text-primary" />
                         </div>
 
                         <div class="space-y-4">
@@ -262,9 +256,7 @@
                                 <p class="text-sm text-base-content/55">Últimas movimentações</p>
                             </div>
 
-                            <div class="grid size-10 place-items-center rounded-lg bg-secondary/10 text-secondary ring-1 ring-secondary/15">
-                                <flux:icon.bell-alert class="size-5" />
-                            </div>
+                            <flux:icon.bell-alert class="size-6 text-secondary" />
                         </div>
 
                         @if ($recentTickets->isEmpty())

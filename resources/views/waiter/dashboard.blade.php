@@ -28,18 +28,14 @@
                     <h1 class="truncate text-2xl font-bold text-neutral">Painel do garçom</h1>
                     <p class="mt-1 truncate text-sm text-base-content/60">{{ auth()->user()->name }}</p>
                 </div>
-                <div class="grid size-12 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                    <flux:icon.user class="size-6" />
-                </div>
+                <flux:icon.user class="size-8 shrink-0 text-primary" />
             </div>
         </section>
 
         <section class="grid grid-cols-2 gap-3">
             <a href="{{ route('ticket-list.create') }}" class="rounded-lg border border-primary/20 bg-primary p-4 text-primary-content shadow-sm transition hover:shadow-md active:scale-[0.99]" wire:navigate>
                 <div class="flex min-h-28 flex-col justify-between">
-                    <span class="flex size-10 items-center justify-center rounded-lg bg-primary-content/15">
-                        <flux:icon.plus class="size-5" />
-                    </span>
+                    <flux:icon.plus class="size-6 text-primary-content" />
                     <div>
                         <p class="text-lg font-bold leading-tight">Nova comanda</p>
                         <p class="mt-1 text-xs leading-snug opacity-80">Mesa ou reserva</p>
@@ -49,9 +45,7 @@
 
             <a href="{{ route('reservations.create') }}" class="rounded-lg border border-secondary/20 bg-secondary/10 p-4 text-secondary shadow-sm transition hover:bg-secondary/15 active:scale-[0.99]" wire:navigate>
                 <div class="flex min-h-28 flex-col justify-between">
-                    <span class="flex size-10 items-center justify-center rounded-lg bg-secondary/15">
-                        <flux:icon.calendar-days class="size-5" />
-                    </span>
+                    <flux:icon.calendar-days class="size-6 text-secondary" />
                     <div>
                         <p class="text-lg font-bold leading-tight">Reserva</p>
                         <p class="mt-1 text-xs leading-snug text-base-content/65">Bloquear mesa</p>

@@ -77,9 +77,7 @@
                     />
                     <x-card>
                         <div class="flex items-start gap-3">
-                            <div class="grid size-10 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                <flux:icon.information-circle class="size-5" />
-                            </div>
+                            <flux:icon.information-circle class="size-6 shrink-0 text-primary" />
                             <p class="text-sm leading-6 text-base-content/65">
                                 Alterar uma mesa ocupada pode impactar a abertura de novas comandas. Confirme o status antes de salvar.
                             </p>
