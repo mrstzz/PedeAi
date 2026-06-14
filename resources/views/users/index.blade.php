@@ -16,14 +16,14 @@
             'accent' => 'text-secondary bg-secondary/10 ring-secondary/15',
         ],
         [
-            'label' => 'Alteraveis',
+            'label' => 'Alteráveis',
             'value' => $userItems->reject(fn ($user) => $user->is(auth()->user()) || $user->isAdmin())->count(),
             'description' => 'Permissão editável aqui',
             'icon' => 'pencil-square',
             'accent' => 'text-success bg-success/10 ring-success/15',
         ],
         [
-            'label' => 'Roles disponiveis',
+            'label' => 'Permissões disponiveis',
             'value' => $roles->count(),
             'description' => 'Sem administrador',
             'icon' => 'key',

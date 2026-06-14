@@ -154,6 +154,41 @@
                     <x-card>
                         <div class="flex items-center justify-between gap-3">
                             <div>
+                                <h2 class="text-base font-semibold text-neutral">Ações rápidas</h2>
+                                <p class="text-sm text-base-content/55">Atalhos principais desta comanda.</p>
+                            </div>
+                            <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
+                                <flux:icon.bars-arrow-down class="size-5" />
+                            </div>
+                        </div>
+
+                        <div class="grid gap-2">
+                            @if ($ticket->status === 'aberta')
+                                <x-form :action="route('ticket-list.start-preparation', $ticket)" post>
+                                    <x-primary-button type="submit" class="min-h-11 w-full gap-2" data-loading-label="Enviando">
+                                        <flux:icon.play class="size-4" />
+                                        Enviar para preparo
+                                    </x-primary-button>
+                                </x-form>
+                            @endif
+
+                            @if (! in_array($ticket->status, ['paga', 'cancelada'], true))
+                                <a href="#pagamento" class="btn btn-primary btn-soft min-h-11 gap-2">
+                                    <flux:icon.banknotes class="size-4" />
+                                    Ir para pagamento
+                                </a>
+                            @endif
+
+                            <a href="#adicionar-itens" class="btn btn-ghost min-h-11 gap-2">
+                                <flux:icon.plus class="size-4" />
+                                Adicionar itens
+                            </a>
+                        </div>
+                    </x-card>
+
+                    <x-card id="pagamento" class="scroll-mt-24">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
                                 <h2 class="text-base font-semibold text-neutral">Pagamento</h2>
                                 <p class="text-sm text-base-content/55">Fechamento financeiro.</p>
                             </div>
@@ -197,7 +232,7 @@
                                     </label>
                                 </div>
 
-                                <x-primary-button type="submit" class="min-h-11 gap-2">
+                                <x-primary-button type="submit" class="min-h-11 gap-2" data-loading-label="Salvando">
                                     <flux:icon.check class="size-4" />
                                     Marcar como paga
                                 </x-primary-button>
@@ -228,14 +263,14 @@
                                 </select>
                             </label>
 
-                            <x-primary-button type="submit" class="min-h-11 gap-2">
+                            <x-primary-button type="submit" class="min-h-11 gap-2" data-loading-label="Atualizando">
                                 <flux:icon.arrow-path class="size-4" />
                                 Atualizar status
                             </x-primary-button>
                         </x-form>
                     </x-card>
 
-                    <x-card>
+                    <x-card id="adicionar-itens" class="scroll-mt-24">
                         <div class="flex items-center justify-between gap-3">
                             <div>
                                 <h2 class="text-base font-semibold text-neutral">Adicionar itens</h2>
@@ -278,7 +313,7 @@
                                     </div>
                                 @endfor
 
-                                <x-primary-button type="submit" class="min-h-11 gap-2" :disabled="$menuItems->isEmpty()">
+                                <x-primary-button type="submit" class="min-h-11 gap-2" :disabled="$menuItems->isEmpty()" data-loading-label="Adicionando">
                                     <flux:icon.plus class="size-4" />
                                     Adicionar
                                 </x-primary-button>

@@ -24,7 +24,7 @@
             'accent' => 'text-error bg-error/10 ring-error/15',
         ],
         [
-            'label' => 'Valor medio',
+            'label' => 'Valor médio',
             'value' => $items->count() ? $money($items->avg('price')) : $money(0),
             'description' => 'Media da pagina atual',
             'icon' => 'banknotes',

@@ -46,7 +46,7 @@
     $activeTickets = (int) $metrics['open'] + (int) $metrics['inProgress'] + (int) $metrics['closed'];
     $metricCards = [
         [
-            'label' => 'Em operação',
+            'label' => 'Em andamento',
             'value' => $activeTickets,
             'description' => 'Comandas ativas no salão',
             'icon' => 'clipboard-document-list',
@@ -233,7 +233,7 @@
                             </div>
 
                             <div class="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15">
-                                <flux:icon.chart-bar class="size-5" />
+                                <flux:icon.clipboard class="size-5" />
                             </div>
                         </div>
 

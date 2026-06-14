@@ -50,7 +50,7 @@
             'accent' => 'text-primary bg-primary/10 ring-primary/15',
         ],
         [
-            'label' => 'Em operacao',
+            'label' => 'Em Andamento',
             'value' => $activeCount,
             'description' => 'Abertas ou aguardando fluxo',
             'icon' => 'clock',
