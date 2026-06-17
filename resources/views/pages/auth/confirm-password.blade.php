@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-6">
         <x-auth-header
             :title="__('Confirmar senha')"
-            :description="__('Esta e uma area segura. Confirme sua senha antes de continuar.')"
+            :description="__('Esta é uma área segura. Confirme sua senha antes de continuar.')"
         />
 
         <x-auth-session-status class="text-center" :status="session('status')" />

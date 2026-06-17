@@ -194,7 +194,7 @@ new class extends Component {
                             name="code"
                             wire:model="code"
                             length="6"
-                            label="OTP Code"
+                            label="Código OTP"
                             label:sr-only
                             class="mx-auto"
                         />
@@ -206,7 +206,7 @@ new class extends Component {
                             class="flex-1"
                             wire:click="resetVerification"
                         >
-                            {{ __('Back') }}
+                            {{ __('Voltar') }}
                         </flux:button>
 
                         <flux:button
@@ -215,7 +215,7 @@ new class extends Component {
                             wire:click="confirmTwoFactor"
                             x-bind:disabled="$wire.code.length < 6"
                         >
-                            {{ __('Confirm') }}
+                            {{ __('Confirmar') }}
                         </flux:button>
                     </div>
                 </div>

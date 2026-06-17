@@ -45,7 +45,7 @@ new #[Title('Configurações de perfil')] class extends Component {
     }
 
     /**
-     * Send an email verification notification to the current user.
+     * Send an e-mail verification notification to the current user.
      */
     public function resendVerificationNotification(): void
     {
@@ -86,7 +86,7 @@ new #[Title('Configurações de perfil')] class extends Component {
             <flux:input wire:model="name" :label="__('Nome')" type="text" required autofocus autocomplete="name" />
 
             <div>
-                <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
+                <flux:input wire:model="email" :label="__('E-mail')" type="email" required autocomplete="email" />
 
                 @if ($this->hasUnverifiedEmail)
                     <div>
