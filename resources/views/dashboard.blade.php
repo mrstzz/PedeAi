@@ -32,7 +32,7 @@
                     <div class="badge badge-secondary badge-outline mb-3">Central de comandas</div>
                     <h1 class="text-2xl font-bold tracking-normal text-base-content/70 sm:text-3xl">Dashboard de Comandas</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
-                        Acompanhe comandas abertas, pagamentos e movimentacoes cadastradas no sistema.
+                        Acompanhe comandas abertas, pagamentos e movimentações cadastradas no sistema.
                     </p>
                 </div>
 
@@ -156,7 +156,7 @@
 
                     <x-card title="Atividade recente">
                         @if ($recentTickets->isEmpty())
-                            <p class="text-sm text-base-content/65">Nenhuma movimentacao registrada ainda.</p>
+                            <p class="text-sm text-base-content/65">Nenhuma movimentação registrada ainda.</p>
                         @else
                             <ul class="timeline timeline-vertical timeline-compact">
                                 @foreach ($recentTickets as $ticket)

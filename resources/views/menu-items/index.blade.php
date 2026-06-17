@@ -10,7 +10,7 @@
                     <div class="badge badge-secondary badge-outline mb-3">Admin</div>
                     <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Itens da comanda</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
-                        Cadastre os produtos que o atendente podera selecionar ao criar uma comanda.
+                        Cadastre os produtos que o atendente poderá selecionar ao criar uma comanda.
                     </p>
                 </div>
 
@@ -30,7 +30,7 @@
                         <div>
                             <h2 class="text-lg font-semibold text-neutral">Nenhum item cadastrado</h2>
                             <p class="mt-1 max-w-md text-sm text-base-content/65">
-                                Crie os itens do cardapio para facilitar o atendimento.
+                                Crie os itens do cardápio para facilitar o atendimento.
                             </p>
                         </div>
                         <x-link-button href="{{ route('menu-items.create') }}">Cadastrar item</x-link-button>
@@ -41,7 +41,7 @@
                             <thead>
                                 <tr>
                                     <th>Item</th>
-                                    <th>Descricao</th>
+                                    <th>Descrição</th>
                                     <th>Valor</th>
                                     <th>Status</th>
                                     <th></th>

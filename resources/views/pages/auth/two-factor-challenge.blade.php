@@ -1,4 +1,4 @@
-<x-layouts::auth :title="__('Autenticacao em dois fatores')">
+<x-layouts::auth :title="__('Autenticação em dois fatores')">
     <div class="flex flex-col gap-6">
         <div
             class="relative w-full h-auto"
@@ -31,15 +31,15 @@
         >
             <div x-show="!showRecoveryInput">
                 <x-auth-header
-                    :title="__('Codigo de autenticacao')"
-                    :description="__('Digite o codigo gerado pelo seu aplicativo autenticador.')"
+                    :title="__('Código de autenticação')"
+                    :description="__('Digite o código gerado pelo seu aplicativo autenticador.')"
                 />
             </div>
 
             <div x-show="showRecoveryInput">
                 <x-auth-header
-                    :title="__('Codigo de recuperacao')"
-                    :description="__('Confirme o acesso usando um dos seus codigos de recuperacao.')"
+                    :title="__('Código de recuperação')"
+                    :description="__('Confirme o acesso usando um dos seus códigos de recuperação.')"
                 />
             </div>
 
@@ -53,7 +53,7 @@
                                 x-model="code"
                                 length="6"
                                 name="code"
-                                label="Codigo OTP"
+                                label="Código OTP"
                                 label:sr-only
                                 class="mx-auto"
                              />
@@ -91,8 +91,8 @@
                 <div class="mt-5 space-x-0.5 text-sm leading-5 text-center">
                     <span class="opacity-50">{{ __('ou voce pode') }}</span>
                     <div class="inline font-medium underline cursor-pointer opacity-80">
-                        <span x-show="!showRecoveryInput" @click="toggleInput()">{{ __('entrar usando um codigo de recuperacao') }}</span>
-                        <span x-show="showRecoveryInput" @click="toggleInput()">{{ __('entrar usando um codigo de autenticacao') }}</span>
+                        <span x-show="!showRecoveryInput" @click="toggleInput()">{{ __('entrar usando um código de recuperação') }}</span>
+                        <span x-show="showRecoveryInput" @click="toggleInput()">{{ __('entrar usando um código de autenticação') }}</span>
                     </div>
                 </div>
             </form>

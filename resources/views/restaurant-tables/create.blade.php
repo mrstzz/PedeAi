@@ -6,7 +6,7 @@
                     <div class="badge badge-secondary badge-outline mb-3">Admin</div>
                     <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Nova mesa</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
-                        Defina identificacao, capacidade e status inicial da mesa.
+                        Defina identificação, capacidade e status inicial da mesa.
                     </p>
                 </div>
 
@@ -28,11 +28,11 @@
                 <x-form :action="route('restaurant-tables.store')" post>
                     <section class="grid gap-4 sm:grid-cols-2">
                         <label class="form-control">
-                            <x-input-label value="Identificacao" />
+                            <x-input-label value="Identificação" />
                             <x-text-input
                                 name="identifier"
                                 value="{{ old('identifier') }}"
-                                placeholder="Ex: 1, 02, Area externa 4"
+                                placeholder="Ex: 1, 02, Área externa 4"
                                 required
                             />
                         </label>
@@ -64,7 +64,7 @@
                     </label>
 
                     <div class="alert alert-info">
-                        <span>Somente mesas com status disponivel e sem reserva confirmada no horario aparecem na abertura de comanda.</span>
+                        <span>Somente mesas com status disponível e sem reserva confirmada no horário aparecem na abertura de comanda.</span>
                     </div>
 
                     <div class="flex flex-col-reverse gap-3 border-t border-base-300 pt-4 sm:flex-row sm:justify-end">

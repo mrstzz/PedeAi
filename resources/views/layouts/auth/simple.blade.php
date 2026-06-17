@@ -19,7 +19,7 @@
         </div>
 
         <footer class="fixed inset-x-0 bottom-0 bg-neutral/70 px-4 py-1 text-center text-sm text-neutral-content">
-            Gestao Facil LTDA - 2026 © Todos os direitos reservados.
+            Gestão Fácil LTDA - 2026 © Todos os direitos reservados.
         </footer>
 
         @persist('toast')

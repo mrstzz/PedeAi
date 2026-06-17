@@ -28,19 +28,19 @@
                     </label>
 
                     <label class="form-control">
-                        <x-input-label value="Descricao" />
+                        <x-input-label value="Descrição" />
                         <textarea name="description" class="textarea textarea-bordered min-h-24 bg-base-100">{{ old('description', $item->description) }}</textarea>
                     </label>
 
                     <label class="label cursor-pointer justify-start gap-3">
                         <input type="hidden" name="active" value="0">
                         <input type="checkbox" name="active" value="1" class="toggle toggle-primary" @checked(old('active', $item->active ? '1' : '0') === '1')>
-                        <span class="label-text">Disponivel para atendentes</span>
+                        <span class="label-text">Disponível para atendentes</span>
                     </label>
 
                     <div class="flex flex-col-reverse gap-3 border-t border-base-300 pt-4 sm:flex-row sm:justify-end">
                         <x-secondary-button type="reset">Limpar</x-secondary-button>
-                        <x-primary-button type="submit">Salvar alteracoes</x-primary-button>
+                        <x-primary-button type="submit">Salvar alterações</x-primary-button>
                     </div>
                 </x-form>
             </x-card>

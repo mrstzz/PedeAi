@@ -13,7 +13,7 @@ use Laravel\Passkeys\Actions\DeletePasskey;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 
-new #[Title('Configuracoes de seguranca')] class extends Component {
+new #[Title('Configurações de segurança')] class extends Component {
     use PasswordValidationRules;
 
     public string $current_password = '';
@@ -169,7 +169,7 @@ new #[Title('Configuracoes de seguranca')] class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <flux:heading class="sr-only">{{ __('Configuracoes de seguranca') }}</flux:heading>
+    <flux:heading class="sr-only">{{ __('Configurações de segurança') }}</flux:heading>
 
     <x-pages::settings.layout :heading="__('Atualizar senha')" :subheading="__('Use uma senha longa e segura para proteger sua conta')">
         <form method="POST" wire:submit="updatePassword" class="mt-6 space-y-6">
@@ -209,14 +209,14 @@ new #[Title('Configuracoes de seguranca')] class extends Component {
 
         @if ($canManageTwoFactor)
             <section class="mt-12">
-                <flux:heading>{{ __('Autenticacao em dois fatores') }}</flux:heading>
-                <flux:subheading>{{ __('Gerencie a seguranca em duas etapas da sua conta') }}</flux:subheading>
+                <flux:heading>{{ __('Autenticação em dois fatores') }}</flux:heading>
+                <flux:subheading>{{ __('Gerencie a segurança em duas etapas da sua conta') }}</flux:subheading>
 
                 <div class="flex flex-col w-full mx-auto space-y-6 text-sm" wire:cloak>
                     @if ($twoFactorEnabled)
                         <div class="space-y-4">
                             <flux:text>
-                                {{ __('Um codigo seguro sera solicitado no login e podera ser consultado no aplicativo autenticador do seu celular.') }}
+                                {{ __('Um código seguro será solicitado no login e poderá ser consultado no aplicativo autenticador do seu celular.') }}
                             </flux:text>
 
                             <div class="flex justify-start">
@@ -233,7 +233,7 @@ new #[Title('Configuracoes de seguranca')] class extends Component {
                     @else
                         <div class="space-y-4">
                             <flux:text variant="subtle">
-                                {{ __('Ao ativar a autenticacao em dois fatores, um codigo seguro sera solicitado durante o login. Esse codigo pode ser consultado em um aplicativo autenticador.') }}
+                                {{ __('Ao ativar a autenticação em dois fatores, um código seguro será solicitado durante o login. Esse código pode ser consultado em um aplicativo autenticador.') }}
                             </flux:text>
 
                             <flux:modal.trigger name="two-factor-setup-modal">
@@ -276,7 +276,7 @@ new #[Title('Configuracoes de seguranca')] class extends Component {
                                             {{ __('Adicionada :time', ['time' => $passkey['created_at_diff']]) }}
                                             @if ($passkey['last_used_at_diff'])
                                                 <span class="opacity-50 mx-1">/</span>
-                                                {{ __('Usada pela ultima vez :time', ['time' => $passkey['last_used_at_diff']]) }}
+                                                {{ __('Usada pela última vez :time', ['time' => $passkey['last_used_at_diff']]) }}
                                             @endif
                                         </p>
                                     </div>
@@ -318,7 +318,7 @@ new #[Title('Configuracoes de seguranca')] class extends Component {
             <div class="space-y-2">
                 <flux:heading size="lg">{{ __('Remover chave de acesso') }}</flux:heading>
                 <flux:text>
-                    {{ __('Tem certeza que deseja remover a chave ":name"? Ela nao podera mais ser usada para entrar.', ['name' => $deletingPasskeyName]) }}
+                    {{ __('Tem certeza que deseja remover a chave ":name"? Ela não poderá mais ser usada para entrar.', ['name' => $deletingPasskeyName]) }}
                 </flux:text>
             </div>
 

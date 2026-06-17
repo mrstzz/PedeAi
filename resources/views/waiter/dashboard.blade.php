@@ -9,13 +9,13 @@
     ];
 @endphp
 
-<x-layouts::app :title="__('Garcom')">
+<x-layouts::app :title="__('Garçom')">
     <div class="flex min-h-[calc(100svh-7rem)] flex-col gap-3">
         <section class="rounded-lg border border-base-300 bg-base-100/95 p-3 shadow-sm">
             <div class="flex items-center justify-between gap-3">
                 <div class="min-w-0 leading-tight">
                     <p class="text-xs font-medium uppercase text-base-content/50">Atendimento</p>
-                    <h1 class="truncate text-xl font-bold text-neutral">Painel do garcom</h1>
+                    <h1 class="truncate text-xl font-bold text-neutral">Painel do garçom</h1>
                 </div>
                 <div class="min-w-0 rounded-md border border-primary/25 bg-primary/10 px-3 py-2 text-right">
                     <p class="truncate text-sm font-semibold text-primary">{{ auth()->user()->name }}</p>

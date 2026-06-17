@@ -13,7 +13,7 @@
                         </span>
                         <div class="min-w-0 leading-tight">
                             <p class="text-sm font-bold text-neutral">PedeAi</p>
-                            <p class="text-xs text-base-content/60">Garcom</p>
+                            <p class="text-xs text-base-content/60">Garçom</p>
                         </div>
                     </a>
 

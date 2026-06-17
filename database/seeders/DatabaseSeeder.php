@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'Administrador',
+            'email' => 'admin@pedeai.com',
             'role_id' => $roles->get('administrador')->id,
         ]);
 

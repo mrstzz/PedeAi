@@ -3,7 +3,7 @@
     'submitRoute' => 'passkey.login',
     'label' => __('Entrar com chave de acesso'),
     'loadingLabel' => __('Autenticando...'),
-    'separator' => __('Ou continue com email'),
+    'separator' => __('Ou continue com e-mail'),
 ])
 
 @assets

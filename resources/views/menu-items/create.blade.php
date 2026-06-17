@@ -28,7 +28,7 @@
                 <x-form :action="route('menu-items.store')" post>
                     <label class="form-control">
                         <x-input-label value="Nome do item" />
-                        <x-text-input name="name" value="{{ old('name') }}" placeholder="Ex: X-salada, refrigerante, porcao..." required />
+                        <x-text-input name="name" value="{{ old('name') }}" placeholder="Ex: X-salada, refrigerante, porção..." required />
                     </label>
 
                     <label class="form-control">
@@ -37,7 +37,7 @@
                     </label>
 
                     <label class="form-control">
-                        <x-input-label value="Descricao" />
+                        <x-input-label value="Descrição" />
                         <textarea
                             name="description"
                             class="textarea textarea-bordered min-h-24 bg-base-100"
@@ -48,7 +48,7 @@
                     <label class="label cursor-pointer justify-start gap-3">
                         <input type="hidden" name="active" value="0">
                         <input type="checkbox" name="active" value="1" class="toggle toggle-primary" @checked(old('active', '1') === '1')>
-                        <span class="label-text">Disponivel para atendentes</span>
+                        <span class="label-text">Disponível para atendentes</span>
                     </label>
 
                     <div class="flex flex-col-reverse gap-3 border-t border-base-300 pt-4 sm:flex-row sm:justify-end">

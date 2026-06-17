@@ -6,7 +6,7 @@
                     <div class="badge badge-secondary badge-outline mb-3">Atendimento</div>
                     <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Nova reserva</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
-                        Reserve uma mesa para o cliente. A mesa ficara bloqueada para comandas normais.
+                        Reserve uma mesa para o cliente. A mesa ficará bloqueada para comandas normais.
                     </p>
                 </div>
 
@@ -27,7 +27,7 @@
             @if ($tables->isEmpty())
                 <div class="alert alert-warning">
                     <div>
-                        <h2 class="font-semibold">Nenhuma mesa disponivel</h2>
+                        <h2 class="font-semibold">Nenhuma mesa disponível</h2>
                         <p class="text-sm">Cadastre ou libere uma mesa antes de registrar novas reservas.</p>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                         </label>
 
                         <label class="form-control">
-                            <x-input-label value="Duracao" />
+                            <x-input-label value="Duração" />
                             <select name="duration_minutes" class="select select-bordered w-full bg-base-100">
                                 @foreach ([60, 90, 120, 180, 240] as $minutes)
                                     <option value="{{ $minutes }}" @selected((int) old('duration_minutes', 120) === $minutes)>
@@ -87,16 +87,16 @@
                     </section>
 
                     <label class="form-control">
-                        <x-input-label value="Observacoes" />
+                        <x-input-label value="Observações" />
                         <textarea
                             name="notes"
                             class="textarea textarea-bordered min-h-24 bg-base-100"
-                            placeholder="Ex: aniversario, mesa proxima ao palco, preferencias..."
+                            placeholder="Ex: aniversário, mesa próxima ao palco, preferências..."
                         >{{ old('notes') }}</textarea>
                     </label>
 
                     <div class="alert alert-info">
-                        <span>Depois de salva, a mesa fica reservada e so podera abrir comanda pela reserva correspondente.</span>
+                        <span>Depois de salva, a mesa fica reservada e só poderá abrir comanda pela reserva correspondente.</span>
                     </div>
 
                     <div class="flex flex-col-reverse gap-3 border-t border-base-300 pt-4 sm:flex-row sm:justify-end">

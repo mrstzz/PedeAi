@@ -1,9 +1,9 @@
 @php
     $statusLabels = [
-        'disponivel' => 'Disponivel',
+        'disponivel' => 'Disponível',
         'ocupada' => 'Ocupada',
         'reservada' => 'Reservada',
-        'manutencao' => 'Manutencao',
+        'manutencao' => 'Manutenção',
     ];
 
     $statusBadges = [
@@ -22,7 +22,7 @@
                     <div class="badge badge-secondary badge-outline mb-3">Admin</div>
                     <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Mesas</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
-                        Cadastre as mesas que poderao ser selecionadas ao abrir comandas.
+                        Cadastre as mesas que poderão ser selecionadas ao abrir comandas.
                     </p>
                 </div>
 
@@ -42,7 +42,7 @@
                         <div>
                             <h2 class="text-lg font-semibold text-neutral">Nenhuma mesa cadastrada</h2>
                             <p class="mt-1 max-w-md text-sm text-base-content/65">
-                                Cadastre as mesas para que elas aparecam na abertura de comandas conforme disponibilidade.
+                                Cadastre as mesas para que elas apareçam na abertura de comandas conforme disponibilidade.
                             </p>
                         </div>
                         <x-link-button href="{{ route('restaurant-tables.create') }}">Cadastrar mesa</x-link-button>

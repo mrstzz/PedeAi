@@ -9,7 +9,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new #[Title('Configuracoes de perfil')] class extends Component {
+new #[Title('Configurações de perfil')] class extends Component {
     use ProfileValidationRules;
 
     public string $name = '';
@@ -45,7 +45,7 @@ new #[Title('Configuracoes de perfil')] class extends Component {
     }
 
     /**
-     * Send an email verification notification to the current user.
+     * Send an e-mail verification notification to the current user.
      */
     public function resendVerificationNotification(): void
     {
@@ -79,28 +79,28 @@ new #[Title('Configuracoes de perfil')] class extends Component {
 <section class="w-full">
     @include('partials.settings-heading')
 
-    <flux:heading class="sr-only">{{ __('Configuracoes de perfil') }}</flux:heading>
+    <flux:heading class="sr-only">{{ __('Configurações de perfil') }}</flux:heading>
 
-    <x-pages::settings.layout :heading="__('Perfil')" :subheading="__('Atualize seu nome e endereco de email')">
+    <x-pages::settings.layout :heading="__('Perfil')" :subheading="__('Atualize seu nome e endereço de e-mail')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
             <flux:input wire:model="name" :label="__('Nome')" type="text" required autofocus autocomplete="name" />
 
             <div>
-                <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
+                <flux:input wire:model="email" :label="__('E-mail')" type="email" required autocomplete="email" />
 
                 @if ($this->hasUnverifiedEmail)
                     <div>
                         <flux:text class="mt-4">
-                            {{ __('Seu endereco de email ainda nao foi verificado.') }}
+                            {{ __('Seu endereço de e-mail ainda não foi verificado.') }}
 
                             <flux:link class="text-sm cursor-pointer" wire:click.prevent="resendVerificationNotification">
-                                {{ __('Clique aqui para reenviar o email de verificacao.') }}
+                                {{ __('Clique aqui para reenviar o e-mail de verificação.') }}
                             </flux:link>
                         </flux:text>
 
                         @if (session('status') === 'verification-link-sent')
                             <flux:text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
-                                {{ __('Um novo link de verificacao foi enviado para seu email.') }}
+                                {{ __('Um novo link de verificação foi enviado para seu e-mail.') }}
                             </flux:text>
                         @endif
                     </div>

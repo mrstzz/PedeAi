@@ -205,7 +205,7 @@
                                         </label>
 
                                         <label class="form-control">
-                                            <x-input-label value="Observacoes" />
+                                            <x-input-label value="Observações" />
                                             <x-text-input name="items[{{ $index }}][notes]" value="{{ old("items.$index.notes") }}" />
                                         </label>
                                     </div>

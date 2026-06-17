@@ -31,7 +31,7 @@ new class extends Component {
             <flux:heading size="lg">{{ __('Tem certeza que deseja excluir sua conta?') }}</flux:heading>
 
             <flux:subheading>
-                {{ __('Depois que sua conta for excluida, todos os dados e recursos serao removidos permanentemente. Digite sua senha para confirmar.') }}
+                {{ __('Depois que sua conta for excluída, todos os dados e recursos serão removidos permanentemente. Digite sua senha para confirmar.') }}
             </flux:subheading>
         </div>
 

@@ -50,19 +50,19 @@
                         </label>
 
                         <label class="form-control">
-                            <x-input-label value="Duracao" />
+                            <x-input-label value="Duração" />
                             <x-text-input name="duration_minutes" type="number" min="30" max="480" step="30" value="{{ old('duration_minutes', $reservation->duration_minutes) }}" required />
                         </label>
                     </section>
 
                     <label class="form-control">
-                        <x-input-label value="Observacoes" />
+                        <x-input-label value="Observações" />
                         <textarea name="notes" class="textarea textarea-bordered min-h-24 bg-base-100">{{ old('notes', $reservation->notes) }}</textarea>
                     </label>
 
                     <div class="flex flex-col-reverse gap-3 border-t border-base-300 pt-4 sm:flex-row sm:justify-end">
                         <x-secondary-button type="reset">Limpar</x-secondary-button>
-                        <x-primary-button type="submit">Salvar alteracoes</x-primary-button>
+                        <x-primary-button type="submit">Salvar alterações</x-primary-button>
                     </div>
                 </x-form>
             </x-card>

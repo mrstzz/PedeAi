@@ -19,7 +19,7 @@
 
                     <section class="grid gap-4 sm:grid-cols-2">
                         <label class="form-control">
-                            <x-input-label value="Identificacao" />
+                            <x-input-label value="Identificação" />
                             <x-text-input name="identifier" value="{{ old('identifier', $table->identifier) }}" required />
                         </label>
 
@@ -40,7 +40,7 @@
 
                     <div class="flex flex-col-reverse gap-3 border-t border-base-300 pt-4 sm:flex-row sm:justify-end">
                         <x-secondary-button type="reset">Limpar</x-secondary-button>
-                        <x-primary-button type="submit">Salvar alteracoes</x-primary-button>
+                        <x-primary-button type="submit">Salvar alterações</x-primary-button>
                     </div>
                 </x-form>
             </x-card>

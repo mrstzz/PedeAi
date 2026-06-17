@@ -27,9 +27,9 @@
             @if ($menuItems->isEmpty())
                 <div class="alert alert-warning">
                     <div>
-                        <h2 class="font-semibold">Nenhum item disponivel</h2>
+                        <h2 class="font-semibold">Nenhum item disponível</h2>
                         <p class="text-sm">
-                            Um usuario admin precisa cadastrar itens ativos antes do atendente criar comandas.
+                            Um usuário admin precisa cadastrar itens ativos antes do atendente criar comandas.
                         </p>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                     <div>
                         <h2 class="font-semibold">Nenhuma mesa livre no momento</h2>
                         <p class="text-sm">
-                            Libere uma mesa, conclua uma comanda aberta ou selecione uma reserva confirmada dentro do horario.
+                            Libere uma mesa, conclua uma comanda aberta ou selecione uma reserva confirmada dentro do horário.
                         </p>
                     </div>
                 </div>
@@ -92,13 +92,13 @@
                     </section>
 
                     <label class="form-control">
-                        <x-input-label value="Observacoes da comanda" />
+                        <x-input-label value="Observações da comanda" />
                          <x-text-input
                             id="notes"
                             type="text"
                             class="textarea textarea-bordered min-h-24 bg-base-100"
                             name="notes"
-                            placeholder="Ex: sem cebola, aniversariante, pedido prioritario..."
+                            placeholder="Ex: sem cebola, aniversariante, pedido prioritário..."
                             :value="old('notes')"/>
                     </label>
 
@@ -112,7 +112,7 @@
                         <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                             <div>
                                 <h2 class="text-lg font-semibold text-neutral">Itens da comanda</h2>
-                                <p class="text-sm text-base-content/65">Adicione os itens consumidos. O total sera calculado automaticamente ao salvar.</p>
+                                <p class="text-sm text-base-content/65">Adicione os itens consumidos. O total será calculado automaticamente ao salvar.</p>
                             </div>
 
                             <button
@@ -143,7 +143,7 @@
 
                                     <div class="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_9rem]">
                                         <label class="form-control min-w-0">
-                                            <x-input-label value="Item do cardapio" />
+                                            <x-input-label value="Item do cardápio" />
                                             <select name="items[{{ $index }}][menu_item_id]" class="select select-bordered w-full bg-base-100" @disabled($menuItems->isEmpty())>
                                                 <option value="">Selecione um item</option>
                                                 @foreach ($menuItems as $menuItem)
@@ -170,7 +170,7 @@
                                     </div>
 
                                     <label class="form-control mt-4">
-                                        <x-input-label value="Observacoes do item" />
+                                        <x-input-label value="Observações do item" />
                                         <x-text-input
                                             name="items[{{ $index }}][notes]"
                                             value="{{ old('items.' . $index . '.notes', $itemRow['notes'] ?? '') }}"
@@ -203,7 +203,7 @@
 
             <div class="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_9rem]">
                 <label class="form-control min-w-0">
-                    <x-input-label value="Item do cardapio" />
+                    <x-input-label value="Item do cardápio" />
                     <select name="items[__INDEX__][menu_item_id]" class="select select-bordered w-full bg-base-100" @disabled($menuItems->isEmpty())>
                         <option value="">Selecione um item</option>
                         @foreach ($menuItems as $menuItem)
@@ -230,7 +230,7 @@
             </div>
 
             <label class="form-control mt-4">
-                <x-input-label value="Observacoes do item" />
+                <x-input-label value="Observações do item" />
                 <x-text-input
                     name="items[__INDEX__][notes]"
                     placeholder="Ponto da carne, adicionais, retirada..."

@@ -1,12 +1,12 @@
-<x-layouts::app :title="__('Usuarios')">
+<x-layouts::app :title="__('Usuários')">
     <div class="min-h-full text-base-content">
         <div class="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
             <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                    <div class="badge badge-secondary badge-outline mb-3">Administracao</div>
-                    <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Usuarios</h1>
+                    <div class="badge badge-secondary badge-outline mb-3">Administração</div>
+                    <h1 class="text-2xl font-bold text-neutral sm:text-3xl">Usuários</h1>
                     <p class="mt-2 max-w-2xl text-sm text-base-content/70">
-                        Gerencie as permissões dos usuarios. A permissão de administrador nao pode ser atribuida por esta tela.
+                        Gerencie as permissões dos usuários. A permissão de administrador não pode ser atribuída por esta tela.
                     </p>
                 </div>
             </section>
@@ -31,8 +31,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Usuario</th>
-                                <th>Email</th>
+                                <th>Usuário</th>
+                                <th>E-mail</th>
                                 <th>Permissão Atual</th>
                                 <th class="w-80">Alterar Permissão</th>
                             </tr>
@@ -81,7 +81,7 @@
                                 <tr>
                                     <td colspan="4">
                                         <div class="p-8 text-center text-sm text-base-content/65">
-                                            Nenhum usuario encontrado.
+                                            Nenhum usuário encontrado.
                                         </div>
                                     </td>
                                 </tr>
