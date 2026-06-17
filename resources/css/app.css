@@ -157,6 +157,18 @@
         background-blend-mode: normal, normal, normal, soft-light;
         background-attachment: fixed;
     }
+
+    [data-flux-sidebar][data-flux-sidebar-stashed] {
+        width: 0 !important;
+        min-width: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        overflow: hidden !important;
+    }
+
+    [data-flux-sidebar][data-flux-sidebar-stashed] > * {
+        display: none !important;
+    }
 }
 
 @layer components {
