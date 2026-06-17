@@ -32,12 +32,12 @@
             <main>
                 <section class="mx-auto grid min-h-[calc(100vh-5.25rem)] w-full max-w-7xl items-center gap-8 px-4 pb-10 pt-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_30rem] lg:px-8">
                     <div class="max-w-3xl">
-                        <div class="badge badge-secondary badge-outline mb-4">Gestao de atendimento</div>
+                        <div class="badge badge-secondary badge-outline mb-4">Gestão de atendimento</div>
                         <h1 class="max-w-3xl text-4xl font-bold leading-tight text-neutral sm:text-5xl lg:text-6xl">
-                            Controle comandas, mesas e cozinha em um fluxo so.
+                            Controle comandas, mesas e cozinha em um fluxo só.
                         </h1>
                         <p class="mt-5 max-w-2xl text-base leading-7 text-base-content/70 sm:text-lg">
-                            O PedeAi organiza a operacao do restaurante desde a abertura da comanda ate o pagamento, com visao rapida para atendimento, cozinha e administracao.
+                            O PedeAi organiza a operação do restaurante desde a abertura da comanda até o pagamento, com visão rápida para atendimento, cozinha e administração.
                         </p>
 
                         <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -58,8 +58,8 @@
                                 <dd class="mt-1 text-2xl font-bold text-success">Fila viva</dd>
                             </div>
                             <div class="rounded-lg border border-base-300 bg-base-100/85 p-4 shadow-sm">
-                                <dt class="text-sm text-base-content/60">Gestao</dt>
-                                <dd class="mt-1 text-2xl font-bold text-secondary">Cardapio</dd>
+                                <dt class="text-sm text-base-content/60">Gestão</dt>
+                                <dd class="mt-1 text-2xl font-bold text-secondary">Cardápio</dd>
                             </div>
                         </dl>
                     </div>

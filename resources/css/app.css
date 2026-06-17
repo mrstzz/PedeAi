@@ -270,6 +270,11 @@
     @apply  !mb-0 !leading-tight;
 }
 
+.app-sidebar-brand > div:last-child {
+    color: var(--color-neutral-content) !important;
+    font-weight: 700;
+}
+
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {

@@ -128,7 +128,7 @@
                         <div>
                             <h2 class="text-lg font-semibold text-neutral">Nenhuma mesa cadastrada</h2>
                             <p class="mt-1 max-w-md text-sm text-base-content/65">
-                                Cadastre as mesas para que elas aparecam na abertura de comandas conforme disponibilidade.
+                                Cadastre as mesas para que elas apareçam na abertura de comandas conforme disponibilidade.
                             </p>
                         </div>
                         <x-link-button href="{{ route('restaurant-tables.create') }}" class="gap-2">
