@@ -4,12 +4,12 @@
         @include('partials.head')
     </head>
     <body data-theme="pedeai" class="app-texture-bg min-h-screen text-base-content">
-        <div class="min-h-screen pb-20">
-            <header class="sticky top-0 z-30 border-b border-base-300 bg-base-100/90 px-3 py-2 backdrop-blur">
+        <div class="min-h-screen pb-24">
+            <header class="sticky top-0 z-30 border-b border-base-300/80 bg-base-100/90 px-3 py-2 backdrop-blur">
                 <div class="mx-auto flex max-w-4xl items-center justify-between gap-3">
                     <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-2" wire:navigate>
-                        <span class="flex size-8 shrink-0 items-center justify-center overflow-hidden rounded-md bg-white">
-                            <x-app-logo-icon class="size-7" />
+                        <span class="flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-base-300">
+                            <x-app-logo-icon class="size-8" />
                         </span>
                         <div class="min-w-0 leading-tight">
                             <p class="text-sm font-bold text-neutral">PedeAi</p>
@@ -17,10 +17,16 @@
                         </div>
                     </a>
 
-                    <form method="POST" action="{{ route('logout') }}" class="shrink-0">
-                        @csrf
-                        <button type="submit" class="btn btn-ghost btn-sm">Sair</button>
-                    </form>
+                    <div class="flex items-center gap-2">
+                        <a href="{{ route('ticket-list.index') }}" class="btn btn-ghost btn-sm px-2" aria-label="Comandas" wire:navigate>
+                            <flux:icon.clipboard-document-list class="size-4" />
+                        </a>
+
+                        <form method="POST" action="{{ route('logout') }}" class="shrink-0">
+                            @csrf
+                            <button type="submit" class="btn btn-ghost btn-sm" data-loading-label="Saindo">Sair</button>
+                        </form>
+                    </div>
                 </div>
             </header>
 
@@ -29,33 +35,33 @@
             </main>
         </div>
 
-        <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-base-300 bg-base-100/95 px-3 pb-2 pt-1.5 shadow-lg backdrop-blur">
+        <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-base-300/80 bg-base-100/95 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 shadow-lg backdrop-blur">
             <div class="mx-auto grid max-w-4xl grid-cols-3 gap-2">
                 <a
                     href="{{ route('ticket-list.create') }}"
-                    class="btn min-h-11 flex-col gap-0 rounded-md border-0 text-xs {{ request()->routeIs('ticket-list.create') ? 'btn-primary' : 'btn-ghost text-base-content/70' }}"
+                    class="btn min-h-14 flex-col gap-1 rounded-lg border-0 text-xs {{ request()->routeIs('ticket-list.create') ? 'btn-primary' : 'btn-ghost text-base-content/70' }}"
                     wire:navigate
                 >
-                    <flux:icon.plus class="size-4" />
+                    <flux:icon.plus class="size-5" />
                     Comanda
                 </a>
 
                 <a
                     href="{{ route('reservations.index') }}"
-                    class="btn min-h-11 flex-col gap-0 rounded-md border-0 text-xs {{ request()->routeIs('reservations.*') ? 'btn-secondary' : 'btn-ghost text-base-content/70' }}"
+                    class="btn min-h-14 flex-col gap-1 rounded-lg border-0 text-xs {{ request()->routeIs('reservations.*') ? 'btn-secondary' : 'btn-ghost text-base-content/70' }}"
                     wire:navigate
                 >
-                    <flux:icon.calendar-days class="size-4" />
+                    <flux:icon.calendar-days class="size-5" />
                     Reservas
                 </a>
 
                 <a
                     href="{{ route('dashboard') }}"
-                    class="btn min-h-11 flex-col gap-0 rounded-md border-0 text-xs {{ request()->routeIs('dashboard') ? 'btn-neutral' : 'btn-ghost text-base-content/70' }}"
+                    class="btn min-h-14 flex-col gap-1 rounded-lg border-0 text-xs {{ request()->routeIs('dashboard') ? 'btn-neutral' : 'btn-ghost text-base-content/70' }}"
                     wire:navigate
                 >
-                    <flux:icon.home class="size-4" />
-                    Inicio
+                    <flux:icon.home class="size-5" />
+                    Início
                 </a>
             </div>
         </nav>

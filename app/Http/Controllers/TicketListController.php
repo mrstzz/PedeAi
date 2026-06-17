@@ -131,7 +131,7 @@ class TicketListController extends Controller
 
     public function storeItems(Request $request, TicketList $ticketList)
     {
-        abort_if(in_array($ticketList->status, ['fechada', 'paga', 'cancelada'], true), 422, 'Nao e possivel adicionar itens em uma comanda encerrada.');
+        abort_if(in_array($ticketList->status, ['fechada', 'paga', 'cancelada'], true), 422, 'Não é possível adicionar itens em uma comanda encerrada.');
 
         $data = $request->validate([
             'items' => ['required', 'array', 'min:1'],
@@ -289,7 +289,7 @@ class TicketListController extends Controller
         return [
             'items.required' => 'Informe ao menos um item para a comanda.',
             'items.min' => 'Informe ao menos um item para a comanda.',
-            'items.*.menu_item_id.exists' => 'Selecione um item ativo do cardapio.',
+            'items.*.menu_item_id.exists' => 'Selecione um item ativo do cardápio.',
             'items.*.quantity.required_with' => 'Informe a quantidade do item selecionado.',
             'items.*.quantity.integer' => 'A quantidade precisa ser um numero inteiro.',
             'items.*.quantity.min' => 'A quantidade precisa ser pelo menos 1.',
@@ -305,7 +305,7 @@ class TicketListController extends Controller
             'customer_name' => 'cliente',
             'restaurant_table_id' => 'mesa',
             'reservation_id' => 'reserva',
-            'items.*.menu_item_id' => 'item do cardapio',
+            'items.*.menu_item_id' => 'item do cardápio',
             'items.*.quantity' => 'quantidade',
             'items.*.notes' => 'observacoes do item',
         ];

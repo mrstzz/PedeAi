@@ -134,6 +134,8 @@ new #[Title('Configurações de segurança')] class extends Component {
 
         $this->closeDeleteModal();
         $this->loadPasskeys();
+
+        Flux::toast(variant: 'success', text: __('Chave de acesso removida.'));
     }
 
     /**
@@ -163,6 +165,8 @@ new #[Title('Configurações de segurança')] class extends Component {
         $disableTwoFactorAuthentication(auth()->user());
 
         $this->twoFactorEnabled = false;
+
+        Flux::toast(variant: 'success', text: __('Autenticação em dois fatores desativada.'));
     }
 }; ?>
 
@@ -201,7 +205,12 @@ new #[Title('Configurações de segurança')] class extends Component {
             />
 
             <div class="flex items-center gap-4">
-                <flux:button variant="primary" type="submit" data-test="update-password-button">
+                <flux:button
+                    variant="primary"
+                    type="submit"
+                    data-test="update-password-button"
+                    data-loading-label="{{ __('Salvando...') }}"
+                >
                     {{ __('Salvar') }}
                 </flux:button>
             </div>
@@ -223,8 +232,11 @@ new #[Title('Configurações de segurança')] class extends Component {
                                 <flux:button
                                     variant="danger"
                                     wire:click="disable"
+                                    wire:loading.attr="disabled"
+                                    wire:target="disable"
                                 >
-                                {{ __('Desativar 2FA') }}
+                                    <span wire:loading.remove wire:target="disable">{{ __('Desativar 2FA') }}</span>
+                                    <span wire:loading wire:target="disable">{{ __('Desativando...') }}</span>
                                 </flux:button>
                             </div>
 
@@ -240,8 +252,9 @@ new #[Title('Configurações de segurança')] class extends Component {
                                 <flux:button
                                     variant="primary"
                                     wire:click="$dispatch('start-two-factor-setup')"
+                                    wire:loading.attr="disabled"
                                 >
-                                {{ __('Ativar 2FA') }}
+                                    {{ __('Ativar 2FA') }}
                                 </flux:button>
                             </flux:modal.trigger>
 
@@ -262,9 +275,7 @@ new #[Title('Configurações de segurança')] class extends Component {
                         @forelse ($passkeys as $passkey)
                             <div class="flex items-center justify-between p-4 {{ ! $loop->last ? 'border-b border-base-300' : '' }}">
                                 <div class="flex items-center gap-4">
-                                    <div class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-base-200">
-                                        <flux:icon.key class="size-5 text-base-content/60" />
-                                    </div>
+                                    <flux:icon.key class="size-6 shrink-0 text-base-content/60" />
                                     <div class="space-y-1">
                                         <div class="flex items-center gap-2.5">
                                             <p class="font-medium tracking-tight">{{ $passkey['name'] }}</p>
@@ -288,14 +299,14 @@ new #[Title('Configurações de segurança')] class extends Component {
                                     icon="trash"
                                     icon:variant="outline"
                                     wire:click="confirmDelete({{ $passkey['id'] }})"
+                                    wire:loading.attr="disabled"
+                                    wire:target="confirmDelete({{ $passkey['id'] }})"
                                     class="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/50"
                                 />
                             </div>
                         @empty
                             <div class="p-8 text-center">
-                                <div class="mx-auto mb-4 flex size-14 items-center justify-center rounded-lg bg-base-200">
-                                    <flux:icon.key class="size-7 text-base-content/50" />
-                                </div>
+                                <flux:icon.key class="mx-auto mb-4 size-8 text-base-content/50" />
                                 <p class="font-medium">{{ __('Nenhuma chave cadastrada') }}</p>
                                 <flux:text class="mt-1">{{ __('Adicione uma chave de acesso para entrar sem senha') }}</flux:text>
                             </div>
@@ -326,14 +337,19 @@ new #[Title('Configurações de segurança')] class extends Component {
                 <flux:button
                     variant="outline"
                     wire:click="closeDeleteModal"
+                    wire:loading.attr="disabled"
+                    wire:target="closeDeleteModal,deletePasskey"
                 >
                     {{ __('Cancelar') }}
                 </flux:button>
                 <flux:button
                     variant="danger"
                     wire:click="deletePasskey"
+                    wire:loading.attr="disabled"
+                    wire:target="deletePasskey"
                 >
-                    {{ __('Remover chave') }}
+                    <span wire:loading.remove wire:target="deletePasskey">{{ __('Remover chave') }}</span>
+                    <span wire:loading wire:target="deletePasskey">{{ __('Removendo...') }}</span>
                 </flux:button>
             </div>
         </div>

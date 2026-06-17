@@ -1,19 +1,19 @@
-<div class="flex items-start max-md:flex-col">
-    <div class="me-10 w-full pb-4 md:w-[220px]">
-        <flux:navlist aria-label="{{ __('Configurações') }}">
-            <flux:navlist.item :href="route('profile.edit')" wire:navigate>{{ __('Perfil') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('security.edit')" wire:navigate>{{ __('Segurança') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('appearance.edit')" wire:navigate>{{ __('Aparência') }}</flux:navlist.item>
-        </flux:navlist>
+<div class="grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
+    <div class="w-full">
+        <div class="rounded-lg border border-base-300/80 bg-base-100 p-3 shadow-sm">
+            <flux:navlist aria-label="{{ __('Configurações') }}">
+                <flux:navlist.item :href="route('profile.edit')" wire:navigate>{{ __('Perfil') }}</flux:navlist.item>
+                <flux:navlist.item :href="route('security.edit')" wire:navigate>{{ __('Segurança') }}</flux:navlist.item>
+                <flux:navlist.item :href="route('appearance.edit')" wire:navigate>{{ __('Aparência') }}</flux:navlist.item>
+            </flux:navlist>
+        </div>
     </div>
 
-    <flux:separator class="md:hidden" />
-
-    <div class="flex-1 self-stretch max-md:pt-6">
+    <div class="min-w-0 rounded-lg border border-base-300/80 bg-base-100 p-5 shadow-sm sm:p-6">
         <flux:heading>{{ $heading ?? '' }}</flux:heading>
         <flux:subheading>{{ $subheading ?? '' }}</flux:subheading>
 
-        <div class="mt-5 w-full max-w-lg">
+        <div class="mt-5 w-full max-w-2xl">
             {{ $slot }}
         </div>
     </div>

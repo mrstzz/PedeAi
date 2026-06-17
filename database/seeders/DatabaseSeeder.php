@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Administrador', 'slug' => 'administrador'],
             ['name' => 'Cozinha', 'slug' => 'cozinha'],
             ['name' => 'Atendente', 'slug' => 'atendente'],
-            ['name' => 'Garcom', 'slug' => 'garcom'],
+            ['name' => 'Garçom', 'slug' => 'garcom'],
         ])->mapWithKeys(fn (array $role) => [
             $role['slug'] => Role::query()->updateOrCreate(
                 ['slug' => $role['slug']],
@@ -41,12 +41,12 @@ class DatabaseSeeder extends Seeder
         $menuItems = [
             ['name' => 'X-Salada', 'price' => 24.90, 'description' => 'Hamburguer, queijo, alface, tomate e molho da casa.'],
             ['name' => 'X-Bacon', 'price' => 29.90, 'description' => 'Hamburguer, queijo, bacon crocante e molho da casa.'],
-            ['name' => 'Batata frita', 'price' => 18.00, 'description' => 'Porcao individual de batata frita.'],
-            ['name' => 'Porcao de frango', 'price' => 38.90, 'description' => 'Tiras de frango empanado com molho especial.'],
+            ['name' => 'Batata frita', 'price' => 18.00, 'description' => 'Porção individual de batata frita.'],
+            ['name' => 'Porção de frango', 'price' => 38.90, 'description' => 'Tiras de frango empanado com molho especial.'],
             ['name' => 'Refrigerante lata', 'price' => 7.00, 'description' => 'Lata 350ml.'],
             ['name' => 'Suco natural', 'price' => 10.00, 'description' => 'Suco natural preparado na hora.'],
-            ['name' => 'Agua mineral', 'price' => 5.00, 'description' => 'Garrafa 500ml.'],
-            ['name' => 'Cafe expresso', 'price' => 6.00, 'description' => 'Cafe expresso curto.'],
+            ['name' => 'Água mineral', 'price' => 5.00, 'description' => 'Garrafa 500ml.'],
+            ['name' => 'Café expresso', 'price' => 6.00, 'description' => 'Café expresso curto.'],
         ];
 
         foreach ($menuItems as $item) {

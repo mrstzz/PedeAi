@@ -44,8 +44,8 @@ class ReservationController extends Controller
             'restaurant_table_id.required' => 'Selecione uma mesa para a reserva.',
             'customer_name.required' => 'Informe o nome do cliente.',
             'reserved_at.required' => 'Informe a data e hora da reserva.',
-            'reserved_at.after_or_equal' => 'A reserva precisa ser para agora ou para um horario futuro.',
-            'duration_minutes.required' => 'Informe a duracao da reserva.',
+            'reserved_at.after_or_equal' => 'A reserva precisa ser para agora ou para um horário futuro.',
+            'duration_minutes.required' => 'Informe a duração da reserva.',
             'duration_minutes.min' => 'A reserva precisa ter pelo menos 30 minutos.',
         ]);
 
@@ -53,7 +53,7 @@ class ReservationController extends Controller
 
         if ($data['reserved_at']->lessThan(now(self::BRASILIA_TIMEZONE))) {
             return back()
-                ->withErrors(['reserved_at' => 'A reserva precisa ser para agora ou para um horario futuro no horario de Brasilia.'])
+                ->withErrors(['reserved_at' => 'A reserva precisa ser para agora ou para um horário futuro no horário de Brasília.'])
                 ->withInput();
         }
 

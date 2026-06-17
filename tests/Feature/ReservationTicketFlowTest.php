@@ -16,10 +16,10 @@ uses(RefreshDatabase::class);
 
 function createRole(string $name, string $slug): Role
 {
-    return Role::query()->create([
-        'name' => $name,
-        'slug' => $slug,
-    ]);
+    return Role::query()->firstOrCreate(
+        ['slug' => $slug],
+        ['name' => $name],
+    );
 }
 
 function createUserWithRole(string $slug): User
@@ -37,7 +37,7 @@ function createUserWithRole(string $slug): User
 function createMenuItem(): MenuItem
 {
     return MenuItem::query()->create([
-        'name' => 'Cafe',
+        'name' => 'Café',
         'price' => 6,
         'active' => true,
     ]);
@@ -108,7 +108,7 @@ it('blocks opening a normal ticket on a reserved table', function () {
         'restaurant_table_id' => $table->id,
         'priority' => 'normal',
     ], collect([[
-        'product_name' => 'Cafe',
+        'product_name' => 'Café',
         'quantity' => 1,
         'unit_price' => 6,
         'subtotal' => 6,
@@ -144,7 +144,7 @@ it('releases the table when a ticket is paid', function () {
 
 it('does not allow assigning admin role through users screen', function () {
     $adminRole = createRole('Administrador', 'administrador');
-    $waiterRole = createRole('Garcom', 'garcom');
+    $waiterRole = createRole('Garçom', 'garcom');
 
     $admin = User::factory()->create(['role_id' => $adminRole->id]);
     $target = User::factory()->create(['role_id' => $waiterRole->id]);

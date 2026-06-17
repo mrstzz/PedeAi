@@ -26,26 +26,26 @@ class UserController extends Controller
     {
         $this->authorizeAdmin();
 
-        abort_if($user->is($request->user()), 403, 'Nao e possivel alterar a sua propria permissão.');
+        abort_if($user->is($request->user()), 403, 'Não é possível alterar a sua própria permissão.');
 
         $assignableRoleIds = $this->assignableRoles()->pluck('id')->all();
 
         $data = $request->validate([
             'role_id' => ['required', 'integer', Rule::in($assignableRoleIds)],
         ], [
-            'role_id.required' => 'Selecione uma role para o usuario.',
-            'role_id.in' => 'Esta role nao pode ser atribuida por aqui.',
+            'role_id.required' => 'Selecione uma permissão para o usuário.',
+            'role_id.in' => 'Esta permissão não pode ser atribuída por aqui.',
         ]);
 
         $role = Role::query()->findOrFail($data['role_id']);
 
-        abort_if($role->isAdmin(), 403, 'Nao e permitido atribuir administrador para outro usuario.');
+        abort_if($role->isAdmin(), 403, 'Não é permitido atribuir administrador para outro usuário.');
 
         $user->forceFill([
             'role_id' => $role->id,
         ])->save();
 
-        return back()->with('status', 'Permissão do usuario atualizada com sucesso.');
+        return back()->with('status', 'Permissão do usuário atualizada com sucesso.');
     }
 
     private function authorizeAdmin(): void

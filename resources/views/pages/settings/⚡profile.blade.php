@@ -81,7 +81,7 @@ new #[Title('Configurações de perfil')] class extends Component {
 
     <flux:heading class="sr-only">{{ __('Configurações de perfil') }}</flux:heading>
 
-    <x-pages::settings.layout :heading="__('Perfil')" :subheading="__('Atualize seu nome e endereço de e-mail')">
+    <x-pages::settings.layout :heading="__('Perfil')" :subheading="__('Atualize seu nome e endereço de email')">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
             <flux:input wire:model="name" :label="__('Nome')" type="text" required autofocus autocomplete="name" />
 
@@ -91,16 +91,16 @@ new #[Title('Configurações de perfil')] class extends Component {
                 @if ($this->hasUnverifiedEmail)
                     <div>
                         <flux:text class="mt-4">
-                            {{ __('Seu endereço de e-mail ainda não foi verificado.') }}
+                            {{ __('Seu endereço de email ainda não foi verificado.') }}
 
                             <flux:link class="text-sm cursor-pointer" wire:click.prevent="resendVerificationNotification">
-                                {{ __('Clique aqui para reenviar o e-mail de verificação.') }}
+                                {{ __('Clique aqui para reenviar o email de verificação.') }}
                             </flux:link>
                         </flux:text>
 
                         @if (session('status') === 'verification-link-sent')
                             <flux:text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
-                                {{ __('Um novo link de verificação foi enviado para seu e-mail.') }}
+                                {{ __('Um novo link de verificação foi enviado para seu email.') }}
                             </flux:text>
                         @endif
                     </div>
@@ -109,7 +109,13 @@ new #[Title('Configurações de perfil')] class extends Component {
 
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-end">
-                    <flux:button variant="primary" type="submit" class="w-full" data-test="update-profile-button">
+                    <flux:button
+                        variant="primary"
+                        type="submit"
+                        class="w-full"
+                        data-test="update-profile-button"
+                        data-loading-label="{{ __('Salvando...') }}"
+                    >
                         {{ __('Salvar') }}
                     </flux:button>
                 </div>
