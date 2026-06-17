@@ -7,8 +7,9 @@
 
 <body data-theme="pedeai" class="app-texture-bg min-h-screen text-base-content"
     x-data="{
-        sidebarOpen: null,
-        isMobile: false,
+        isMobile: window.innerWidth < 1024,
+        /* Inicia false (fechada) a não ser que o usuário tenha salvado como aberta ('false' para stashed) */
+        sidebarOpen: window.innerWidth >= 1024 ? (localStorage.getItem('sidebar-stashed') === 'false') : false,
         sidebar: null,
         checkSidebarState() {
             if (!this.sidebar) return;
@@ -22,6 +23,16 @@
     x-init="
         sidebar = document.querySelector('[data-flux-sidebar]');
         isMobile = window.innerWidth < 1024;
+
+        /* Força a sidebar a ficar oculta por padrão, a menos que o usuário tenha salvado ela aberta */
+        if (sidebar && !isMobile) {
+            if (localStorage.getItem('sidebar-stashed') !== 'false') {
+                sidebar.setAttribute('data-flux-sidebar-stashed', '');
+            } else {
+                sidebar.removeAttribute('data-flux-sidebar-stashed');
+            }
+        }
+
         checkSidebarState();
 
         if (sidebar) {
@@ -33,22 +44,21 @@
             isMobile = window.innerWidth < 1024;
             checkSidebarState();
         });
-    "
->
+    ">
     <flux:sidebar
         sticky
         collapsible="mobile"
         stashable
-        class="border-e border-[var(--color-sidebar-muted)] bg-[var(--color-sidebar-bg)] text-[var(--color-sidebar-content)] shadow-xl shadow-neutral/10"
-    >
+        class="border-e border-[var(--color-sidebar-muted)] bg-[var(--color-sidebar-bg)] text-[var(--color-sidebar-content)] shadow-xl shadow-neutral/10">
         <flux:sidebar.header class="border-b border-[var(--color-sidebar-muted)] px-3 pb-4 pt-3">
             <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
         </flux:sidebar.header>
 
         <div class="px-3 py-3">
-            <div class="rounded-lg border border-[var(--color-sidebar-muted)] bg-[var(--color-sidebar-muted)] p-3 shadow-inner">
+            <div class="rounded-lg border border-[var(--color-sidebar-muted)] bg-[var(--color-sidebar-bg)] p-3 shadow-sm">
                 <p class="text-xs font-semibold uppercase text-[var(--color-neutral)]">Operação</p>
                 <p class="mt-1 text-sm font-semibold text-[var(--color-sidebar-content)]">Comandas e atendimento</p>
+
                 <div class="mt-3 h-1.5 overflow-hidden rounded-full bg-[var(--color-sidebar-muted)]">
                     <div class="h-full w-2/3 rounded-full bg-secondary"></div>
                 </div>
@@ -108,7 +118,7 @@
         </flux:sidebar.nav>
 
         <div class="px-3 pb-2">
-            <div class="rounded-lg border border-[var(--color-sidebar-muted)] bg-[var(--color-sidebar-muted)] px-3 py-2">
+            <div class="rounded-lg border border-[var(--color-sidebar-muted)] bg-[var(--color-sidebar-bg)] px-3 py-2 shadow-sm">
                 <p class="text-xs font-semibold uppercase text-[var(--color-neutral)]">Permissão</p>
                 <p class="mt-1 text-sm font-semibold text-[var(--color-sidebar-content)]">{{ auth()->user()->role?->name ?? 'Sem permissão' }}</p>
             </div>
@@ -134,7 +144,7 @@
                 }
             }
         "
-        class="fixed top-6 z-50 transition-all duration-300
+        class="fixed top-6 z-50 transition-[left,border-width,border-radius,box-shadow] duration-300
                bg-[var(--color-sidebar-bg)] text-[var(--color-sidebar-content)]
                border border-[var(--color-sidebar-muted)]
                hover:bg-[var(--color-sidebar-muted)]
@@ -142,13 +152,11 @@
         :class="sidebarOpen
             ? 'left-[calc(16rem-1px)] border-l-0 rounded-r-lg shadow-sm'
             : 'left-4 rounded-lg shadow-md'"
-        aria-label="Toggle sidebar"
-    >
+        aria-label="Toggle sidebar">
         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </button>
-
     {{ $slot }}
 
     @persist('toast')

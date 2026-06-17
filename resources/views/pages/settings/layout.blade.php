@@ -1,6 +1,6 @@
 <div class="grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
     <div class="w-full">
-        <div class="ps-0 sm:ps-6">
+        <div class="ps-0 sm:ps-0">
             <div class="rounded-lg border border-base-300/80 bg-base-100 p-3 shadow-sm">
                 <flux:navlist aria-label="{{ __('Configurações') }}">
                     <flux:navlist.item :href="route('profile.edit')" wire:navigate>{{ __('Perfil') }}</flux:navlist.item>
